@@ -1,0 +1,13 @@
+#title 使用jde编辑java
+
+jde需要安装jdk才能正常工作，所以先要下载jdk安装好。
+
+下载jde和elib，解压到site-lisp中，在emacs中load jde。接下来为jde设置一下jdk的路径:M-x customize-variable<ret> jde-jdk-registry<ret>，把安装好的jdk的路径和版本填进去（如果机器上安装了多个jdk，还需要用设置jde-jdk变量）。之后再打开.java文件时就会自动进入jde-mode了。
+
+在jde中可以用C-c C-v C-.对java代码进行自动补全。不过好像只能对jdk中的类进行补全，自定义的类不起作用。
+
+jde有两个方便的扩展：
+
+1.jmaker.el:这个扩展可以为java工程自动生成Makefile文件。
+
+2.decompile.el:如果用emacs打开.class文件，这个扩展会调用jad对.class文件进行反编译，显示编译后的代码（跟eclipse的jadclipse类似）。要用它需要首先安装jad（在windows中只需要把jad.exe拷贝到emacs/bin下就可以）。

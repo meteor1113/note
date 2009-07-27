@@ -1,0 +1,38 @@
+#title python语言
+
+----
+
+[[./python20041120.html][python20041120]] python笔记1
+
+[[./python20041121.html][python20041121]] python笔记2
+
+[[./python20041122.html][python20041122]] python笔记3
+
+[[./python20080411.html][python20080411]] python中使用getopt
+
+[[./python20080414.html][python20080414]] python的模块和包
+
+[[./python20080415.html][python20080415]] python与C/C++的不同
+
+[[./python20080417.html][python20080417]] import
+
+[[./python20080418.html][python20080418]] 类
+
+[[./python20080419.html][python20080419]] 异常
+
+[[./python20080421.html][python20080421]] python的内置工具
+
+[[./python20080422.html][python20080422]] python的unicode支持
+
+[[./python20080423.html][python20080423]] python的正则表达式
+
+[[./python20080424.html][python20080424]] 用struct模块处理二进制数据
+
+[[./python20080425.html][python20080425]] python线程
+
+[[./python20080505.html][python20080505]] wxPython学习1
+
+[[./python20080512.html][python20080512]] wxPython学习2
+
+----
+updated: <lisp>(current-time-string)</lisp>

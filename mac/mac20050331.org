@@ -1,0 +1,13 @@
+#title 多线程及其它
+
+这儿说的多线程是指posix thread库。pthread_create创建线程，pthread_join等待线程结束。MPCreateSemaphore创建信号量，MPSignalSemaphore发送信号量，MPWaitOnSemaphore等待某个信号量之后再继续，MPDeleteSemaphore销毁信号量。
+
+可以在单独的线程中建立NSAutoreleasePool管理线程的释放池，甚至某个单独的操作本身也可以在单独的释放池中。
+
+NSTimer不知道为什么在modal dialog中不好用。
+
+Notification会被post它的线程执行，而不是注册observe的线程，要想通知另一个线程执行某项功能，应使用performSelectorOnMainThread，或者使用cocoa的port和conection机制。
+
+sheet功能可以不使用modal，它的父窗口就不会阻塞，但父窗口上的无法接受鼠标和键盘消息。
+
+

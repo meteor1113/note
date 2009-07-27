@@ -1,0 +1,46 @@
+#title automake备忘
+
+1.进入目录
+
+2.autoscan
+
+生成configure.scan
+
+3.mv configure.scan configure.in
+
+4.修改configure.in
+
+加上：
+
+<example>
+AC_INIT(ProjectName, Version, Email)
+AM_INIT_AUTOMAKE(ProjectName, Version)
+AC_CONFIG_FILES([Makefile
+           subdir1/Makefile
+           subdir2/Makefile])
+AC_OUTPUT
+</example>
+
+5.写Makefile.am
+
+<example>
+AUTOMAKE_OPTIONS = foreign
+bin_PROGRAMS = ProgramName
+ProgramName_SOURCES = main.cpp other.c
+</example>
+
+6.写autogen.sh
+
+<example>
+#!/bin/sh
+aclocal
+autoconf			# generate configure
+#autoheader
+automake --foreign --add-missing --copy # generate Makefile.in
+</example>
+
+根据项目选择否需要autoheader
+
+7.sh autogen.sh
+
+8.现在可以./configure; make; make install了

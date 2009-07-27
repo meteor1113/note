@@ -1,0 +1,30 @@
+#title 异常
+
+** try
+
+try语句用来异常自理，它支持以下子句：
+
+<example>
+except name:                   捕获name类型的异常
+except name, value             捕获name类型的异常及它的附加数据
+except (name1, name2, name3):  捕获任何列出的异常
+except:                        捕获所有异常(必须是最后一个except)
+else:                          如果没有发生异常就执行else子句
+finally:                       不论是否发生异常都执行finally子句
+</example>
+
+else:和finally:不能同时出现。
+
+** assert语句
+
+assert <条件>, [data]           #data部分是可选的
+
+assert等同于以下代码：
+
+<example>
+if __debug__:
+    if not <条件>:
+        raise AssertionError, [data]
+</example>
+
+__debug__是一个内置的名字，表示调试模式，如果用了-O命令行标志，那么assert会从编译的字节码中去除。

@@ -1,0 +1,136 @@
+#title ruby学习笔记四
+
+** ruby的模块
+
+ruby用module...end定义模块。模块提供了一个名字空间，可以防止命名冲突。
+
+<example>
+    module Me
+       def foo()
+           return 0;
+       end
+    end
+</example>
+
+要使用me模块中的函数可以：
+
+<example>
+    include Me
+    foo()
+</example>
+
+如果连续inclde了多个模块，而这些模块中有同名的函数，那么前面的函数将被后面include的函数覆盖。
+
+标准库里提供了很多模块，Math模块提供了大量数字相类的方法，比如Math.sqrt。前面使用模块都是用include模块名然后调用方法来实现的，这个include有点像c++中的using namespace，有时候我们希望不include也能使用，就像Math.sqrt一样使用，因为这样可以防止include的多个模块中有重名的情况。这时我们需要把函数定义为模块函数。
+
+<example>
+    module Me2
+        def Me2.foo()
+        end
+    end
+</example>
+
+下面我们不需要include Me2就可以用Me2.foo()来调用了。
+
+外界不仅可以访问模块里的函数，还可以访问模块里的常量。常量的访问方式是module::常量名。
+
+** Mix-in
+
+可以把一个模块中定义的函数整个放入到一个类里去。
+
+<example>
+    class Person
+        include Me
+    end
+</example>
+
+这样，Person类里就有foo()方法了，可以
+
+<example>
+    p = Person.new
+    p.foo()
+</example>
+
+与include方式对应，还有一个extend方法。include是为整个类加入这个模块的方法，extend可以为某个类的单个实例加入模块的方法。
+
+<example>
+    p1 = Person.new
+    p1.extend(Me2)
+</example>
+
+** require和load
+
+require类似于c++中的include，用来包括另一个文件，它们的区别在于：
+
+require只加载一次，遇到同一文件时会忽略，不过不同路径下的同名文件会多次加载。
+
+load会多次加载，只要运行到load语句就会加载一次。所以利用load的特性，可以实现系统的无缝升级，程序功能改变时只需要重新load一下就行了。
+
+** 模块总结
+
+require,load用于加载文件，include,extend用于包含模块。
+
+require加载一次，load加载多次。
+
+require加载文件时可以不加后缀，load必须加后缀。
+
+require一般用于加载库文件，load一般用于加载配置文件。
+
+** 数组
+
+<example>
+    arr1 = []
+    arr2 = Array.new
+    arr3 = [4, 5, 6]
+</example>
+ 
+ruby中的数组用整数作下标，下标从0开始，与c语言一致。可以使用负数下标，表示从末尾开始索引，如arr3[-1]表示最后一个元素，上例中是6。
+
+可以用一对数字来索引数组，第一个数字表示开始位置，第二个数字表示数目，所以arr3[1..2]表示的是[4, 5]。
+
+ruby中数组是动态的，随时可以添加/删除元素。
+
+<example>
+    arr3[6] = 45；                #把索引为6的元素设置为45，索引为3，4，5的元素都是nil
+    arr3.delete_at(3)             #删除下标为3的元素 
+    arr3.delete(5)                #删除值为5的所有元素
+    arr3.insert(3, 66)            #在下标为3的位置添加元素66
+    arr.pop                       #删除最后一个元素
+    arr.shift                     #删除第一个元素
+    arr.clear                     #清空数组
+    print arr.join(",")           #把数组join成一个字符串输入，每个元素间用,分割
+</example>
+
+** 字符串
+
+<example>    
+    str1 = 'str'
+    str2 = "str"
+    str3 = %q/str/
+    str4 = %Q(str)
+    str5 = <<OK_str
+        dksla;f
+        str
+    OK_str
+</example>
+
+%q用来生成单引号字符串，%Q生成双引号字符串，%q和%Q后面跟分隔符，可以是配对的! !; / /; < >; ( ); [ ]; { };等
+  
+str5是一个字符串文档，从<<后跟一个文档结束符，字符串从下一行开始，一直到遇到文档结束符为止，所以str5的实际内容是
+
+<example>
+        dksla;f
+        str
+</example>
+
+字符串中可以使用类似于c语言的转义符，比如"\n"，也可以用#{}嵌入ruby表达式，表达式会被求值然后和字符串连接到一起。
+
+** 正则表达式
+
+** 迭代器，代码块，闭包
+
+<example>
+    (1..9).each{|i| print i if i < 7}
+</example>
+
+迭代器each是数组类的一个方法，{}中的代码是代码块，除了用{}，还可以用do...end组织代码块。{}的优先级高于do...end。

@@ -1,0 +1,15 @@
+#title sqlite3, access, sqlserver2000的编码设置
+
+最近做的一个项目(S-LAN)中涉及到对多种数据库(sqlite3, access, sqlserver2000)的操作，但是在编码过程中，碰到了编码的问题，在这儿记录下来免得以后忘记。
+
+S-LAN可以使用多种数据库(同一时间只能是一种，但是可以切换)，这就需要对各种数据库操作进行封装，sqlite3使用自己的api，access和sqlserver2000都使用ado进行访问，以后还可能增加其它的数据库类型以及其它的数据库访问方式。
+
+S-LAN内部是使用unicode的，但是，sqlite3使用utf-8存储，access使用unicode存储，sqlserver2000使用ascii存储(sqlserver2000也有unicode类型，分别是nchar,nvarchar等，如果使用它类型不一致了，不方便在代码中统一处理)，这就造成了编码不一致问题。
+
+解决的方法是，在每种数据库自己的操作类中，对sql语句进行重新编码，比如ExecQuery中得到一个wstring的sql语句，在sqlite3的封装类中，我们需要把它转换为utf-8然后再传入sqlite3的api中调用，而对于access和sqlserver2000，因为ado本身可以接受wchar_t的类型，也就是说ado自己会负责编码转换，所以可以直接调用。
+
+从数据库中取出来的数据，也统一转换为unicode进行处理。对于access和sqlserver2000，ado方式取出来的数据本身就是unicode的，所以不用处理，而sqlite3取出来的数据是utf-8的，需要把utf-8再转换为unicode。
+
+通过这样的封装之后，S-LAN就能够统一各种不同数据库的操作。在程序中统一是unicode，而在数据库中，存储为数据库本身的格式。
+
+现在，还剩下唯一的问题就是：sqlite3和access中使用了unicode，对于多种语言的字符都可以存进去，但是sqlserver2000中的char和varchar仅仅是ascii，虽然ado确实会把自动转换，但是如果是在中文系统上存储日文的话，在sqlserver2000中就变为乱码了。

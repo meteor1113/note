@@ -1,0 +1,66 @@
+#title safearray的使用
+
+com中要传递数组, 在c++甚至是VJ++之间可以直接使用标准c++数组, 但是要把数组传递给VB, 则要使用safearray. safearray比一般的简单数组功能强大, 但使用起来也更复杂. Win32提供了一组API来操作safearray, 但是这些API很不容易使用, 所以VC和CB都有专门的类封装了safearray的操作.
+
+CB中提供的是TSafeArray类, 这是一个模板类, 使用起来需要传很多个参数来生成模板类实例, 用起来不方便, 不过还好, CB中为常见的几种数组都提供了typedef. 比如要定义BSTR的二维数组, 可以用TSafeArrayBSTR2, 要定义long型的三维数组的话就用TSafeArrayLong3. 举个例子, 我们要定义一个第一维3个元素, 第二维4个元素的二维BSTR数组就可以这么写: TSafeArrayDim2 dim(3, 4); TSafeArrayBSTR2 bstrArray(dim); 这就定义了一个名为bstrArray的二维BSTR数组了. 对于TSafeArray的访问可以直接用[], 因为TSafeArray类重载了[]操作符. 比如要访问前面这个数组第二维的第三个元素, 直接bstrArray[ 1 ][ 2 ]就行了. 需要单独说明的是BSTR类型的数组, 像刚才bstrArray[ 1 ] [ 2 ]这种访问方式返回的BSTR并不是引用, 而是新建了一个BSTR的拷贝再返回, 所以使用这种东西的时候要注意, 通过这样返回的BSTR, 用完之后我们还需要手动删除它. 否则会有内存泄露.
+关于TSafeArray要说明的最后一点是: CB5里的TSafeArray类实现有bug, 需要我们手动修改$BCB\include\Vcl\safearry.h文件的第223行. 把delete[] m_Indices;修改为{m_Indices--; delete[] m_Indices;}
+
+VC中提供了COleSafeArray类来封装safearray. COleSafeArray中没有重载[], 所以需要用GetElement和SetElement来取值和设值. 并且COleSafeArray不是模板类, 所以不是类型安全的. 另外, 要注意的仍然是BSTR, 用GetElement取出来的BSTR是原有safearray的一份拷贝, 使用完后需要手动释放. 另外, 如果从COM接口中传递出来一个用VARIANT包装的safearray对象, 我们一般可以通过这个VARIANT构造COleSafeArray, 不过用完之后还需要用VariantClear释放VARIANT. 以下例子是PutElement构造一个COleSafeArray 数组，再用GetElement将一个COleSafeArray 数组中的元素取出，最后用VariantClear清除数组:
+
+<example>
+/*用PutElement构造一个COleSafeArray 数组*/
+VARIANT val;
+COleSafeArray saRet;         
+DWORD numElements[] = {10, 10}; // 10x10
+// Create the 2 dimensional safe-array of type VT_BSTR with size 10x10
+saRet.Create(VT_BSTR, 2, numElements);
+// Initialize safearray  with values...
+long index[2];
+for (index[0]=0; index[0]<10; index[0]++)
+{
+    for(index[1]=0; index[1]<10; index[1]++)
+    {
+        CString str("Donkey");
+        BSTR bstr = str.AllocSysString();
+        //populate the safearray elements with BSTR values
+        saRet.PutElement(index, bstr);
+        //Free bstr
+        ::SysFreeString( bstr );
+    }
+}
+
+// Return the safe-array encapsulated in a VARIANT...
+val = saRet.Detach();
+val.vt = VT_ARRAY | VT_BSTR;
+
+/*用GetElement将一个COleSafeArray 数组中的元素取出*/
+//Determine upper bounds for both dimensions
+long lNumRows;
+long lNumCols;
+saRet.GetUBound(1, &lNumRows);
+saRet.GetUBound(2, &lNumCols);
+//Display the elements in the SAFEARRAY.
+COleSafeArray safeArray(&val);
+DWORD dim = safeArray.GetDim();
+//Determine upper bounds for both dimensions
+long r, c;
+saRet.GetLBound(1, &r);
+saRet.GetLBound(2, &c);
+for(;r <= lNumRows; r++ )
+{
+    for(; c <= lNumCols; c++ )
+    {
+        index[ 0 ]=r;
+        index[ 1 ]=c;
+        BSTR bstr;
+        //retrieve each element of the safearray
+        saRet.GetElement(index, &bstr);
+        int nElemLen = ::SysStringByteLen(bstr);
+        char strTemp[ 20 ];
+        memcpy(strTemp,(char*)bstr,nElemLen);
+        ::SysFreeString( bstr );
+    }
+}
+
+VariantClear( &val );
+</example>

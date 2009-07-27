@@ -1,0 +1,38 @@
+#title company-mode
+
+company-mode发布了0.3.0，试用了一下，比以前的好用多了，记录一下。
+
+company-mode以前的版本补全功能不太好用，而且有很多bug，特别是把tab键占用了，造成无法用tab进行indent使得我放弃了它（还有一个原因就是不能支持objc）。
+
+不过company-mode已经修正了这个bug，更重要的是，0.3.0加入了很多方便的backends，css、dabbrev、elisp、etags、files、gtags、nxml、semantic、xcode等。有了这些backends使用company就方便得很了。company补全时会对调用所有的backends，把这些backends结合起来进行补全，总有一些是当前可用的。
+
+特别是对xcode的支持，有了它就可以实现对objc的补全支持了(另外它的etags backend也可以用于objc，这样在windows下也能写objc了)。虽然company-mode不是智能地分析objc的语法，它无法像semantic那样根据上下文弹出对应的补全，只能把xcodeindex分析的结果全部列出来供选择；不过加上search，编辑objc已经比以前方便很多了。
+
+company-mode的使用很简单，把下载下来的tar.bz2包解压放在emacs能找到的地方，在.emacs中写入：
+
+<example>
+(require 'company)
+(dolist (hook (list
+               'emacs-lisp-mode-hook
+               'lisp-mode-hook
+               'lisp-interaction-mode-hook
+               'scheme-mode-hook
+               'c-mode-common-hook
+               'python-mode-hook
+               'haskell-mode-hook
+               'asm-mode-hook
+               'emms-tag-editor-mode-hook
+               'sh-mode-hook))
+  (add-hook hook 'company-mode))
+</example>
+
+就会在上面这些mode下自动打开company-mode，之后就可以运行命令company-complete-common来补全了，company-mode很聪明，会自动查找当前可用的backends进行补全。
+
+默认情况下，在输入3个字符(可以通过company-minimum-prefix-length设置)或者光标停留在一个单词结尾的话，经过一段时间(通过company-idle-delay设置，默认0.7秒，设置为nil会禁用自动补全，设置为t表示马上补全)会自动调用补全。不过有时候我移动光标到行尾本来想回车，结果company-mode居然给我弹出一个补全菜单，令我很郁闷，并且这个功能和auto-complete的自动补全经常冲突，所以我把company-idle-delay设置为nil了(使用(setq company-idle-delay nil))，免得它老烦我。
+
+本来以为有了company-0.3.0就不再需要auto-complete了，不过好像company-mode不会在输入字符之后马上进行当前buffer的补全，所以还是把auto-complete打开了。用auto-complete来自动弹出补全，company-mode只在需要时才通过命令触发。
+
+越来越觉得company-mode就是emacs完美的补全方案。
+
+ps:
+company-0.3.0有个bug，弹出的菜单有时候会错乱，并且和tabbar有冲突，在0.3.1中已经修正了。

@@ -1,0 +1,7 @@
+#title powerplant中的命令和消息
+
+powerplant中，LCommander类处理消息，它的命令被ObeyCommand处理，这个主要用来处理菜单命令，可以在FindCommandStatus中设置菜单的状态。
+
+LCommander中命令处理是分级的，下级往上级传，当前接收的那个是LCommander的一个静态变量叫sTarget，可以用SwitchTarget来切换。sTarget所指的LCommander对象首先接收到命令，然后处理。我就曾经不小心用SwitchTargetw(NULL)使得当前没有接收消息的对象，所以菜单什么的都无法响应了。
+
+另外还有一个Broadcaster和Listener的类一般用来处理菜单外的消息，它的处理是直接的，不像LCommander那样分级。需要指出的是，以前一直以为BroadcastMessage出去的消息是异步的，不过我看这个函数的源代码，Broadcast也是同步的，只不过它的消息直接到达而已。

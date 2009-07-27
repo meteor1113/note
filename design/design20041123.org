@@ -1,0 +1,15 @@
+#title 重构：重新组织函数
+
+Extract Method:如果有一段程序可以被组织在一起并独立出来就将这段程序放在一个独立的函数中，让函数名称解释这个函数的用处。
+
+Inline Methon:一个函数，其本体应该和其名称一清楚易懂。
+
+Introduce Explaining Variable:有一个很复杂的表达式，可以考虑把这个复杂运算式或其中一部分的结果放进一个临时变量，以此变量名称来解释表达式的用处。
+
+Split Temporary Variable:在程序中某个临时变量被赋值超过一次的时候，对每次赋值都创造一个独立的变量。
+
+Remove Assignments to Parameters:程序对一个参数进行赋值动作，那么用一个临时变量取代这个参数的位置。
+
+Replace Method with Method Object:当有一个大型函数，对其中局部变量的使用，无法采用Extrace Method的时候，把这个函数放进一个单独的对象中。
+
+Substitute Algorithm:把某个算法换为另一个更清晰的算法，把函数本身换掉。

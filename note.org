@@ -1,0 +1,22 @@
+笔记首页
+
+* [[./linux/linux.html][linux]]
+  linux操作与程序设计
+
+* [[./windows/windows.html][windows]]
+  windows操作与程序设计
+
+* [[./mac/mac.html][mac]]
+  mac操作与程序设计
+
+[[./cpp/cpp.html][cpp]] c++语言，我的最爱
+
+[[./python/python.html][python]] 面向对象的脚本语言
+
+[[./ruby/ruby.html][ruby]] ruby脚本语言
+
+[[./design/design.html][design]] 设计模式
+
+[[./emacs/emacs.html][emacs]] 不仅仅是一个编辑器
+
+[[./other/other.html][other]] 其它一些杂项

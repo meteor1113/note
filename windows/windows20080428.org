@@ -1,0 +1,19 @@
+#title windows的线程互斥和同步
+
+这几天的调查终于明白了，互斥和同步并不是一个概念。
+
+互斥是为了防止多个线程访问同一个对象，造成对象状态不一致。
+
+同步是为了控制各个线程执行的顺序的。
+
+windows提供了下面几个机制来实现互斥和同步：临界区(critical session)，互斥(mutex)，事件(event)，信号灯(semaphore)。
+
+其中，临界区只能在同一个进程之中使用，所以它的效果很高。而其它三个对象属于windows内核对象，可以跨进程使用。
+
+使用critical session和mutex来实现线程之间的互斥。critical session和mutex基本是一样的，区别只在于critical session只能在同一进程中，所以速度快，mutex速度慢，但是可以跨进程。
+
+使用event来实现线程之间的同步。
+
+使用semaphore来实现线程协调工作。
+
+semaphore和mutex(或者critical session)的区别在于mutex主要用于互扩，而semaphore实现了计数的机制，主要用于协调资源访问。

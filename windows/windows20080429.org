@@ -1,0 +1,15 @@
+#title 0xcd(205)问题
+
+昨天调试SLanAgent时碰到一个很奇怪的问题。
+
+SLanServer和SLanAgent都用Debug版运行，取得Agent的各种数据，一直跑得很好。但是用python写了一个测试程序，从SLanAgent取得OSInfo，在解析OSVersion和OSMend时一直出错。SLanAgent是采用utf-8传输字符串的。python中取得字符串后也使用utf-8解析了，但是python就是报错，说有些byte无法被decode。
+
+调试SLanAgent之后，发现转换成utf-8传输时，如果传一个100字节的数组，但里面的内容不足100字节，那么多余那些类容会被填充为0xcd(也就是205)，奇怪，从来没有使用0xcd这个数字啊，字符串的结束符不应该是0x0吗？为什么无故变成0xcd了呢，这个0xcd又是怎么来的呢。
+
+上网查了之后发现，0xcd是被vc的debug版自动加上去的，对于一个分配了空间但是没有初始化的char数组，在调试版的时候，vc会把所有的字节初始化为0xcd(cd表示clear data)，表示没被初始化过，这样放可以防止某些时候报错。
+
+问题清楚了，解决起来也很容易，在用new分配空间的时候，分配完之后立即用memset对这段空间进行初始化，这下就不再出问题了。
+
+btw:虽然这个0xcd在python下出错了，但是在SLanServer一直没出现问题，并且对于以0x25结尾的字符串，MultiByteToWideChar这个函数也不会把一连串的0xcd当作真正的字符进行解析，这个MultiByteToWideChar也挺奇怪啊。
+
+

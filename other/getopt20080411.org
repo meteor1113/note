@@ -1,0 +1,91 @@
+#title 用getopt处理命令行参数
+
+** getopt
+
+getopt用来以-开头的单字符命令行参数，如果选项有附加参数，那么参数可以和空格分开也可以不分开，参数也可以加引号或不加引号，以下格式都是正确的：
+
+<example>
+-o
+-oa
+-o a
+-oaaaa
+-o "a a"
+</example>
+
+getopt是posix规范的命令行参数处理函数。其原型如下：
+
+<example>
+#include <unistd.h>
+extern char *optarg;
+extern int optind;
+extern int optopt;
+extern int opterr;
+extern int optreset;
+int getopt(int argc, char * const *argv, const char *optstring);
+</example>
+
+argc和argv当然就是main函数传进来的命令行参数，optstring中包含我们想要在命令行参数中查找的参数。optstring有三种格式：
+
+<example>
+单个字母：表示这个选项没有参数
+单个字母后跟一个冒号[:]：表示这个选项后面必须跟一个参数
+单个字母后跟两个冒吃[::]：表示这个选项后的参数是可选的。
+</example>
+
+例如：
+<example>
+ab:c::de:f
+意思是：
+a,d,f后面没有冒号，所以没有参数
+b,e后面有一个冒号，表示有一个必须的参数
+c后面有两个冒号，表示可以有一个参数，也可以没有参数。
+</example>
+
+getopt每次调用返回一个选项，getopt的返回值表示找到的参数字母，当遇到未知的选项时，返回'?'，如果分析已经到达参数结尾时返回-1。如果参数中包括"--"，会引起getopt分析错误并返回-1。
+
+如果返回的选项有参数，那么全局变量optarg指向选项参数。
+
+全局变量opterr默认为1，getopt会输出错误信息，如果不希望getopt输出错误信息，则可以在调用前把全局变量opterr设置为0。
+
+** getopt_long
+
+getopt_long可以支持长选项（即--）。长选项的的格式是"--"后面跟长选项名，如果还有参数，那么需要紧跟选项名加上"="，=前后均不可以有空格。getopt_long的原型如下：
+
+<example>
+struct option
+{
+  const char *name;
+  int has_arg;
+  int *flag;
+  int val;
+};
+extern int getopt_long (int argc, char *const *argv,
+			const char *shortopts,
+		        const struct option *longopts, int *longind)
+</example>
+
+<verse>
+参数的含义：
+longopts:长选项数组
+longind:返回时这个值会被设置为当前找到选项在longopts中的索引
+
+结构体struct option各个选项的含义如下：
+name:长选项名
+has_arg:这个选项是否有参数，可以取的值有:no_argument(没有参数),optional_argument(可选一个参数),required_argument(必须有一个参数)
+flag:getopt_long遇到此选项时，会把flag设置为val的值，如果flag为NULL，则函数返回val的值，如果命令行参数中有个短选项和长选项表示相同的意义，则可以把val的值设为相应的短选项字母，这样在处理返回值的时候就可以和getopt的处理保持一致了。
+val:此长选项对应的值，一般设置为和这个长选项对应的短选项字母。如果没有对应的短选项，则可以把val设置成其它没有被用过的值，当找到这个长选项时，getopt_long会返回这个val，可以给每个长选项设置为不同的val值。也可以给所有长选项设置一样的val值，当switch到这个值时，可以通过字符串比较来确定找到了哪个长选项（通过返回的longind找到longopts中对应的name值来进行比较）。
+</verse>
+
+和getopt相比，它多了longopts和longind两个参数，longopts是一个指向结构体struct option数组的指针，这个数组的最后一项要把结构体设置为struct option{NULL, no_argument, NULL, 0}。例如，如果我们想分析"language"和"output"两个参数时，应该这样设置结构体数组：
+
+<example>
+const struct option longOpts[] = {
+    { "language", required_argument, NULL, 'l' },
+    { "input", required_argument, NULL, 'i' },
+    { NULL, no_argument, NULL, 0 }
+};
+</example>
+
+** 注意
+
+getopt和getopt_long都是每次返回一个选项，所以我们需要每次对返回值使用switch-case进行处理。

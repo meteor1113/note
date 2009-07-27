@@ -1,0 +1,73 @@
+#title python笔记3
+
+在class中定义的函数都是method，包括__init__，每个method至少有一个参数self，相当于c++中的this。在class里声明的变量就是属性，属性可以随时添加和删除。
+
+继承：class <name>(superclass1,superclass2,...)。
+
+class中特殊的method:
+
+__init__
+
+__del__(self)：对象删除的时候会调用
+
+__repr__(self)：使用repr函数的时候调用
+
+__str__(self)：返回一个字符串描述对象本身
+
+__cmp__(self,other)：一个比较操作符，０相等，１大于，－１小于
+
+__nozero__(self)：
+
+__len__(self)：调用len()的时候，返回对象的长度
+
+__getitem__(self,key)：返回self[key]，用来模拟list等数据结构
+
+__setitem__：(self,key,value)模拟obj[key]=value
+
+__delitem__(self,key)：模拟del obj[key]
+
+__contains__(self.other)：处理in语句
+
+__call__(self,arg1,arg2,...)：让obj像函数一样可以调用
+
+还有很多算术操作符等，可以查看python参考手册。
+
+异常处理：
+
+捕获异常：
+
+<example>
+try:
+    ...
+except ExceptionType:
+    ...
+else:
+    ...
+</example>
+
+或者
+
+<example>
+try:
+    ...
+finally:
+    ...
+</example>
+
+用raise语句抛出异常。
+
+import导入一个模块
+
+执行代码:exec code [in glocaldict,[,localdict]]
+
+和系统相关的调用在sys中，用import sys使用。
+
+和操作系统相关的调用在os中，用import os使用。
+
+应该用os.path编写平台无关的程序，path封装了各个平台下表示路径的方法。
+
+打开文件用f=open("filename","r")，r那儿可以用r-只读，w-只写,rw-读写,rb-读二进制,wb-写二进制。
+
+用Cmd模块可以很容易地编写命令行接口。
+
+可以用c语言编写python的扩展模块。

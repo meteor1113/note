@@ -1,0 +1,28 @@
+#title boost库学习
+
+从www.boost.org下载，也可以从国内镜像boost.c-view.org下载，我下载的版本是1.31，好象1.32快要出了。直接下载后解压出来即可使用，编译的时候必须把boost的路径加到命令行里。boost的大部分组件都可以直接使用，另外有一些组件因为平台的原因需要编译库，暂时我还没有自己编译过库。
+
+** lexical_cast
+
+lexical_cast用来做类型转换，可以是字符串－>数值，也可以是数值－>字符串。用法很简单，字符串转换到数值的时候，先包含头文件#include <boost/lexical_cast.hpp>，然后如下使用:int a = boost::lexical_cast<int>("123");即可以将字符串"123"转换为int型的123。
+
+数组－>字符串的转换也一样，比如string s = boost::lexical_cast<string>(123.12);
+
+如果转换失败，会有bad_lexical_cast异常抛出，该类是bad_cast的子类。
+
+boost依赖于字符流std::stringstream，它的原理是将源类型读入到字符流中，再写到目标类型中。
+
+lexical_cast不仅仅局限于字符串和数值类型之间的转换，可在任意可输出到stringstream的类型和任意可从stringstream输入的类型间转换。
+
+
+** timer
+
+boost提供了timer类用于计时，另外还有计时器时间报告类progress_timer和进度条显示类progress_display。
+
+timer类包含在头文件boost/timer.hpp中，progress_timer和progress_display类都包含在boost/progress.hpp中。
+
+timer类测量程序耗用时间，它使用了标准库的clock()函数，有良好的移植性，但代价却是精度不高。
+
+progress_timer类自动测量程序耗费时间，在对象时显示耗费时间信息，默认向std::cout输出字符信息。比如在main中生成一个progress_timer的对象t，在程序结束的时间会在屏幕上输出执行的时间。
+
+progress_display类以适当的形式在适当的位置显示进度条。比如在执行一个for循环之臆生成一个对象progress_display show_progress(10000);然后在执行这个for循环的过程中让这个对象自加:for(int i=0;i<10000;i++){++show_progress;}，这样就会边执行边在屏幕上显示进度条。

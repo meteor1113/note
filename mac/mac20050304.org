@@ -1,0 +1,4 @@
+#title cocoa-从.nib文件动态生成实例
+
+使用NSBundle类的+ (BOOL)loadNibNamed:(NSString *)aNibName owner:(id)owner方法，可以通过载入一个nib类来生成nib文件中的所有实例，并且可以多次载入，这样就可以动态生成.nib的实例，只要owner参数不一样，那么就可以通过不同的owner来管理不同的实例了。
+

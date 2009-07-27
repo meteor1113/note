@@ -1,0 +1,13 @@
+#title cocoa笔记１
+
+HideMenuBar()和ShowMenuBar()可以用来隐藏和显示系统菜单和dock。
+
+cocoa中使用NSCursor管理光标，NSCursor的set函数更改当前的光标，NSView和NSWindow等的resetCursorRects类可以定义光标在某个区域的形状。
+
+用NSScreen管理屏幕。
+
+View类存储了两个矩形，存储它在superview的坐标位置的叫做frame，存储view自身坐标位置的叫做bounds。
+
+NSResponder响应消息，first responder首先获得消息，如果未处理则传给nextResponder，NSView默认不可以做为first responder，可以重写acceptsFirstResponder函数返回YES使NSView可以成为第一个响应消息的对象。这儿使用的是Chain of Responsiblity(职责链)的模式。
+ 
+

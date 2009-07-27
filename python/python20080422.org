@@ -1,0 +1,15 @@
+#title python的unicode支持
+
+从python1.6版开始引入了Unicode字符串.
+
+在字符串定义前加u或者U，表示这个字符串是Unicode字符串，如果用type()来测试的话，会发现它的类型不是str,而是一个新的类型unicode.
+
+unicode()内建函数的作用和u/U类似，它以一个字符串为参数，返回一个Unicode字符串.
+
+encode内建方法以一个字符串为参数，返回一个经过编码的字符串.在python2.0版以后，encode可以同时对字符串和unicode字符串进行操作.
+
+内建函数ord()能够支持Unicode对象了.新的unichr函数会返回字符的Unicode对象.
+
+UnicodeError是ValueError的子类，全体与Unicode编码/解码有关的异常都是UnicodeError的子类.
+
+

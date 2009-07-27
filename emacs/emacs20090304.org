@@ -1,0 +1,30 @@
+#title 使用ropemacs对python代码进行补全
+
+rope是一个python的重构库。
+
+ropemacs是rope的emacs接口，ropemacs依赖于pymacs。
+
+pymacs是用来连接emacs和python的，有了它就可以在emacs中调用python了。
+
+要用ropemacs在emacs中进行python的补全，先要安装pymacs(当然最先得确保python已经安装上了)，然后顺序安装rope, ropemacs。在.emacs中写下下面代码来设置pymacs：
+
+<example>
+;;; Initialize Pymacs
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+</example>
+
+接下来写入下面代码来设置ropemacs：
+
+<example>
+;;; Initialize Rope
+(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-autoimport t)
+</example>
+
+以后打开.py文件的话，emacs会加入一个rope的菜单。编辑python时按M-/就能显示python的补全了。
+
+ps: 在osx里，emacs启动rope会出错，是因为emacs没有从系统继承PYTHONPATH这个环境变量。所以需要在.emacs的开头用setenv设置一个PYTHONPATH这个环境变量。

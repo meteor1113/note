@@ -1,0 +1,12 @@
+#title imenu不能创建objc的tag的问题
+
+在MacOS X下用emacs编辑Objective-C时发现一个问题：用emacs-app最后发布的版本emacs.app rc3，打开.m文件，在ecb的member buffer可以正常出现objc的函数。但是如果用最新的合并到emacs cvs中的emacs23则不能显示，emacs会报告"invalid-function imenu-progress-message"，在windows上用emacs23也会有这样的问题。
+
+一开始以为是ecb没有正确调用etags产生的，后来仔细检查发现ecb其实调用了etags，但确实没有使用etags产生的tags。不过，产生前面那个错误的原因却并不是etags的，而是imenu的，经过调查，发现是调用imenu-add-member-index函数时产生的错误。继续跟踪下去，原来在cc-menus.el中调用了imenu-progress-message这个宏，但是这个文件中并没有(require 'imenu)，所以编译出来的cc-menus.elc就报告找不到imenu-progress-message。而在emacs.app rc3里面能正常运行是因为它里面带的cc-menus.el比较老，那时候还没有加入调用imenu-progress-message的代码。
+
+知道问题就好解决了，在cc-menus.el中加入(require 'imenu)重新byte-compile一下就可以了。还有一个办法就是把cc-menus.elc删除或改名，因为出错只是因为cc-menus.elc编译时没有指定imenu，删除掉cc-menus.elc之后emacs会转为使用cc-menus.el，我的emacs中已经load完imenu了，所以cc-menus.el就能找到imenu-progress-message并调用了。或者在.emacs显式地load一下cc-menus.el也能解决问题。
+
+20090303追记：
+
+在emacs23.0.90中这个问题已经修正了。
+

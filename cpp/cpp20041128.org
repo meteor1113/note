@@ -1,0 +1,24 @@
+#title boost::utility
+
+boost::utility是一个大杂烩，有很多不好归类的小工具，函数，类等。
+
+1.checked_delete() && checked_array_delete()
+
+在编译器静态地检查即将被delete的指针。比如个只声明但并未用new为其分配空间的指针，如果delete它，编译器一般只会为警告或者根本略过，如果使用这两个函数的话会强制将其作为错误对待。
+
+2.next() & prior()
+
+template <class T> inline T next(T x) { return ++x; }
+
+template <class T> inline T prior(T x) { return --x; }
+
+直接对迭代子使用++或--会导致迭代子本身改变，这两个函数通过拷贝之后再 ++/--。
+
+3.addressof()
+
+addressof支持在类重载了&运算符后，获取类的真实地址。其使用三级强制转换，以忽略重载后& 运算符的影响。
+
+4.class base_from_member
+
+base_from_member类可以提示成员变量的初始化顺序。
+

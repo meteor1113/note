@@ -1,0 +1,39 @@
+#title 设置emacs的编码
+
+** 配置文件
+
+学习emacs，因为苹果上的编码使用unicode，所以配置emacs的编码为gb2312。查资料了解了一些中文编码的知识。
+
+emacs的配置文件:
+
+(set-keyboard-coding-system 'cn-gb-2312)
+
+(set-selection-coding-system 'cn-gb-2312)
+
+(set-terminal-coding-system  'cn-gb-2312)
+
+(set-buffer-file-coding-system 'gb2312)
+
+(setq default-buffer-file-coding-system 'gb2312)
+
+(setq locale-coding-system 'gb2312)
+
+(set-language-environment-coding-systems "chinese-gb"  nil)
+
+#语法加亮
+
+(global-font-lock-mode t)
+
+#自动显示图片
+
+(auto-image-file-mode t)
+
+#可以使用shift和方向键选择
+
+(pc-selection-mode)
+
+** 切换当前buffer的编码
+
+使用c-x RET r，可以改变当前打开文件的编码，这是个很方便的功能，不过有了unicad之后，这个估计就用得少了。
+
+用C-x RET f转换当前文件的编码。

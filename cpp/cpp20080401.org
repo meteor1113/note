@@ -1,0 +1,345 @@
+#title c++标准库总结
+
+** 1.容器
+
+*** 1.1序列
+<example>
+    vector=========================<vector>
+    list===========================<list>
+    deque==========================<deque>
+</example>
+
+*** 1.2序列适配器
+
+<example>
+    stack:top,push,pop=============<stack>
+    queue:front,back,push,pop======<queue>
+    priority_queue:top,push,pop====<queue>
+</example>
+
+*** 1.3关联容器 
+
+<example>
+    map============================<map>
+    multimap=======================<map>
+    set============================<set>
+    multiset=======================<set>
+</example>    
+
+*** 1.4拟容器
+
+<example>
+    string=========================<string>
+    valarray=======================<valarray>
+    bitset=========================<bitset>
+</example>
+
+** 2.算法
+
+*** 2.1非修改性序列操作
+
+<example>
+<algorithm>
+    for_each()=====================对序列中每个元素执行操作
+    find()=========================在序列中找某个值的第一个出现
+    find_if()======================在序列中找符合某谓词的第一个元素
+    find_first_of()================在序列中找另一序列里的值
+    adjust_find()==================找出相邻的一对值
+    count()========================在序列中统计某个值出现的次数
+    count_if()=====================在序列中统计与某谓词匹配的次数
+    mismatch()=====================找使两序列相异的第一个元素
+    equal()========================如果两个序列对应元素都相同则为真
+    search()=======================找出一序列作为子序列的第一个出现位置
+    find_end()=====================找出一序列作为子序列的最后一个出现位置
+    search_n()=====================找出一序列作为子序列的第n个出现位置
+</example>
+
+*** 2.2修改性的序列操作
+
+<example>
+<algorithm>
+    transform()====================将操作应用于序列中的每个元素
+    copy()=========================从序列的第一个元素起进行复制
+    copy_backward()================从序列的最后元素起进行复制
+    swap()=========================交换两个元素
+    iter_swap()====================交换由迭代器所指的两个元素
+    swap_ranges()==================交换两个序列中的元素
+    replace()======================用一个给定值替换一些元素
+    replace_if()===================替换满足谓词的一些元素
+    replace_copy()=================复制序列时用一个给定值替换元素
+    replace_copy_if()==============复制序列时替换满足谓词的元素
+    fill()=========================用一个给定值取代所有元素
+    fill_n()=======================用一个给定值取代前n个元素
+    generate()=====================用一个操作的结果取代所有元素
+    generate_n()===================用一个操作的结果取代前n个元素
+    remove()=======================删除具有给定值的元素
+    remove_if()====================删除满足谓词的元素
+    remove_copy()==================复制序列时删除给定值的元素
+    remove_copy_if()===============复制序列时删除满足谓词的元素
+    unique()=======================删除相邻的重复元素
+    unique_copy()==================复制序列时删除相邻的重复元素
+    reexample()======================反转元素的次序
+    reexample_copy()=================复制序列时反转元素的次序
+    rotate()=======================循环移动元素
+    rotate_copy()==================复制序列时循环移动元素
+    random_shuffle()===============采用均匀分布随机移动元素
+</example>
+
+*** 2.3序列排序
+
+<example>
+<algorithm>
+    sort()=========================以很好的平均次序排序
+    stable_sort()==================排序且维持相同元素原有的顺序
+    partial_sort()=================将序列的前一部分排好序
+    partial_sort_copy()============复制的同时将序列的前一部分排好序
+    nth_element()==================将第n个元素放到它的正确位置
+    lower_bound()==================找到某个值的第一个出现
+    upper_bound()==================找到大于某个值的第一个出现
+    equal_range()==================找出具有给定值的一个子序列
+    binary_search()================在排好序的序列中确定给定元素是否存在
+    merge()========================归并两个排好序的序列
+    inplace_merge()================归并两个接续的排好序的序列
+    partition()====================将满足某谓词的元素都放到前面
+    stable_partition()=============将满足某谓词的元素都放到前面且维持原顺序
+</example>
+
+*** 2.4集合算法
+
+<example>
+<algorithm>
+    include()======================如果一个序列是另一个的子序列则为真
+    set_union()====================构造一个已排序的并集
+    set_intersection()=============构造一个已排序的交集
+    set_difference()===============构造一个已排序序列，包含在第一个序列但不在第二个序列的元素
+    set_symmetric_difference()=====构造一个已排序序列，包括所有只在两个序列之一中的元素
+</example>
+
+*** 2.5 堆操作
+
+<example>
+<algorithm>
+    make_heap()====================将序列高速得能够作为堆使用
+    push_heap()====================向堆中加入一个元素
+    pop_heap()=====================从堆中去除元素
+    sort_heap()====================对堆排序
+</example>
+
+*** 2.6 最大和最小
+
+<example>
+<algorithm>
+    min()==========================两个值中较小的
+    max()==========================两个值中较大的
+    min_element()==================序列中的最小元素
+    max_element()==================序列中的最大元素
+    lexicographic_compare()========两个序列中按字典序的第一个在前
+</example>
+
+*** 2.7排列
+<example>
+<algorithm>
+    next_permutation()=============按字典序的下一个排列
+    prev_permutation()=============按字典序的前一个排列
+</example>
+
+*** 2.8 通用数值算法
+
+<example>
+<numeric>
+    accumulate()===================积累在一个序列中运算的结果(向量的元素求各的推广)
+    inner_product()================积累在两个序列中运算的结果(内积)
+    partial_sum()==================通过在序列上的运算产生序列(增量变化)
+    adjacent_difference()==========通过在序列上的运算产生序列(与partial_sum相反)
+</example>
+
+*** 2.9 C风格算法
+
+<example>
+<cstdlib>
+    qsort()========================快速排序，元素不能有用户定义的构造，拷贝赋值和析构函数
+    bsearch()======================二分法查找，元素不能有用户定义的构造，拷贝赋值和析构函数
+</example>
+
+** 3.函数对象
+
+*** 3.1基类
+
+<example>    
+    template<class Arg, class Res> struct unary_function
+    template<class Arg, class Arg2, class Res> struct binary_function
+</example>   
+
+*** 3.2谓词
+
+    返回bool的函数对象。
+
+<example>
+<functional>
+    equal_to=======================二元，arg1 == arg2
+    not_equal_to===================二元，arg1 != arg2
+    greater========================二元，arg1 > arg2
+    less===========================二元，arg1 < arg2
+    greater_equal==================二元，arg1 >= arg2
+    less_equal=====================二元，arg1 <= arg2
+    logical_and====================二元，arg1 && arg2
+    logical_or=====================二元，arg1 || arg2
+    logical_not====================一元，!arg
+</example> 
+
+*** 3.3算术函数对象
+
+<example>
+<functional>
+    plus===========================二元，arg1 + arg2
+    minus==========================二元，arg1 - arg2
+    multiplies=====================二元，arg1 * arg2
+    divides========================二元，arg1 / arg2
+    modulus========================二元，arg1 % arg2
+    negate=========================一元，-arg
+</example>
+
+*** 3.4约束器，适配器和否定器
+
+<example>
+<functional>
+    bind2nd(y)
+        binder2nd==================以y作为第二个参数调用二元函数
+    bind1st(x)
+        binder1st==================以x作为第一个参数调用二元函数
+    mem_fun()
+        mem_fun_t==================通过指针调用0元成员函数
+        mem_fun1_t=================通过指针调用一元成员函数
+        const_mem_fun_t============通过指针调用0元const成员函数
+        const_mem_fun1_t===========通过指针调用一元const成员函数
+    mem_fun_ref()
+        mem_fun_ref_t==============通过引用调用0元成员函数
+        mem_fun1_ref_t=============通过引用调用一元成员函数
+        const_mem_fun_ref_t========通过引用调用0元const成员函数
+        const_mem_fun1_ref_t=======通过引用调用一元const成员函数
+    ptr_fun()
+        pointer_to_unary_function==调用一元函数指针
+    ptr_fun()
+        pointer_to_binary_function=调用二元函数指针
+    not1()
+        unary_negate===============否定一元谓词
+    not2()
+        binary_negate==============否定二元谓词
+</example>
+
+** 4.迭代器
+
+*** 4.1分类
+
+<example>
+    Output: *p= , ++
+    Input: =*p , -> , ++ , == , !=
+    Forward: *p= , =*p , -> , ++ , == , != 
+    Bidirectional: *p= , =*p -> , [] , ++ , -- , == , !=
+    Random: += , -= , *p= , =*p -> , [] , ++ , -- , + , - , == , != , < , > , <= , >=
+</example>
+
+*** 4.2插入器
+
+<example>
+    template<class Cont> back_insert_iterator<Cont> back_inserter(Cont& c);
+    template<class Cont> front_insert_iterator<Cont> front_inserter(Cont& c);
+    template<class Cont, class Out> insert_iterator<Cont> back_inserter(Cont& c, Out p);
+</example>
+
+*** 4.3反向迭代器
+
+<example>
+    reexample_iterator===============rbegin(), rend()
+</example>
+
+*** 4.4流迭代器
+
+<example>
+    ostream_iterator===============用于向ostream写入
+    istream_iterator===============用于向istream读出
+    ostreambuf_iterator============用于向流缓冲区写入
+    istreambuf_iterator============用于向流缓冲区读出
+</example>
+
+** 5.分配器
+
+<example>
+<memory>
+    template<class T> class std::allocator
+</example>
+
+** 6.数值
+
+*** 6.1数值的限制
+
+<example>
+<limits>
+    numeric_limits<>
+<climits>
+    CHAR_BIT
+    INT_MAX
+    ...
+<cfloat>
+    DBL_MIN_EXP
+    FLT_RADIX
+    LDBL_MAX
+    ...
+</example>
+
+*** 6.2标准数学函数
+
+<example>
+<cmath>
+    double abs(double)=============绝对值(不在C中)，同fabs()
+    double fabs(double)============绝对值
+    double ceil(double d)==========不小于d的最小整数
+    double floor(double d)=========不大于d的最大整数
+    double sqrt(double d)==========d在平方根，d必须非负 
+    double pow(double d, double e)=d的e次幂
+    double pow(double d, int i)====d的i次幂
+    double cos(double)=============余弦
+    double sin(double)=============正弦
+    double tan(double)=============正切
+    double acos(double)============反余弦
+    double asin(double)============反正弦
+    double atan(double)============反正切
+    double atan2(double x,double y) //atan(x/y)
+    double sinh(double)============双曲正弦
+    double cosh(double)============双曲余弦
+    double tanh(double)============双曲正切
+    double exp(double)=============指数，以e为底
+    double log(double d)===========自动对数(以e为底),d必须大于0
+    double log10(double d)=========10底对数，d必须大于0
+    double modf(double d,double*p)=返回d的小数部分，整数部分存入*p
+    double frexp(double d, int* p)=找出[0.5,1)中的x,y,使d=x*pow(2,y),返回x并将y存入*p
+    double fmod(double d,double m)=浮点数余数，符号与d相同
+    double ldexp(double d, int i)==d*pow(2,i)
+<cstdlib>
+    int abs(int)===================绝对值
+    long abs(long)=================绝对值(不在C中)
+    long labs(long)================绝对值
+    struct div_t { implementation_defined quot, rem; }
+    struct ldiv_t { implementation_defined quot, rem; }
+    div_t div(int n, int d)========用d除n，返回(商，余数)
+    ldiv_t div(long n, long d)=====用d除n，返回(商，余数)(不在C中)
+    ldiv_t ldiv(long n, long d)====用d除n，返回(商，余数)
+</example>
+
+*** 6.3向量算术
+
+<example>
+<valarray>
+    valarray
+</example>
+
+*** 6.4复数算术
+
+<example>
+<complex>
+    template<class T> class std::complex;
+</example>
+
+*** 6.5通用数值算法
+
+    见2.8

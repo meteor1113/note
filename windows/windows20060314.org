@@ -1,0 +1,5 @@
+#title windows内核对象名字空间
+
+Windows的内核对象, 包括events, semaphores, mutexes, waitable timers, file-mapping objects, and job objects. 这些对象都有名字空间的, 默认情况下名字可以在多个进程之间共享, 但是如果在终端服务中, 是无法看到console上的名字的. 要想在终端服务和console之间共享内核对象, 就必须在名字上加上"Golbal\"前缀, 加上这个就表示全局名字空间.
+
+这个规定......实在是恶心.

@@ -1,0 +1,60 @@
+#title 类
+
+** 类中重载操作符：
+
+<example>
+__init__       构造函数          创建对象Class()
+__del__        析构函数          释放对象的时候
+__add__        "+"              X + y
+__or__         '|'(按位或)       X | y
+__repr__       打印，转换         print x, 'X'
+__call__       函数调用          X()
+__getattr__    属性引用          X.undefined
+__getitem__    索引             x[key],for循环，in测试
+__setitem__    按索引赋值        x[key] = value
+__getslice__   分片             x[low:high]
+__len__        长度             len(x)
+__cmp__        比较             x == y, x < y
+__radd__       右边的操作符'+'   Noninstance(非实例) + x
+</example>
+
+** 类的序列化
+
+用pickle或shelve模块，可以把类的实例存储到磁盘上，还可以从磁盘上恢复类的实例。
+
+pickle很容易使用：
+
+<example>
+import pickle
+object = SomeClass()
+file = open(filename, "w")
+pickle.dump(object, file)          #保存对象
+
+file = open(filename, "r")
+object = pickle.load(file)         #恢复对象
+</example>
+
+shelve和pickle类似，但是它把对象存到按键访问的数据库里：
+
+<example>
+import shelve
+object = SomeClass()
+dbase = shelve.open(filename)
+dbase['key'] = object               #存入
+object = dbase['key']               #取回
+</example>
+
+另外，还有一个cPickle的模块，是使用c语言实现的同pickle的功能，它的接口和pickle一致，但是效果高很多。
+
+** 类方法，实例方法，类成员变量，静态类成员变量
+
+可以理解为python没有类方法，只有实例方法。也就是说python类里的方法第一个参数必须是self，它没有像c++那样的静态类方法。
+
+类成员变量(实例属性)通过实例名.变量名引用，静态类成员变量(类属性)通过类名.变量名引用。
+
+<example>
+class SomeClass:
+    def foo(self):
+        self.a = 1
+        SomeClass.b = 2
+</example>

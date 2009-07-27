@@ -1,0 +1,65 @@
+#title 关于临时对象的引用
+
+根据C++标准，如果const的引用被初始化为对一个临时变量的引用，那么它会使这个临时变量的生命期变得和它自己一样。
+
+<example>
+class Ref
+{
+public:
+    Ref() {cout << "Ref()" << endl;}
+    virtual ~Ref() {cout << "~Ref()" << endl;}
+};
+Ref GetRef()
+{
+    Ref r;
+    return r;
+}
+int main()
+{
+    const Ref& ref = GetRef();
+    std::cout << "ok" << std::endl;
+}
+</example>
+
+对于上面的代码，根据标准，const的引用ref被初始化为GetRef()函数中创建的对象r，所以r的生命期会变得和ref一样，也就是到main()函数执行完才会被析构。那么上面代码的输出应该是：
+
+<example>
+Ref()
+ok
+~Ref()
+</example>
+
+在gcc上，确实是这样输出的，说明gcc是符合标准的。但是在vc++2005上，输出变成了：
+
+<example>
+Ref()
+~Ref()
+ok
+</example>
+
+这只能说明vc++2005在这一点上是不符合标准的。
+
+并且，如果把上面的main()函数体改为：
+
+<example>
+int main()
+{
+    Ref& ref = GetRef();
+    std::cout << "ok" << std::endl;
+}
+</example>
+
+这段代码在gcc上编译会报错，因为不能把非const引用初始化为一个临时对象。但是同样的这段代码，在vc++2005上编译，没有错误，甚至连警告都没有，运行的结果和加上const一模一样。
+
+后记：
+
+把GetRef()函数改为下面的形式：
+
+<example>
+Ref GetRef()
+{
+    return Ref();
+}
+</example>
+
+vc++2005也能得出正确的结果了，看来对于临时对象的理解，各个编译器间还有区别。

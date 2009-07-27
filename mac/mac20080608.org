@@ -1,0 +1,28 @@
+#title cocoa的KVO以及loadNib
+
+* KVO:
+
+KVO(Key Value Coding)是cocoa中用来设值或取值的协议(NSKeyValueCoding)，跟java的ejb有点类似。都是通过对变量和函数名进行规范达到方便设置类成员值的目的。
+
+具体的说，NSKeyValueCoding规定了很多函数，其中最常用的是setValue:forKey:和valueForKey:，默认的实现中，对一个类调用setValue:forKey:的话，会(以setValue:v forKey:@"name")：
+
+1,看这个类中是否有叫setName的方法，如果有就用setName:v调用它。
+
+2,如果没有setName，就查找类中是否有name这个成员变量，如果有就把name成员设置为v。（如果没有name, 有_name, _isName或isName也行）
+
+3,如果1,2都不存在，则调用setValue:forUndefinedKey:方法。
+
+valueForKey与上面的过程类似，只不过不是设值而是取值。
+
+通过上面可以看出，KVO其实就是定义了一套命名方法用来对类成员变量进行取值和设值，而且它的命名规范跟cocoa常用的命名是一样的（取值函数跟成员同名，设值函数在成员名前加set，并且把成员的第一个字母大写）。在objc2.0中，可以通过@property让编译器自动生成这两个函数。
+
+
+* loadNib:
+
+在iphone或osx中(cocoa)，loadNib会使用KVO来设置Controller的Outlet，不过iphone和osx中有一些区别：
+
+1,osx里使用NSBundle的loadNibNamed方法会load一个nib文件中所有的东西，把里面的top-level对象的retain count设为1，如果有Outlet指向它，则用KVO来设置Outlet。也就是说如果Outlet的类没有setter方法，则load完成后Outlet已经指向一个retain count为1的对象，我们用完之后需要release这个对象。如果我们写了setter方法来retain这个对象（或者使用ratin属性的@property），则这个对象的retain count会变为2,我们需要release两次。
+
+2,iphone里NSBundle的loadNibNamed方法load一个nib文件后，虽然也会把top-level对象的retain count设为1,但是之后马上会调用autorelease，然后使用KVO来设置Outlet。也就是说如果Outlet的类没有setter方法，那么load完成后，Outlet会指向一个已经被release的对象，那么在iphone中，我们需要写setter方法（或者用retain属性的@property）来retain top-level对象，这时候对象的retain count是1,用完了只需要release一次就够了。
+
+apple的文档(Resource Programming Guide, p19)上说，建议osx和iphone都使用setter方法，当然iphone上是必须使用setter（最好用@property代替）。不过我觉得osx上似乎没有这个必要，否则retain count就变为2了（难道load完后马上先release一遍top-level对象？有点麻烦吧）。

@@ -1,0 +1,37 @@
+#title 杂项
+
+----
+
+[[./cvs20041103.html][cvs20041103]] cvs学习
+
+[[./apache20041105.html][apache20041105]] 配置apache2使用能访问用户目录
+
+[[./squid20041105.html][squid20041105]] 配置squid使支持匿名访问
+
+[[./regexp20041125.html][regexp20041125]] 正则表达式
+
+[[./doxygen20041130.html][doxygen20041130]] 用doxygen为程序生成文档
+
+[[./wxwidget20050914.html][wxwidget20050914]] 用MinGW编译wxWidget静态库的问题
+
+[[./getopt20080411.html][getopt20080411]] 用getopt处理命令行参数
+
+[[./db20080417.html][db20080417]] sqlite3, access, sqlserver2000的编码设置
+
+[[./tex20080428.html][tex20080428]] tex入门
+
+[[./unicode20080429.html][unicode20080429]] 编码知识小结
+
+[[./vim20080902.html][vim20080902]] 用vim作IDE
+
+[[./virtual20081220.html][virtual20081220]] 虚拟化技术分类
+
+[[./automake20081222.html][automake20081222]] automake备忘
+
+[[./commoncmd20081222.html][commoncmd20081222]] 常用命令惯用法
+
+[[./dvcs20090406.html][dvcs20090406]] 几个分布式vcs比较
+
+----
+updated: <lisp>(current-time-string)</lisp>
+

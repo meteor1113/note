@@ -1,0 +1,19 @@
+#title boost:is_convertable
+
+boost::is_convertable是boost::type_traits是一部分，用来判断两个类型之间是否可以转换。
+
+用法:
+
+<example>
+if (is_convertable<A, B>::value) 
+{
+    std::cout << "Conversion from A to B is possiable" << std::endl;
+}
+else
+{
+    std::cout << "Conversion from A to B is impossiable" << std::endl;
+}
+</example>
+
+实现没看明白。
+

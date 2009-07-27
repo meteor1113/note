@@ -1,0 +1,15 @@
+#title 常用命令惯用法
+
+* grep:
+
+grep -r -n -i 'findstr' .
+
+在目录.（当前目录）的文件中查找字符串findstr。-r表示递归查找，也就是说还包括所有子目录；-n表示在结果中显示行号；-i表示忽略大小写查找。
+
+* find:
+
+find . -type f -maxdepth 1 -name "*.[hHcCmM]" -o -name "*.[hHcC][pP][pP]"
+
+在目录.（当前目录）中查找扩展名为h/c/m/hpp/cpp的文件(不区别大小写)。-type f表示查找的类型文件(另外还可以使用b(块设备),c(字符设备),d(目录),l(符号链接),p(管道文件),s(socket))；-maxdepth 1表示查找的子目录最大深度为1层（另外还可以用mindepth指定最小深度）；-name表示按文件名查找（-name的参数可以出现"[","]","*","?"）；-o表示追加一个新的条件，与别的条件的关系是||(还可以使用-a，它表示&&的关系)；
+
+除了通过-name(文件名）进行查找外，find还可以通过下面些类型查找：-perm(文件权限),-user(文件的owner),-group(所属的组),-nogroup(不属于任何组),-nouser(没有有效owner),-size(文件长度)等。

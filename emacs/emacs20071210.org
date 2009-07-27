@@ -1,0 +1,17 @@
+#title 我使用的几个emacs扩展
+
+学习了很多年的emacs，却一直都不能熟练使用，可能有工作太忙的原因，不过最大的原因还是没有坚持。最近几天不忙了，又把emacs捡了起来，希望能坚持下去吧。
+
+这一次直接使用了emacs23，是一个正在开发中的版本，不过因为对国际化支持得好了，我仍然选择了使用它。这个版本不用再像emacs21那样自己安装mule了，而且在日文平台上也不用写一堆配置文件了。
+
+目前我在win32和linux平台下除了emacs自带的lisp之外还使用了另外几个扩展：muse、cedet、ecb、cscope等。
+
+muse是用来写日记的，也就是以前的emacs-wiki，现在这个文章就是用muse写的。muse的用法很简单，直接把下载的muse解压到site-lisp里，打开emacs后load-library muse-mode和muse-html就可以了。前者是用来加载muse模式用的，只要加载了muse-mode，就可以在任何时候执行muse-mode切换到muse模式进行编辑，如果一个文件的扩展名是muse，那么打开这个文件的时候还会自动切换到muse模式下。而muse-html是用来发布用的，它支持html,xhtml,xhtml1.0,xhtml1.1这几种方式，只要在muse模式下用C-c C-t(muse-project-publish-this-file)或者C-c C-T(muse-publish-this-file)就可以发布当前文件了。另外，还有muse-latex,muse-texinfo,muse-docbook等可以用来支持发布不同的格式。
+
+cedet，用来进行代码补全，它的semantic是基于语法分析的，代码补全很智能，而且还有菜单，很好用。
+
+ecb是用来读c/c++代码用的，它把emacs装扮得像一个IDE了。
+
+cscope是用来替代（也不完全是替代，目前我是把cscope和etags结合起来使用的）etags的，用来查找c/c++代码中的符号。cscope比etags的查找功能更强，不过我喜欢etags的alt+.的简洁用法，所以把etags也留下来了。
+
+装扩展的方法很简单，直接从网上下载代码，解压到site-lisp目录下，在.emacs中require需要的扩展就可以了。如果像我这么懒的话，连.emacs都可以不用，直接打开emacs，然后运行load-library命令载入就可以了。

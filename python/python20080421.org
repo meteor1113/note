@@ -1,0 +1,69 @@
+#title python的内置工具
+
+** 内置函数
+
+<example>
+str(string)                   返回对象的字符串表示
+list(seq)
+tuple(seq)
+int(x)                        把字符串或数字转换为整数
+long(x)
+float(x)
+Complex(real, image)
+hex(i)
+oct(i)
+ord(c)                        返回单个字符的ascii值
+chr(i)                        返回ascii值为i的字符
+min(i[, i]*)
+max(i[, i]*)
+</example>
+
+** 属性操作函数
+
+四个内置函数分别对一个名字空间里的属性做如下操作：是否存在，取值，设值，删除。可用于模块，类和实例。
+
+<example>
+hasattr                       有属性则返回1，否则0
+getattr
+setattr
+delattr
+</example>
+
+** 执行程序
+
+<example>
+import
+exec code [in globaldict[, localdict]]
+compile(string, filename, kind)
+execfile(filename[, globaldict[, localdict]])
+eval(code[, globaldict[, localdict]])
+</example>
+
+** 库模块
+
+*** 基本字符串操作：str模块
+
+*** 高级的字符串操作：re模块(正则表达式)
+
+*** 通用的操作系统接口：os模块
+
+*** 拷贝文件和目录：shutil模块
+
+*** Internat相关模块：
+
+<example>
+公共网关接口：cgi模块
+操作URL: urllib和urlparse模块
+特殊的internet协议：httplib, ftplib, gopherlib, poplib, imaplib, nntplib, smtplib
+处理internat文件的模块：sgmllib, htmllib, xmllib, formatter, rfc822, mimetools, binhex, uu, binascii, xdrllib, mimetypes, base64, quopri, mailbox, mimify
+</example>
+
+*** 处理二进制数据：struct模块
+
+*** 调试，时间和优化：pdb, time, profile
+
+*** 拷贝：copy模块
+
+*** 随机：random模块
+
+

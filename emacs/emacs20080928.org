@@ -1,0 +1,85 @@
+#title emacs使用semantic
+
+一直以为配置semantic都不成功，昨天参考了smth一个人的配置文件，终于成功了。
+
+安装ecb的时候已经安装好semantic了，然后只需要在.emacs文件中加入以下三行就可以了。
+
+<example>
+(require 'cedet)
+(semantic-load-enable-code-helpers)
+(global-set-key [(control tab)] 'semantic-ia-complete-symbol-menu)
+</example>
+
+之后用emacs随便打开一个c/c++文件，就可以在时而用ctrl+tab弹出自动补全的提示菜单了。semantic会parse当前所有include的文件，然后进行智能提示。
+
+这个配置太简单了，下面用一个稍稍复杂点的配置文件说说它的配置过程：
+
+<example>
+(require 'cedet)
+
+;; Enabling Semantic (code-parsing, smart completion) feature, Select one of the following:
+;; (semantic-load-enable-minimum-features)
+(semantic-load-enable-code-helpers)
+;; (semantic-load-enable-guady-code-helpers)
+;; (semantic-load-enable-excessive-code-helpers)
+;; (semantic-load-enable-semantic-debugging-helpers)
+
+;; (global-set-key [(control tab)] 'senator-complete-symbol);
+;; (global-set-key [(control tab)] 'senator-completion-menu-popup) ;; use C-c , SPC instead
+;; (global-set-key [(control tab)] 'semantic-ia-complete-symbol)
+(global-set-key [(control tab)] 'semantic-ia-complete-symbol-menu)
+
+;; 配置Semantic的检索范围:
+;; (setq semanticdb-project-roots
+;;      (list
+;;       (expand-file-name "/")))
+
+;; 设置semantic cache临时文件的路径，避免到处都是临时文件
+;; (setq semanticdb-default-save-directory "~/.emacs.d/")
+
+;; C/C++语言启动时自动加载semantic对/usr/include的索引数据库
+;; (setq semanticdb-search-system-databases t)
+;; (add-hook 'c-mode-common-hook
+;;           (lambda ()
+;;             (setq semanticdb-project-system-databases
+;;                   (list (semanticdb-create-database
+;; 			 semanticdb-new-database-class
+;; 			 "/usr/include")))))
+</example>
+
+(require 'cedet)当然是用来加载cedet扩展的，cedet里包含了semantic和一些其它扩展
+
+semantic-load-enable-code-helpers用来设置semantic分析文件的程度，一共有5级，从上到下越来越复杂。semantic-load-enable-minimum-features是最低要求；semantic-load-enable-code-helpers稍复杂一点，主要是加了一个imenu菜单(不过这个菜单在windows和mac上都显示不出来)；semantic-load-enable-guady-code-helpers加入了一些用处不大的功能，比如在第一行显示当前的函数等（这个命令已经不建议使用了）；semantic-load-enable-excessive-code-helpers加了在mode line显示当前函数名的功能，也没多大用；semantic-load-enable-semantic-debugging-helpers用于调试semantic本身。所以一般我们用semantic-load-enable-code-helpers就可以了。
+
+(global-set-key [(control tab)] 'semantic-ia-complete-symbol-menu)用来设置快捷键。因为semantic没有设置默认的热键，所以我把它绑定到ctrl+tab上去。这儿有4种补全选择：senator-complete-symbol是调用senator的分析结果直接补全，不弹出菜单；senator-completion-menu-popup也是调用senator，不过会弹一个选择菜单；semantic-ia-complete-symbol是调用semantic的分析结果智能补全，不弹出菜单；semantic-ia-complete-symbol-menu也是调用semantic的结果，不过会弹出一个选择菜单。因为semantic的分析结果更智能，所以一般都用semantic-ia-complete-symbol-menu。
+
+用semanticdb-project-roots来配置semantic的检索范围，最简单的方式在linux下直接配置为/根目录。不过我发现不配置它也可以用，可能semantic默认设置为/了。
+
+(setq semanticdb-default-save-directory "~/.emacs.d/")设置cache文件的保存位置，不设的话默认是在被分析文件的目录下，每个目录一个。
+
+最后一段让semantic自动加载对c/c++标准库的parse结果，不过我试用的结果效果不很理想。
+
+所以我一般只用最前面那三句就能让semantic很好工作了。
+
+我是个懒人，不喜欢往.emacs里写东西，所以前面那三行也可以不写在.emacs里，而在emacs启动完之后，依次运行以下命令也有同样的效果：
+
+<example>
+load-library <RET> cedet
+semantic-load-enable-code-helpers
+global-set-key <RET> <control tab> semantic-ia-complete-symbol-menu
+</example>
+
+2009-03-03：
+
+1. semantic-ia-fast-jump(好像是从cedet1.0pre5才加入的)可以实现类似vs中f12的功能，跳转到光标所在的地方的符号的定义，我把它绑定到f12上了。
+
+2.cedet-contrib里有个eassist.el，可以很方便地在c++的h/cpp文件间切换，具体命令是eassist-switch-h-cpp，可以把它绑定到某个键上(我用的f11)。
+
+3.semantic默认只搜索当前路径，好像还有系统路径/usr/include。对于windows，可以用下面命令：
+
+<example>
+(semantic-add-system-include "C:/MinGW/include/c++/3.4.5" 'c++-mode)
+(semantic-add-system-include "C:/Program Files/Microsoft Visual Studio 9.0/VC/atlmfc/include" 'c++-mode)
+</example>
+
+把mingw或者vc的头文件路径加进去，这样，就可以用semantic对mfc类进行补全了。

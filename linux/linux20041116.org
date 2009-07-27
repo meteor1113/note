@@ -1,0 +1,40 @@
+#title debian安装小结
+    
+1.安装基本系统，从 http://cdimage.debian.org/pub/ 下载testing的网络安装光盘刻盘安装。
+
+2.装完基本系统后设置sources.list为dlut:
+
+deb http://mirror.dlut.edu.cn/debian unstable main non-free contrib
+
+deb http://mirror.dlut.edu.cn/debian-non-US unstable/non-US main non-free contrib
+
+deb ftp://ftp.nerim.net/debian-marillat unstable main
+
+另外还有几个非官方的源可以从前面找到，然后从网络升级系统:apt-get update;apt-get dist-upgrade。
+
+3.升级完系统后设置一下命令行界面，把/boot/grub/menu.lst里的kernel那行加上vga=791，使字符界面能使用1028*768*16的分辨率。
+
+4.安装一下locales,apt-get install locale选中zh_CN.GB2312，使能支持中文，再apt-get install zhcon，这样就可以在console下使用中文了。
+
+5.安装X,apt-get install x-window-system-core，按自己的需要选择，acer77g的水平和垂直扫描分别设置为30-72和50-120，分辨率1024*768,色深24位，现在可以暂时使用vesa或者nv的驱动。现在还没有桌面，可以apt-get install fvwm安装fvwm的桌面管理器，然后去fvwm-themes.sf.net下载一个fvwm-themes，里面有配置好的fvwm主题，就不用自己去挨个配置了。
+
+6.安装nvidia的驱动，先apt-get install nvidia-glx,apt-get install modules-assistant,然后m-a按提示下载一些头文件和源文件编译安装nvidia的驱动。安装完后dpkg-reconfigure xserver-xfree86重新设置一下，把驱动选为nvidia，再用startx启动就可以看到nvidia的logo了，而且桌面的刷新率也已经上到85了。
+
+7.安装中文输入法，apt-get install fcitx，然后在当前目录下建立一个.xinitrc的文件，写入
+
+<example>
+    export LC_CTYPE=zh_CN.GB2312
+    export XMODIFIERS="@im=fcitx"
+    fcitx &
+    fvwm-themes-start
+</example>
+
+这样就可以在英文界面下使用fcitx输入中文了。
+
+8.安装mplayer(从ftp://ftp.nerim.net/debian-marillat 这个源)，直接apt-get install mplayer-586 w32codecs mplayer-fonts就可以安装，并且它自动地把codec安装了，还自带一个skin。现在就可以用mplayer放电影了。
+
+9.安装其它软件，比如zgv,w3m,gcc,g++,emacs,emacs-wiki,ecb,gaim,stardict,lftp,ssh,bittornado,mozilla-firefox,mozilla-thunderbird,gqview,rxvt-ml,samba,zip,upzip,rar,mp3blaster,cvs,beep-media-player等，直接apt-get就可以了。注意安装stardict之后还需要安装stardict的辞典。
+
+10.安装tex,只需要apt-get install tetex-base tetex-bin tetex-extra就可以了，要使用中文的话还需要apt-get install cjk-latex tfm-arphic-g* tfm-arphic-b*，里面带了song和kai两套开源的中文字体，不过只能使用GB码，要想使用GBK还需要另外的配置。想要使用dvipdfmx生成可以支持复制的pdf文件,还需要安装dvipdfmx,和xpdf xpdf-chinese-simplified,xpdf-chinese-simplified里有dvipdfmx生成中文pdf文档需要的字体文件.
+
+11.安装flashplug，apt-get install flashplugin-nonfree就可以了。

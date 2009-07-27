@@ -1,0 +1,34 @@
+#title debian的几个sources.list源
+
+http://mirror.dlut.edu.cn/ 大连理工大学
+
+系统安装光盘下载站点
+
+http://mirrors.geekbone.org/debian-cd/
+
+ftp://ftp.uninett.no/pub/linux/debian-iso/images/current/
+
+
+几个非官方的apt source:
+
+1.realplayer,mplayer,acroreader,w32codecs,etc
+
+deb ftp://ftp.nerim.net/debian-marillat/ unstable main
+
+deb-src ftp://ftp.nerim.net/debian-marillat/ unstable main
+
+2.blackdown java
+
+deb ftp://metalab.unc.edu/pub/linux/devel/lang/java/blackdown.org/debian unstable main non-free
+
+3.USTC的Unofficial Source
+
+deb ftp://debian.ustc.edu.cn/debian-uo sid marillat rareware ustc java misc jrfonseca firefly
+
+deb-src ftp://debian.ustc.edu.cn/debian-uo sid marillat rareware ustc java misc jrfonseca firefly
+
+4.rarewares.org -- lots of audio software
+
+deb http://www.rarewares.org/debian/packages/unstable ./
+
+非官方APT source总索引： www.apt-get.org

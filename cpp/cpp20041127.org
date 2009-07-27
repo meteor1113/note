@@ -1,0 +1,10 @@
+#title boost::random
+
+boost随机数。直接包含random.hpp就可以使用。
+
+要声明一个generator来产生随机数，比如boost::hellekalek1995 generator(13);boost::hellekalek1995是一个随机数产生器，13是个随机数种子。
+
+然后声明一个随机数分布(uniform random number distribution)来产生随机数.比如boost::uniform_smallint<boost::hellekalek1995> die_gen(generator,1, 6)
+
+然后就可以不停的读取die_gen, 比如std::cout << dir_gen() << std::endl;
+

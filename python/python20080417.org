@@ -1,0 +1,30 @@
+#title import
+
+import module 导入了一个模块
+
+from module import mark 实际上是建立了这个标识符的一个副本
+
+所以，reload(module)会影响import导入的模块，因为它们指向同一个地方，但是不会影响到from语句建立的名字，因为from建立的是副本。
+
+import..., from...import..., reload()都会使导入的模块顺序执行。
+
+import...和from...import...是可执行的语句而不是声明，它们是在执行到这条语句的时候才导入的。所以，也可以在函数或类中使用import...和from...import...，不过这样导入的名字限制在了函数或类本身的名字空间里。
+
+在import...或from...import...中的模块名是一个硬编码的变量名。如果想通过一个字符串导入一个模块，有两种办法：exec和__import__：
+
+exec语句编译一个代码字符串，并传递给python执行：如
+
+<verse>
+name = "string"
+exec "import " + name
+</verse>
+
+__import__函数载入参数指定的模块并返回模块对象，用法如下：
+
+<verse>
+name = "string"
+string = __import__(name)
+</verse>
+
+reload没有传递性，如果一个模块a中import了b，在我们的代码中，先import了a，因为import时会执行模块a的代码，所以它会导入b。但是我们用reload(a)重新载入a时，并不会自动import b。
+

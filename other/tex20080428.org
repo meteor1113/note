@@ -1,0 +1,129 @@
+#title tex入门
+
+** tex
+
+latex中空格和制表符等空白字符视为相同的空白距离，多个视为一个。
+
+latex使用空行来结束段落，多个空行视为一个空行。
+
+# $ % ^ & _ { } ~ 是特殊字符，要加反斜线才能得到。
+
+tex命令两个形式：１由反斜线加字母字符命令行组成，２是由反斜线加特殊字符组成，参数使用{}括起来，还可以用[]加入一些可选项
+
+注释使用%
+
+tex文件的结构:
+
+以\documentclass{...}开始，它指明文档的类别
+
+\usepackage{...}调入一些宏集
+
+\begin{document}开始文档
+
+\end{document}结束文档，在begin和end间写正文            
+
+设定文档类型\document[options]{class}中class指明在创建的文档类型，如article科技期刑，程序文档，报告等，report长报告，论文等，book书籍,slides幻灯片。options可以设置一些选项，比如纸张，字体等。如\documentclass[11pt,twoside,a4paper]{article}这个命令设定使用11pt的字，双面格式，a4纸。
+
+使用宏包\usepackage[options]{package}
+
+各类latex文件：
+
+<example>
+    tex:tex或latex的源文件
+    sty:latex宏包
+    dtx:文档化tex文件,latex发布宏包的主要格式
+    ins:相应dtx的安装文件
+    dvi:设备无关文件
+    log:log文件
+    toc:存储章节标题，用来生成目录
+    lof:类似toc,可生成图形目录
+    lot:类似toc,可生成表格目录
+    aux:用来传递下次编译信息的辅助文件
+    idx:包含索引,需用makindex处理
+    ind:经过处理的idx文件，可以下次编译时加入文档中
+    ilg:运行makeindex生成的记录文件
+</example>
+
+随latex发布的一些宏包：
+
+<example>
+    normalfontdoc:排版latex程序文档
+    exscale:提供可缩放版本的数字字体扩展
+    normalfontfontenc:声明latex使用的字体编码
+    ifthen:提示"if...then do...otherwise do..."
+    latexsym:调入此宏包可在文档中使用latex符号
+    makeidx:提供生成索引的命令
+    syntonly:仅处理文档，不对其排版
+    inputenc:允许声明ascii,iso latin-1,ios latin-2,437/850ibm编码页,apple macintosh,next,ansi-windows或自 输入编码
+</example>
+
+\\或者\newline断行
+
+\\*强行断行并禁止分页
+
+\newpage另起一新页
+
+\mbox{text}把几个单词放在同一行上
+
+\fbox和\mbox类似，同时fbox会围绕内容画一个框
+
+特殊命令：
+
+<example>
+    \today
+    \TeX
+    \LaTeX
+    \LaTeXe
+</example>
+
+tex中，用两个'产生左引号，两个'产生右引号，一个'和'产生单引号
+
+\ldots省略号
+
+分节命令
+
+<example>
+    \section{...}
+    \subsection[...}
+    \subsubsection{...}
+    \paragraph{...}
+    \subparagraph{...}
+</example>
+
+对report和book还有\part{...}和\chapter{...}用于分节
+
+\appendix不带参量，把章的诒改为字母标记
+
+\tableofcontents 在出现的位置插入目录
+
+\underlint{text}加下划线
+
+\emph{text}斜体
+
+\begin{environment}text\end{environment}定义环境，环境可以嵌套
+
+itemize环境用于简单列表，enumerate环境用于带序号的列表，description环境用于带描述的列表
+
+flushleft和flushright产生靠左和靠右排列的段落，center产生居中的文本。
+
+quote环境产生例子的引用，quotation环境用于超过几段的较长引用，verse环境用于诗歌。
+
+位于\begin{verbatim}和\eng{verbatim}之间的文本将直接打印，包括断行和空白，不执行任何LaTeX命令。
+
+tabular环境用来生成表格，LaTeX自动确定每一列的宽度，\begin{tabular}{table spec}的table spec定义了表格的样式，用一个l产生左对齐的列，用一个r产生右对齐，用c产生居中，用p{width}产生相应宽度包含自动断行文本的列，|产生铅直表线。在tabular环境中，用&跳入下一列，用\\开始新的行，用\hline插入水平表线，用\cline{j-i}添加部分表线，其中j和i表示表线的起始列和终止列的序号。
+
+包围于环境figure或table中的内容被，视为浮动内容。
+
+** 配置debian下的latex
+
+debian下默认的latex已经可以支持中文了，apt-get install tetex-base tetex-bin tetex-extra texmf-zh，这个命令会装上tetex。apt-get install cjk-latex，这个命令安装CJK4.5.1。apt-get install dvipdfm-cjk-cmap，这个命令会安装adobe的几种中文字体。apt-get install tfm-aprhic*这个命令会装上中文字库。apt-get install gbkfonts，这个命令会装一个转换字体的工具，在下面安装gbk的时候会需要。现在latex已经可以处理中文gb码了，并且有了两种字体可以用。不过因为debian里的CJK4.5.1不支持gbk，所以要想处理gbk的话就需要另外配置了。
+
+下面我们要配置latex使支持gbk，为了让gbk和原有的latex不干扰，将gbk配置在用户目录下，在用户目录下建立texmf目录，将windos下的simsun.ttf拷贝到texmf的fonts/truetype目录下，在texmf下执行gbkfonts fonts/truetype/simsun.ttf song，这样就生成了我们需要用的宋体字库。同样可以生成其它字体的字库。为让dvips使用cjk，需要把生成的cjk.map移动到dvips目录下，并编辑dvips/config/config.ps文件（如果没有就从/usr/share/texmf/dvips/config下拷一个）,在最后一行加入"p +cjk.map"。为让pdflatex使用cjk，需要将生成的gdbsong.map文件拷贝到pdftex/config下，并编辑pdftex/config/pdftex.cfg文件（若没有就从/usr/share/texmf/pdftex/config下拷一个），在末尾加上"map +gbksong.map"，若有多种字体也同样加。为让dvipdfm-CJK使用cjk，需要将生成的cid-x.map拷贝到dvipdfm/config下，并编辑dvipdfm/config/config（若没有就从/usr/share/texmf/dvipdfm/config下拷），在末尾加上"f cid-x.map"。从http://cjk.ffii.org/ 上下载CJK4.5.2，解后将整个文件夹放到texmf/tex/latex下。运行mktexlsr，现在已经可以用pdflatex命令生成中文gbk的文档了。不过还不能使用dvipdfmx，因为只有dvipdfmx生成的pdf才可以支持中文拷贝，所以我们apt-get install dvipdfmx，然后还需要为dvipdfm准备字体，可以apt-get install dvipdfm-cjk-cmap，安装这个包会安装一些字体，但我测试的结果仍然有些不支持，所以我把windows上ctex安装的dvipdfm/CMap下的字体拷贝过去，这里面有一个pdf说明了哪些是中文简体的，拷贝需要的就可以了（没装ctex的话，只要安装了adobe reader，就可以在adobe reader的目录下找到CMap），现在就可以使用dvipdfmx生成支持中文拷贝的pdf文档了。
+
+** 配置macosx上的tex
+
+参考http://www.livejournal.com/users/exaos/ 中的"exaos- 在 MacOS X 上配置中文LaTeX 环境"一文。配置Mac OS X 10.3.5 中的tex。
+
+使用fink安装tetex系统，根据上文的说明使用cjk配置中文使支持unicode和gbk。
+
+通过亲自手动设置，了解了tex和TDS目录结构，了解了使用gbkfonts从ttf生成tex使用的字体。

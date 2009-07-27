@@ -1,0 +1,33 @@
+#title boost其它
+
+** boost::conversion
+
+c++标准库的dynamic_cast转换时是指针失败会返回0,如果是引用转会出异常，boost提供了polymorphic_cast，即使使用指针失败也会抛出std::bad_cast异常。
+
+dynamic_cast效果很低，boost提供了polymorphic_downcast，它调试时dynamic_cast，在最终中使用static_cast来转换而提高效率，适合于已知的有效类型转换。
+
+lexical_cast实现类型转换。
+
+numeric_cast在对数字进行类型转换时检查是否有精度损失，如果有就抛出bad_numeric_cast异常。
+
+** boost::pool
+
+boost::pool用于快速分配同样大小的小块内存。
+
+pool分配同样大小的内存，如果无法分配，返回0，pool用的时候要指定每次分配块的大小：boost::pool<> p(sizeof(int))，要分配内存的时候使用int * const t = p.malloc(),则会为t分配sizeof(int)大小的内存，用完后要用p.free(t)把内存还给pool,pool的析构函数会释放pool占用的内存。
+
+object_pool和pool的区别在于：pool指定每次分配的块的大小，object_pool指定分配的对象的类型，boost::object_pool<CStudent> op;如果用CStudent * t = op.malloc只会分配内存而不会调用构造函数，要调用构造函数应该使用CStudent * const t = op.construct();
+
+singleton_pool和pool和一样，不过可以定义多个pool类型的object，都分配同样大的内存块，另外singleton_pool提供静态方法分配内存，不用定义object：struct MyPoolTag{}; typedef boost::singleton_pool<MyPoolTag,sizeof(int)> my_pool; int * const t = my_pool::malloc();用完后my_pool::purge_memory();释放内存。
+
+pool_alloc，基于singleton_pool实现，提供allocator(用于STL等):std::vector<int,boost::pool_allocator<int> > v; v.push_back(13); 需要的话必须显式调用oost::singleton_pool<boost::pool_allocator_tag, sizeof(int)>::release_memory()释放内存。
+
+pool的实现，pool每次向系统申请一大块内存，分成同样大小的多个小块用链表组织来，每次分配的时候从链表中取一个给用户，不够时继续向系统申请大块内存，pool申请大块内存再为块组成链表的开销比较大，所以适合于需要频繁分配小块内存的情况。
+
+** boost::base_from_member
+
+这个类用来处理类构造函数初始化列表的顺序问题。
+
+** boost::compose
+
+STL提供了一些函数对象适配器，但STL不能对其进行复合，boost提供了compose对其进行补充，compose提供了一些用于复合的函数对象。

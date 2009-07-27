@@ -1,0 +1,92 @@
+#title ruby学习笔记三
+
+** 重载？
+   
+ruby支持缺省参数，但是ruby中没有方法重载。
+
+ruby支持可变参数，在参数名前加*表示可变参数。
+
+<example>
+    def sum(*num)
+        numSum = 0;
+        num.each{|i| numSum += i};
+        return numSum;
+    end
+    puts sum()
+    puts sum(3,6,9)
+</example> 
+
+如果子类重写了父类的方法，不管参数是否一样，都完全重写了父类方法。
+
+** super
+
+在子类方法中，可以直接用super表示调用父类方法。
+
+<example>
+    class Sub < Base
+        def talk
+            super
+            puts "sub"
+        end
+    end
+</example>
+
+Sub类的函数talk会首先执行父类的talk函数，然后执行自己的puts语句。
+
+** 类变量（static变量）
+
+全局变量和实例变量(类成员)如果没有初始化，默认为nil，类变量（静态成员变量）必须初始化。
+
+** 类方法（static方法）
+
+定义类方法要在方法名前加上类名和一个点"."
+
+<example>
+    class Person
+        def Person.StaticMethon
+            puts "this is a static function";
+        end
+    end
+</example>
+
+** 单例方法
+
+ruby中可以为某个类的实例单独定义方法，也就是说，p1,p2都是Person类的实例，但是p2可以比p1多出一些方法。
+
+<example>
+    class Person
+    end
+    
+    p1 = Person.new
+    p2 = Person.new
+    def p2.foo
+    end
+</example>
+
+** 访问控制
+
+ruby也有访问控制权限，它可以支持public, protected, private，方法默认都是公有的，initialize方法除外（initialize永远是私有的）。
+
+<example>
+    class Person
+        def talk
+        end
+        protected:talk
+    end
+</example>
+
+上面的语句就把talk方法定义为保护的了。也可以在类里写访问控制，表示在此之后的所有方法都用这个权限。
+
+<example>
+    class Person
+        private
+        def talk
+        end
+        def foo
+        end
+    end
+</example>
+
+上面的写话把talk和foo都定义为私有的。
+
+ruby中的访问控制中动态的，可以根据需要，在程序的不同位置进行改变。

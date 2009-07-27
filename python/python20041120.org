@@ -1,0 +1,53 @@
+#title python笔记1
+
+一种解释性的面向对象的语言。
+
+强类型，虽然它的变用声明，但一旦变量有了值也就有了类型，要赋其它的时候必须使用类型转换。
+
+一切都是对象，类，函数，模块都是对象。
+
+没有布尔型，none,0,"",[],{},()都是假。
+
+list(列表，定义为[])，相当于c++中的vector或者c中的数组。其下标0开始，并且可以使用负数。
+
+用单引号或双引号构成字符串。用三个连续的双引号在一起可以定义很长的字符串，超过多行。可以把字符串看作是很多字符的list。
+
+元组(tuple)是常量list,用()表示，括号以省略,元组可以用下标返回元素或子tuple，元组可用于多个变量的赋值，如a,b=(1,2)。
+
+序列(sequence)包括string,list,tuple。它们有一些共通的操作：用in判断一个元素是在序列中：if x in seq。得到sequence的长度len(seq)。通过下标取元素sql[i]，通过带冒号的下标取子seq：sql[start:end]，用+连接两个seq，用*表示重复seq。
+
+字典(dictionary)是一个无序的结构，每个元素都是一个pair，包括value和key，key的类型是integer或string，value的类型任意，dictionary中没有重复的key,dictionary中每个元素都是一个tuple,tuple中包括上元素，key和value，叫做pair。pair中前面是key后面是value,可以用D[key]取其value。字典用{}括起来。
+
+条件语句if:
+
+if <expr1>: <one-line-statement>
+
+或者
+
+<example>
+if <expr1>:
+    <statement-block>
+</example>
+
+或者
+
+<example>
+    if <expr1>:
+    <statement-block>
+    else:
+    <statement-block>
+</example>
+
+    或者
+
+<example>
+    if <expr1>:
+    <statement-block>
+    elif <expr2>:
+    <statement-block>
+    elif <expr3>:
+    <statement-block>
+    ...
+    else:
+    <statement-block>
+</example>

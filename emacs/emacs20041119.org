@@ -1,0 +1,36 @@
+#title emacs使用技巧
+
+** emacs中使用语法高亮
+
+在配置文件中加入(global-font-lock-mode t)
+
+** 使用etags读源文件
+
+在emacs里先用M-x cd切换到源代码所在目录，然后M-! ctags *.*生成TAGS文件，然后打开要读的文件，用M-.就可以查找了。
+
+** 在emacs中使用代码折叠
+
+首先用M-x hs-minor-mode打开折叠的模式，然后在需要折叠的地方用c-x @ c-x就可以折叠或者打开折叠了，用命令的话是M-x hs-troggle-hiding。
+
+** 在emacs中使用图形
+
+在配置文件中加入(auto-image-file-mode t)
+
+** 在emacs中插入档案
+
+c-x i
+
+** 在命令行下选择
+
+按c-space或c-@标记开始，到结束的地方用m-w就可以把内容拷贝出来，到需要的地方再c-y即可。
+
+全选的话使用c-x h,或者命令mark-whole-buffer。
+    
+** 跳到另外的frame
+
+c-x 2可以分割窗口，c-x o可以在各个分割窗口中切换。
+
+** 程序编辑
+
+按c-c .或命令c-set_style可以选择不同的缩进风格，我喜欢用stroustrup的风格，然后按esc c-\或C-M-\可以重新排列文件的缩进。
+

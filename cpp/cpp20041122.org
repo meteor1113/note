@@ -1,0 +1,30 @@
+#title boost::ref
+
+ref的目的是对于一个模板函数，在传和传引用都可以的时候，把的权利下放给使用者。在参数上套一个ref()，显式告诉编译器这里引用传递，否则就是值传递。
+
+例：
+
+<example>
+#include <iostream>
+#include <boost/ref.hpp>
+using namespace std;
+using namespace boost;
+struct QQ
+{
+    int k;
+};
+template <typename T> int foo(T a)
+{
+    typedef unwrap_reference<T>::type& truetype;
+    truetype k = a;  k.k = 10;  return 0;
+}
+int main()
+{
+    QQ huxw;
+    foo(ref(huxw));
+    cout << huxw.k << endl;
+    huxw.k = 11;  foo(huxw);
+    cout << huxw.k << endl;
+    return 0;
+}
+</example>

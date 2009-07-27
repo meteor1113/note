@@ -1,0 +1,21 @@
+#title wxPython学习2
+
+标准对话框：
+
+<verse>
+标准文件对话框：wx.FileDialog
+标准颜色对话框：wx.ColourDialog
+</verse>
+
+布局组件：
+
+<verse>
+wx.BoxSizer:在一条线上布局，可以是垂直或者水平，可以包含子sizer
+wx.GridSizer:固定的二维网格，每个元素有相同的尺寸，要么固定行数要么固定列数，项目被从左至右添加，直到一行被填满然后从下一行开始。
+wx.FlexGridSizer:固定的二维网格，与wx.GridSizer的区别是，FlexGridSizer不要求所有的表格式小都一样，只要求同一列上所有表格的宽度相同并且同一行上所有表格的高度相同。
+wx.GridBagSizer:固定的二维网格，基于wx.FlexGridSizer，允许项目被放在网格上的固定点，也允许网格跨越多个网格区域。
+wx.StatisBoxSizer:等同于wx.BoxSizer，只是box周围多了一个附加边框（有一个可选的标签）。
+wx.StdDialogButtonSizer:根据平台的不同对某些按钮进行特殊的排列。
+</verse>
+
+

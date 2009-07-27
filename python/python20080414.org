@@ -1,0 +1,28 @@
+#title python的模块和包
+
+** 模块
+
+一个.py文件就是一个python模块。
+
+** 包
+
+把一堆相关的python模块放在一个目录下，再加上一个__init__.py文件就构成了一个python包，python包可以嵌套，嵌套之后有点像java的包。__init__.py文件可以为空，不过，一般它时而会包含一个__version__的变量，保存这个包的版本信息，另外还有一个__all__的列表，包括要import *时要导入的模块。当然，__init__.py的内容不是绝对的，也可以什么都不写，还可以加上其它任何自己认为需要的代码。
+
+** import 和from... import
+
+导入模块用import module或者from module import *，它们是有区别的：
+
+import module会导入module这个模块里的所有标识，但是这些标识现在都在module名字空间下。
+
+from module import *也会导入module中所有标识，但是标识不在module名字空间下了，它放到在当前名字空间里。并且，这句话执行完之后，当前名字空间中并不存在module这个标识。from ... import ...语句还可用于从一个模块中导入部分标识，写法是"from module import 标识名"，这样就只有指定的标识被导入，这种方式可以精确控制导入的内容，防止导入整个模块造成名称污染。
+
+import和from ... import还可用于导入包。可以from 包.子包.模块 import 函数，也可以form 包.子包 import*，还可以from 包.子包 import 模块。
+
+导入模块或包按下面顺序进行路径查找：
+
+1.当前目录
+
+2.环境变量PYTHONPATH所指的目录列表
+
+3.python解释器的安装目录
+

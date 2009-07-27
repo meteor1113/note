@@ -1,0 +1,15 @@
+#title emacs的查找和替换
+
+C-s可向后查找，C-r向前查找，查找到后再按C-s或C-r可查找匹配的下个。查找结束按回车后如果想查找上一次的内容，可按两次C-s或C-r。
+
+默认使用是增量查找，如果要使用传统的查找，可以在按C-s或C-r后按RET,然后输入查找的内容后按RET
+
+ESC % 或 M-% 或 M-x query-replace询问替换
+
+M-x query-replace-regexp正则表达询问替换
+
+M-x replace-string替换
+
+M-x replace-regexp正则表达式替换
+
+C-x C-w 另存为

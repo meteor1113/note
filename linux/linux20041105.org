@@ -1,0 +1,8 @@
+#title 用screen挂bbs
+
+screen是一个可以在一个登陆终端中模拟多各种虚拟的登陆终端，可以方便的在各个终端之间切换。还可以把所有的虚拟终端统统挂起，然后以后再重新连接，就象 你从来都没有离开过一样。
+
+debian上直接apt-get安装，然后运行screen进入screen的界面，在这里面执行需要的操作，如登录bbs，然后直接断线下来，以后再连入的时候就可以用screen -list列出原来已登录的终端。比如叫 2659.pts-0.debian，然后可以用screen -r  2659.pts-0.debian再次连入这个终端。这样就可以实现挂线了。
+
+screen的详细命令见screen -h 或者man screen。
+

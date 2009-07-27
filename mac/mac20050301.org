@@ -1,0 +1,4 @@
+#title cocoa-awakeFromNib
+
+当.nib文件被加载的时候，会发送一个awakeFromNib的消息到.nib文件中的每个对象，每个对象都可以定义自己的awakeFromNib函数来响应这个消息，执行一些必要的操作。
+

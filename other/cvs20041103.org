@@ -1,0 +1,75 @@
+#title cvs学习
+
+** debian下配置cvs
+
+按debian的指南,
+
+<example>
+# cd /var/lib; umask 002 ; sudo mkdir cvs # [Woody] FSH
+# apt-get install cvs cvs-doc cvsbook
+# export CVSROOT=/var/lib/cvs
+# cd $CVSROOT
+# chown root:src . 
+# chmod 3775 .            
+# cvs -d /var/lib/cvs init
+# cd CVSROOT
+# chown -R root:staff .
+# chmod 2775 .
+# touch val-tags 
+# chmod 664 history val-tags
+# chown root:src history val-tags
+</example>
+
+不过好象这些设置有些不是必要的，直接apt-get install cvs之后好象debian已经配置好了。
+
+要注意的主要是设置目录的权限，chmod的时候需要加上s位，否则某一个用户建立一个cvs后，同组的用户也只有只读权限了，因为umask的原因。s位表示当其它用户执行这个的时候会以这个用户的身份执行，这样就可以操作了。s位的设置是chmod g+s xxx。
+
+** cvs的使用
+
+要使用本机的cvs的话设置环境变量CVSROOT=/var/lib/cvs
+
+从网络上使用的话设置CVSROOT=:pserver:leoh2000@202.118.69.137:/var/lib/cvs
+
+然后cvs login登录
+
+建立一个新的项目，比如要将用户目录下的record目录全部放入cvs中，执行
+
+cvs import -m "my record" record v0_1 start
+
+它会将整个record目录下的文件放到cvs里，并建立一个record的目录存放
+
+若要将cvs中的某个项目取出来，则cd到需要放置的地方，执行
+
+cvs checkout record
+
+若已经checkout一次，则不需要再checkout，只需要更新一下就行了，进入到本地的re	cord目录，执行cvs update就行了
+
+如果不想更新只想看看有没有需要更新的东西，可以进入到record目录，执行cvs status
+
+想要提交某个文件的修改，比如ceo.c，执行cvs commit -m "add a what" ceo.c。或者直接使用cvs commit -m "about something"，这样cvs会自动查找哪些文件需要提交。
+
+** cvs命令
+
+建立一个新的项目如record:
+
+<example>
+cvs import -m "hehe" record v0 start
+从cvs获取项目: cvs checkout record
+获得ceo.c文件的更新: cvs update ceo.c
+获取所有文件的更新: cvs update
+查看状态: cvs status
+提交ceo.c的修改: cvs commit -m "hehe" ceo.c
+提交所有的修改: cvs commit -m "hehe"
+加入一个文件ceo.c: cvs add -m "hehe" ceo.c
+删除一个文件ceo.c: cvs remove -m "hehe" ceo.c
+</example>
+
+注意:add和remove都只是做标记，最后必须调用cvs commit才能真正修改。
+
+** tag的使用
+
+cvs tag record200411
+
+这条命令可以给cvs当前的项目指定一个时程碑，也即版本，以后可以通过这个版本导出某个版本的内容。如cvs checkout -r record200411 record
+
+开发的时候cvs项目的每个目录下都有一个CVS目录，使用cvs export可以导出不带CVS目录的项目，不过只能针对一个tag或者日期导出。如cvs export -r record200411 record或cvs export -D now record
