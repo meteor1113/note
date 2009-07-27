@@ -1,4 +1,4 @@
-#title 几个分布式vcs比较
+几个分布式vcs比较
 
 最近，比较了一下git, bazaar(bzr), mercurial(hg)这几个分布式版本管理系统。
 

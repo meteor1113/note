@@ -1,8 +1,8 @@
-#title 类
+类
 
 ** 类中重载操作符：
 
-<example>
+#+BEGIN_EXAMPLE
 __init__       构造函数          创建对象Class()
 __del__        析构函数          释放对象的时候
 __add__        "+"              X + y
@@ -16,7 +16,7 @@ __getslice__   分片             x[low:high]
 __len__        长度             len(x)
 __cmp__        比较             x == y, x < y
 __radd__       右边的操作符'+'   Noninstance(非实例) + x
-</example>
+#+END_EXAMPLE
 
 ** 类的序列化
 
@@ -24,7 +24,7 @@ __radd__       右边的操作符'+'   Noninstance(非实例) + x
 
 pickle很容易使用：
 
-<example>
+#+BEGIN_SRC python
 import pickle
 object = SomeClass()
 file = open(filename, "w")
@@ -32,17 +32,17 @@ pickle.dump(object, file)          #保存对象
 
 file = open(filename, "r")
 object = pickle.load(file)         #恢复对象
-</example>
+#+END_SRC
 
 shelve和pickle类似，但是它把对象存到按键访问的数据库里：
 
-<example>
+#+BEGIN_SRC python
 import shelve
 object = SomeClass()
 dbase = shelve.open(filename)
 dbase['key'] = object               #存入
 object = dbase['key']               #取回
-</example>
+#+END_SRC
 
 另外，还有一个cPickle的模块，是使用c语言实现的同pickle的功能，它的接口和pickle一致，但是效果高很多。
 
@@ -52,9 +52,9 @@ object = dbase['key']               #取回
 
 类成员变量(实例属性)通过实例名.变量名引用，静态类成员变量(类属性)通过类名.变量名引用。
 
-<example>
+#+BEGIN_SRC python
 class SomeClass:
     def foo(self):
         self.a = 1
         SomeClass.b = 2
-</example>
+#+END_SRC

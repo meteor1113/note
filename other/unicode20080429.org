@@ -1,4 +1,4 @@
-#title 编码知识小结
+编码知识小结
 
 最早的编码是ascii，它只在1-127，用一个字节就可以表示出来。并且这个字节的第一个位是0。
 
@@ -36,13 +36,11 @@ utf-32是一种定长编码，它和UCS4几乎是相同的。utf-32编码每个�
 
 utf是编码方案，所以还涉及到字节序的问题。字节顺序标记(Byte Order Mark, 简称BOM)出现在Unicode流开端，说明编码类型。BOM是一个有点小聪明的想法：在UCS编码中有一个叫做"zero width no-break space"的字符，编码为FEFF，而FFFE在UCS中是不存在的字符，所以不应该出现在实际的传输中，UCS规范建议我们在传输字节流前，先传输"zero width no-break space"，这样拉收者收到这个字符时就可以通过它判断字节顺序。下面是常用的BOM:
 
-<verse>
-UTF-16 big endian | FE FF
-UTF-16 little endian | FF FE
-UTF-32 bign endian | 00 00 FE FF
-UTF-32 little endian | FF FE 00 00
-UTF-8 little endian | EF BB BF
-</verse>
+| UTF-16 big endian    | FE FF       |
+| UTF-16 little endian | FF FE       |
+| UTF-32 bign endian   | 00 00 FE FF |
+| UTF-32 little endian | FF FE 00 00 |
+| UTF-8 little endian  | EF BB BF    |
 
 当我们在Unicode流开头读到这些字符时就可以确认编码的顺序。utf-8因为是以字节为单位进行编码，所以不存在字节顺序问题,但可以用BOM来表示编码方式，字符"zero width no-break space"的utf-8编码是EF BB BF。所以如果收到EF BB BF开头的字节流，就表明这是utf-8编码。在windows下，如果用记事本存一下utf-8格式的文件，其头部就是以EF BB BF开头的。在linux下，为了保持和ascii的兼容，所有的utf-8文件是不加EF BB BF头的。
 
@@ -56,15 +54,15 @@ Unicode是规范，其有UCS2和UCS4两种格式。UCS2和UCS4都是定长的。
 
 UTF是Unicode的实现，它分为utf-8,utf-16,utf-32几种形式，其中utf-8和utf-16都是变长的，而utf-32是定长编码。（其实还有utf-7等其它编码存在）
 
-<verse>
 附：UTF-8的字节布局：
-字节数 | 位数 | 表示 
-1     | 7   | 0bbbbbbb 
-2     | 11  | 110bbbbb 10bbbbbb 
-3     | 16  | 1110bbbb 10bbbbbb 10bbbbbb 
-4     | 21  | 11110bbb 10bbbbbb 10bbbbbb 10bbbbbb 
-5     | 26  | 111110bb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 
-6     | 31  | 1111110b 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 
-7     | 36  | 11111110 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 
-8     | 42  | 11111111 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 
-</verse>
+
+| 字节数 | 位数 | 表示                                                                    |
+|--------+------+-------------------------------------------------------------------------|
+|      1 |    7 | 0bbbbbbb                                                                |
+|      2 |   11 | 110bbbbb 10bbbbbb                                                       |
+|      3 |   16 | 1110bbbb 10bbbbbb 10bbbbbb                                              |
+|      4 |   21 | 11110bbb 10bbbbbb 10bbbbbb 10bbbbbb                                     |
+|      5 |   26 | 111110bb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb                            |
+|      6 |   31 | 1111110b 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb                   |
+|      7 |   36 | 11111110 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb          |
+|      8 |   42 | 11111111 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb 10bbbbbb |

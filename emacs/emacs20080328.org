@@ -1,4 +1,4 @@
-#title emacs中使用五笔
+emacs中使用五笔
 
 emacs中自带了很多种输入法，但是中文里却没有五笔输入法，幸好网上有人专门为emacs写了五笔输入法，直接把从网上下载的wubi.tar.gz解压到emacs的site-lisp目录下，不需要像网上那样特殊的配置，其实只要启动emacs，然后load-library RET wubi，然后用M-x set-input-methon RET chinese-wubi就可以了，用C-\可以在英文和五笔之间切换。
 

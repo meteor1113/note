@@ -1,3 +1,3 @@
-#title ZeroLink
+ZeroLink
 
 XCode的这个ZeroLink可把人害苦了，据文档说是可以提高应用程序的速度，但是如果程序中有在main之前就初始化的静态对象的话就会产生错误。XCode默认debug版打开这个选项，release版关闭这个选项，花了一周的时候调试错误，最后发现是ZeroLink的问题，把这个选项关闭就好了。

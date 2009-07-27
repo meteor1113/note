@@ -1,4 +1,4 @@
-#title tex入门
+tex入门
 
 ** tex
 
@@ -28,34 +28,30 @@ tex文件的结构:
 
 各类latex文件：
 
-<example>
-    tex:tex或latex的源文件
-    sty:latex宏包
-    dtx:文档化tex文件,latex发布宏包的主要格式
-    ins:相应dtx的安装文件
-    dvi:设备无关文件
-    log:log文件
-    toc:存储章节标题，用来生成目录
-    lof:类似toc,可生成图形目录
-    lot:类似toc,可生成表格目录
-    aux:用来传递下次编译信息的辅助文件
-    idx:包含索引,需用makindex处理
-    ind:经过处理的idx文件，可以下次编译时加入文档中
-    ilg:运行makeindex生成的记录文件
-</example>
+- tex:tex或latex的源文件
+- sty:latex宏包
+- dtx:文档化tex文件,latex发布宏包的主要格式
+- ins:相应dtx的安装文件
+- dvi:设备无关文件
+- log:log文件
+- toc:存储章节标题，用来生成目录
+- lof:类似toc,可生成图形目录
+- lot:类似toc,可生成表格目录
+- aux:用来传递下次编译信息的辅助文件
+- idx:包含索引,需用makindex处理
+- ind:经过处理的idx文件，可以下次编译时加入文档中
+- ilg:运行makeindex生成的记录文件
 
 随latex发布的一些宏包：
 
-<example>
-    normalfontdoc:排版latex程序文档
-    exscale:提供可缩放版本的数字字体扩展
-    normalfontfontenc:声明latex使用的字体编码
-    ifthen:提示"if...then do...otherwise do..."
-    latexsym:调入此宏包可在文档中使用latex符号
-    makeidx:提供生成索引的命令
-    syntonly:仅处理文档，不对其排版
-    inputenc:允许声明ascii,iso latin-1,ios latin-2,437/850ibm编码页,apple macintosh,next,ansi-windows或自 输入编码
-</example>
+- normalfontdoc:排版latex程序文档
+- exscale:提供可缩放版本的数字字体扩展
+- normalfontfontenc:声明latex使用的字体编码
+- ifthen:提示"if...then do...otherwise do..."
+- latexsym:调入此宏包可在文档中使用latex符号
+- makeidx:提供生成索引的命令
+- syntonly:仅处理文档，不对其排版
+- inputenc:允许声明ascii,iso latin-1,ios latin-2,437/850ibm编码页,apple macintosh,next,ansi-windows或自 输入编码
 
 \\或者\newline断行
 
@@ -69,12 +65,10 @@ tex文件的结构:
 
 特殊命令：
 
-<example>
-    \today
-    \TeX
-    \LaTeX
-    \LaTeXe
-</example>
+- \today
+- \TeX
+- \LaTeX
+- \LaTeXe
 
 tex中，用两个'产生左引号，两个'产生右引号，一个'和'产生单引号
 
@@ -82,13 +76,11 @@ tex中，用两个'产生左引号，两个'产生右引号，一个'和'产生�
 
 分节命令
 
-<example>
-    \section{...}
-    \subsection[...}
-    \subsubsection{...}
-    \paragraph{...}
-    \subparagraph{...}
-</example>
+- \section{...}
+- \subsection[...}
+- \subsubsection{...}
+- \paragraph{...}
+- \subparagraph{...}
 
 对report和book还有\part{...}和\chapter{...}用于分节
 

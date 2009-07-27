@@ -1,4 +1,6 @@
-#title python笔记3
+#+OPTIONS: ^:nil
+
+python笔记3
 
 在class中定义的函数都是method，包括__init__，每个method至少有一个参数self，相当于c++中的this。在class里声明的变量就是属性，属性可以随时添加和删除。
 
@@ -36,23 +38,23 @@ __call__(self,arg1,arg2,...)：让obj像函数一样可以调用
 
 捕获异常：
 
-<example>
+#+BEGIN_SRC python
 try:
     ...
 except ExceptionType:
     ...
 else:
     ...
-</example>
+#+END_SRC
 
 或者
 
-<example>
+#+BEGIN_SRC python
 try:
     ...
 finally:
     ...
-</example>
+#+END_SRC
 
 用raise语句抛出异常。
 

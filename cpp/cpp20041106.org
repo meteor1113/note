@@ -1,4 +1,4 @@
-#title 对gcc的理解
+对gcc的理解
 
 gcc中，ld是链器程序，ar可将多个目录文件合成一个函数库，如ar r liba.a a.o会从a.o中生成a这个库。nm可以查看库文件的内容，如nm libstdc++.a。
 

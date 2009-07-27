@@ -1,4 +1,4 @@
-#title imenu不能创建objc的tag的问题
+imenu不能创建objc的tag的问题
 
 在MacOS X下用emacs编辑Objective-C时发现一个问题：用emacs-app最后发布的版本emacs.app rc3，打开.m文件，在ecb的member buffer可以正常出现objc的函数。但是如果用最新的合并到emacs cvs中的emacs23则不能显示，emacs会报告"invalid-function imenu-progress-message"，在windows上用emacs23也会有这样的问题。
 

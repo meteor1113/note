@@ -1,18 +1,18 @@
-#title 用struct模块处理二进制数据
+用struct模块处理二进制数据
 
 有的时候需要用python处理二进制数据，比如，存取文件，socket操作时.这时候，可以使用python的struct模块来完成.可以用struct来处理c语言中的结构体.
 
 struct模块中最重要的三个函数是pack(), unpack(), calcsize()
 
-<example>
+#+BEGIN_EXAMPLE
 pack(fmt, v1, v2, ...)    按照给定的格式(fmt)，把数据封装成字符串(实际上是类似于c结构体的字节流)
 unpack(fmt, string)       按照给定的格式(fmt)解析字节流string，返回解析出来的tuple
 calcsize(fmt)             计算给定的格式(fmt)占用多少字节的内存
-</example>
+#+END_EXAMPLE
 
 struct中支持的格式如下表：
 
-<verse>
+#+BEGIN_EXAMPLE
 格式 |      c类型                       | python类型
 x |        char                       | 无(表示填充字节)  
 c |        char                       | 长度为1的字符串
@@ -35,24 +35,24 @@ P |        void*                      | integer
 注2.每个格式前可以有一个数字，表示个数
 注3.s格式表示一定长度的字符串，4s表示长度为4的字符串，但是p表示的是pascal字符串
 注4.P用来转换一个指针，其长度和机器字长相关
-</verse>
+#+END_EXAMPLE
 
 默认情况下struct根据本地机器字节顺序转换.不过可以用格式中的第一个字符来改变对齐方式.定义如下：
 
-<verse>
+#+BEGIN_EXAMPLE
 字符 |    字节顺序                 | 长度和对齐方式
 @   |    native                  | native  
 =   |    native                  | standard 
 <   |    little-endian           | standard 
 >   |    big-endian              | standard 
 !   |    network (= big-endian)  | standard 
-</verse>
+#+END_EXAMPLE
 
 有了struct，我们就可以很容易操作二进制数据了.
 
 比如有一个结构体:
 
-<example>
+#+BEGIN_SRC c++
 struct Header
 {
     unsigned short id;
@@ -60,14 +60,14 @@ struct Header
     unsigned int version;
     unsigned int count;
 }
-</example>
+#+END_SRC
 
 通过socket.recv接收到了一个上面的结构体数据，存在字符串s中，现在需要把它解析出来，可以使用unpack()函数.
 
-<example>
+#+BEGIN_SRC python
 import struct
 id, tag, version, count = struct.unpack("!H4s2I", s)
-</example>
+#+END_SRC
 
 上面的格式字符串中，!表示我们要使用网络字节顺序解析，因为我们的数据是从网络中接收到的，在网络上传送的时候它是网络字节顺序的.后面的H表示一个unsigned short的id,4s表示4字节长的字符串，2I表示有两个unsigned int类型的数据.
 
@@ -75,9 +75,9 @@ id, tag, version, count = struct.unpack("!H4s2I", s)
 
 同样，也可以很方便的把本地数据再pack成struct格式.
 
-<example>
+#+BEGIN_SRC python
 ss = struct.pack("!H4s2I", id, tag, version, count);
-</example>
+#+END_SRC
 
 pack函数就把id, tag, version, count按照指定的格式转换成了结构体Header，ss现在是一个字符串(实际上是类似于c结构体的字节流)，可以通过socket.send(ss)把这个字符串发送出去.
 

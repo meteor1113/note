@@ -1,4 +1,4 @@
-#title 使用jde编辑java
+使用jde编辑java
 
 jde需要安装jdk才能正常工作，所以先要下载jdk安装好。
 

@@ -1,4 +1,4 @@
-#title company-mode
+company-mode
 
 company-mode发布了0.3.0，试用了一下，比以前的好用多了，记录一下。
 
@@ -10,7 +10,7 @@ company-mode以前的版本补全功能不太好用，而且有很多bug，特�
 
 company-mode的使用很简单，把下载下来的tar.bz2包解压放在emacs能找到的地方，在.emacs中写入：
 
-<example>
+#+BEGIN_SRC emacs-lisp
 (require 'company)
 (dolist (hook (list
                'emacs-lisp-mode-hook
@@ -24,7 +24,7 @@ company-mode的使用很简单，把下载下来的tar.bz2包解压放在emacs�
                'emms-tag-editor-mode-hook
                'sh-mode-hook))
   (add-hook hook 'company-mode))
-</example>
+#+END_SRC
 
 就会在上面这些mode下自动打开company-mode，之后就可以运行命令company-complete-common来补全了，company-mode很聪明，会自动查找当前可用的backends进行补全。
 

@@ -1,3 +1,3 @@
-#title 关于iterm的中文输入
+关于iterm的中文输入
 
 macos X中,用telnet连linux的终端,一定要加-8的参数才可以支持中文输入,如果用ssh的话直接就可以支持.

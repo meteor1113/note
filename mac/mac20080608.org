@@ -1,4 +1,4 @@
-#title cocoa的KVO以及loadNib
+cocoa的KVO以及loadNib
 
 * KVO:
 

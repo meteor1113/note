@@ -1,4 +1,4 @@
-#title powerplant中的消息处理
+powerplant中的消息处理
 
 今天基本明白了powerplant中的LCommander和LListener/LBoradcaster。
 

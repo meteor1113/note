@@ -1,4 +1,6 @@
-#title boost::random
+#+OPTIONS: ^:nil
+
+boost::random
 
 boost随机数。直接包含random.hpp就可以使用。
 

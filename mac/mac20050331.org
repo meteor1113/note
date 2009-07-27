@@ -1,4 +1,6 @@
-#title 多线程及其它
+#+OPTIONS: ^:nil
+
+多线程及其它
 
 这儿说的多线程是指posix thread库。pthread_create创建线程，pthread_join等待线程结束。MPCreateSemaphore创建信号量，MPSignalSemaphore发送信号量，MPWaitOnSemaphore等待某个信号量之后再继续，MPDeleteSemaphore销毁信号量。
 

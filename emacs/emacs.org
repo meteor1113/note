@@ -1,38 +1,33 @@
-#title emacs，不仅仅是一个编辑器
+emacs，神之编辑器
 
-----
+[[./emacs20041102.org][emacs20041102]] 设置emacs的编码
 
-[[./emacs20041102.html][emacs20041102]] 设置emacs的编码
+[[./emacs20041103.org][emacs20041102]] emacs的操作
 
-[[./emacs20041103.html][emacs20041102]] emacs的操作
+[[./emacs20041119.org][emacs20041119]] emacs使用技巧
 
-[[./emacs20041119.html][emacs20041119]] emacs使用技巧
+[[./emacs20041122.org][emacs20041122]] emacs的查找和替换
 
-[[./emacs20041122.html][emacs20041122]] emacs的查找和替换
+[[./emacs20041123.org][emacs20041123]] 在emacs中使用ecb
 
-[[./emacs20041123.html][emacs20041123]] 在emacs中使用ecb
+[[./emacs20071210.org][emacs20071210]] 我使用的几个emacs扩展
 
-[[./emacs20071210.html][emacs20071210]] 我使用的几个emacs扩展
+[[./emacs20080328.org][emacs20080328]] emacs中使用五笔
 
-[[./emacs20080328.html][emacs20080328]] emacs中使用五笔
+[[./emacs20080928.org][emacs20080928]] emacs使用semantic
 
-[[./emacs20080928.html][emacs20080928]] emacs使用semantic
+[[./emacs20081118.org][emacs20081118]] yasnippet
 
-[[./emacs20081118.html][emacs20081118]] yasnippet
+[[./emacs20081203.org][emacs20081203]] 在MacOS X下编译emacs23
 
-[[./emacs20081203.html][emacs20081203]] 在MacOS X下编译emacs23
+[[./emacs20081219.org][emacs20081219]] imenu不能创建objc的tag的问题
 
-[[./emacs20081219.html][emacs20081219]] imenu不能创建objc的tag的问题
+[[./emacs20090112.org][emacs20090112]] emacs的列模式
 
-[[./emacs20090112.html][emacs20090112]] emacs的列模式
+[[./emacs20090121.org][emacs20090121]] ediff
 
-[[./emacs20090121.html][emacs20090121]] ediff
+[[./emacs20090303.org][emacs20090303]] 使用jde编辑java
 
-[[./emacs20090303.html][emacs20090303]] 使用jde编辑java
+[[./emacs20090304.org][emacs20090304]] 使用ropemacs对python代码进行补全
 
-[[./emacs20090304.html][emacs20090304]] 使用ropemacs对python代码进行补全
-
-[[./emacs20090416.html][emacs20090416]] company-mode
-
-----
-updated: <lisp>(current-time-string)</lisp>
+[[./emacs20090416.org][emacs20090416]] company-mode

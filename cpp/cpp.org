@@ -1,38 +1,35 @@
-#title C++语言，我的最爱
+#+OPTIONS: ^:nil
 
-----
+C++语言，我的最爱
 
-[[./cpp20041105.html][cpp20041105]] 杂记gcc&&make
+[[./cpp20041105.org][cpp20041105]] 杂记gcc&&make
 
-[[./cpp20041106.html][cpp20041106]] 对gcc的理解
+[[./cpp20041106.org][cpp20041106]] 对gcc的理解
 
-[[./cpp20041107.html][cpp20041107]] c++的注释
+[[./cpp20041107.org][cpp20041107]] c++的注释
 
-[[./cpp20041110.html][cpp20041110]] boost库学习
+[[./cpp20041110.org][cpp20041110]] boost库学习
 
-[[./cpp20041111.html][cpp20041111]] boost库
+[[./cpp20041111.org][cpp20041111]] boost库
 
-[[./cpp20041122.html][cpp20041122]] boost::ref
+[[./cpp20041122.org][cpp20041122]] boost::ref
 
-[[./cpp20041123.html][cpp20041123]] boost::any
+[[./cpp20041123.org][cpp20041123]] boost::any
 
-[[./cpp20041125.html][cpp20041125]] boost::concept_check
+[[./cpp20041125.org][cpp20041125]] boost::concept_check
 
-[[./cpp20041127.html][cpp20041127]] boost::random
+[[./cpp20041127.org][cpp20041127]] boost::random
 
-[[./cpp20041128.html][cpp20041128]] boost::utility
+[[./cpp20041128.org][cpp20041128]] boost::utility
 
-[[./cpp20041130.html][cpp20041130]] boost::is_convertable
+[[./cpp20041130.org][cpp20041130]] boost::is_convertable
 
-[[./cpp20041202.html][cpp20041202]] boost::smart_ptr
+[[./cpp20041202.org][cpp20041202]] boost::smart_ptr
 
-[[./cpp20041203.html][cpp20041203]] boost其它
+[[./cpp20041203.org][cpp20041203]] boost其它
 
-[[./cpp20080401.html][cpp20080401]] c++标准库总结
+[[./cpp20080401.org][cpp20080401]] c++标准库总结
 
-[[./cpp20080417.html][cpp20080417]] 关于临时对象的引用
+[[./cpp20080417.org][cpp20080417]] 关于临时对象的引用
 
-[[./cpp20080418.html][cpp20080418]] 用ScopeGuard简化异常安全代码
-
-----
-updated: <lisp>(current-time-string)</lisp>
+[[./cpp20080418.org][cpp20080418]] 用ScopeGuard简化异常安全代码

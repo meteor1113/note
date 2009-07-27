@@ -1,4 +1,4 @@
-#title com组件和多接口
+com组件和多接口
 
 以前一直都认为一个dll(或者exe)就是一个com组件，dll里面不同的类就是不同的接口，CLSID就是用来标识一个dll或exe的。
 

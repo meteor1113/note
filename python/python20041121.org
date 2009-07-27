@@ -1,24 +1,25 @@
-#title python笔记2
+python笔记2
 
-循环结构：
+* 循环结构
 
-<example>
-    for x in <sequence>:
+#+BEGIN_SRC python
+for x in <sequence>:
     <statement-block>
-    else:
+else:
     <else-block>
-    while <expr1>:
+    
+while <expr1>:
     <block>
-    else:
+else:
     <else-block>
-</example>
+#+END_SRC
 
-函数：
+* 函数
 
-<example>
-    def <function_name>(<parameters_list>):
+#+BEGIN_SRC python
+def <function_name>(<parameters_list>):
     <code-block>
-</example>
+#+END_SRC
 
 函数没有返回值类型，return可以返回任何类型。函数名只是一个变量，一个对象，以把函数名赋值给另一个变量，这有点像函数指针，数据叫函数别名。
 
@@ -26,10 +27,10 @@
 
 像下面这样定义：
 
-<example>
-    def printf(format,*arg):
+#+BEGIN_SRC python
+def printf(format,*arg):
     ...
-</example>
+#+END_SRC
 
 可以让参数个数可变，*arg表示可以接受任意个参数，就像c中的printf一样。arg是一个tuple，可以像访问tuple的方法来访问参数。
 
@@ -39,18 +40,20 @@ lambda函数，相当于匿名函数吧。
 
 可以使用嵌套函数。
 
-模块，一个module就是把一些函数和类放在一个.py文件中。
+* 模块
+  一个module就是把一些函数和类放在一个.py文件中。
 
-包是一组module的集合。
+* 包
+  是一组module的集合。
 
-名字空间：
+* 名字空间
 
-类：
+* 类
 
-<example>
+#+BEGIN_SRC python
 class class_name
     ...
-</example>
+#END_SRC
 
 可以在类里定义一个def __init__(self)的函数，python中没有构造和析构函数，但object创建的时候会自动调用init。类和函数一样是对象，所以类也可以赋值给普通变量。
 

@@ -1,4 +1,4 @@
-#title import
+import
 
 import module 导入了一个模块
 
@@ -14,17 +14,17 @@ import...和from...import...是可执行的语句而不是声明，它们是在�
 
 exec语句编译一个代码字符串，并传递给python执行：如
 
-<verse>
+#+BEGIN_SRC python
 name = "string"
 exec "import " + name
-</verse>
+#+END_SRC
 
 __import__函数载入参数指定的模块并返回模块对象，用法如下：
 
-<verse>
+#+BEGIN_SRC python
 name = "string"
 string = __import__(name)
-</verse>
+#+END_SRC
 
 reload没有传递性，如果一个模块a中import了b，在我们的代码中，先import了a，因为import时会执行模块a的代码，所以它会导入b。但是我们用reload(a)重新载入a时，并不会自动import b。
 

@@ -1,4 +1,4 @@
-#title 用doxygen为程序生成文档
+用doxygen为程序生成文档
 
 doxygen可以为c++,c,java,IDL,php和c#等生成文档，生成的格式可以是html,latex,rtf,pdf,man等多种格式，甚至可以从无文档的源码中提取代码结构。
 
@@ -16,7 +16,7 @@ doxygen缺省为documented members,files,classes,namespace生成文档(EXTRACT_A
 
 几种方式的detail注释：
 
-<example>
+#+BEGIN_EXAMPLE
     1.JavaDoc风格：
     /**
      * ...
@@ -42,11 +42,11 @@ doxygen缺省为documented members,files,classes,namespace生成文档(EXTRACT_A
     ///////////////////////////
     /// ...
     ///////////////////////////
-</example>
+#+END_EXAMPLE
 
 几种brief注释：
 
-<example>
+#+BEGIN_EXAMPLE
     1.在上述注释中使用brief,然后在一个空行后跟detail注释：
     /*! brief Brief description.
     *  Brief Description continued.
@@ -69,7 +69,7 @@ doxygen缺省为documented members,files,classes,namespace生成文档(EXTRACT_A
     //! Brief descripion.
     //! Detailed description
     //! starts here.
-</example>
+#+END_EXAMPLE
 
 后一种的空行用来分开brief和detail注释。
 

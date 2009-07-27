@@ -1,4 +1,4 @@
-#title emacs使用技巧
+emacs使用技巧
 
 ** emacs中使用语法高亮
 

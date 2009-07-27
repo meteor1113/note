@@ -1,21 +1,21 @@
-#title debian下samba的安装
+debian下samba的安装
 
 特别简单，直接apt-get install samba,根据向导填几项内容，不会填的就默认吧，然后用一个有效的用户名和密码就以通过windows访问用户目录了。
 
 在/etc/samba/smb.conf [global]节添加以下几行:
 
-<example>
+#+BEGIN_EXAMPLE
 dos charset = cp936
 unix charset = cp936
 display charset = cp936
-</example>
+#+END_EXAMPLE
 
 这样windows才能看到目录和文件。然后加入自己要向外共享的文件夹，如：
 
-<example>
+#+BEGIN_EXAMPLE
 [hda7]
 comment = movie && music
 path = /mnt/hda7
 read only = yes
 public = yes
-</example>
+#+END_EXAMPLE

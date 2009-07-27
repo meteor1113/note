@@ -1,10 +1,9 @@
-#title boost::ref
+boost::ref
 
 ref的目的是对于一个模板函数，在传和传引用都可以的时候，把的权利下放给使用者。在参数上套一个ref()，显式告诉编译器这里引用传递，否则就是值传递。
 
 例：
-
-<example>
+#+BEGIN_SRC c++
 #include <iostream>
 #include <boost/ref.hpp>
 using namespace std;
@@ -27,4 +26,4 @@ int main()
     cout << huxw.k << endl;
     return 0;
 }
-</example>
+#+END_SRC

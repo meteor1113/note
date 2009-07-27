@@ -1,4 +1,6 @@
-#title Com中BSTR的使用
+#+OPTIONS: ^:nil
+
+Com中BSTR的使用
 
 ** BSTR:
 
@@ -6,13 +8,13 @@ BSTR(Basic STRing)实际上是类Pascal字符串，在BSTR的前4个字节保存
 
 Com的接口中要使用字符串的话必须使用BSTR类型，传个参数可以直接使用BSTR,传出参数则要使用BSTR*，也就是一个wchar_t的双重指针，它的作法其它是传递一个双重指针进来，由Com内部分配空间，并通过这个二级指针传递给客户程序，所以客户程序要负责释放这段空间(如果用户传进来的指针已经包含分配过的字符串，则在Com内部首先要释放原有的空间，然后再新分配一个返回，否则会有内存泄露)，比如，假如接口里传入一个参数BSTR* sAnswers，则需要首先：
 
-<example>
+#+BEGIN_SRC c++
 if (*sAnswers != NULL)
 {
     ::SysFreeString(*sAnswers);
     *sAnswers = NULL;
 }
-</example>
+#+END_SRC
 
 这个功能执行完要返回时再使用*sAnswers = ::SysAllocString(L"return value")分配一个新的字符串返回给客户。
 

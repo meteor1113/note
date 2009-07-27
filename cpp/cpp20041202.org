@@ -1,4 +1,6 @@
-#title boost::smart_ptr
+#+OPTIONS: ^:nil
+
+boost::smart_ptr
 
 标准库提供了个智能针auto_ptr，能够自动管理指针的生命周期，auto_ptr在同一时间只能有一个auto_ptr管理指和其指向资源。
 

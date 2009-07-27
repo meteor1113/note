@@ -1,4 +1,6 @@
-#title ruby学习笔记一
+#+OPTIONS: ^:nil
+
+ruby学习笔记一
 
 ** 运行ruby的三种方式：
 
@@ -10,7 +12,7 @@ irb			irb是ruby的交互式环境
 
 ** 注释与分行
 
-#表示单行注释，同C++中的//
+"#"表示单行注释，同C++中的//
 
 =begin和=end表示多行注释，同C++中的/*和*/，=begin中间不能有空格，并且必须在一行的开头。
 
@@ -102,7 +104,7 @@ equal?		比较对象地址是否相等
 
 ** 基本语句
 
-<example>
+#+BEGIN_EXAMPLE
     1.
     if 条件 then 语句1; 语句2; 语句... end
    
@@ -155,7 +157,7 @@ equal?		比较对象地址是否相等
     next	忽略本次循环剩余部分，跳到下次循环
     redo	从头开始循环，从本次开始
     retry	重头开始这个循环体
-</example>
+#+END_EXAMPLE
 
 ** 异常
 

@@ -1,18 +1,13 @@
-#title linux，自由的操作系统
+linux，自由的操作系统
 
-----
+[[./linux20041105.org][linux20041105]] 用screen挂bbs
 
-[[./linux20041105.html][linux20041105]] 用screen挂bbs
+[[./linux20041111.org][linux20041111]] debian的几个sources.list源
 
-[[./linux20041111.html][linux20041111]] debian的几个sources.list源
+[[./linux20041116.org][linux20041116]] debian安装小结
 
-[[./linux20041116.html][linux20041116]] debian安装小结
+[[./linux20041203.org][linux20041203]] debian下samba的安装
 
-[[./linux20041203.html][linux20041203]] debian下samba的安装
+[[./linux20041218.org][linux20041218]] 在debian下使用fvwm
 
-[[./linux20041218.html][linux20041218]] 在debian下使用fvwm
-
-[[./linux20080424.html][linux20080424]] ubuntu8.04LTS发布
-
-----
-updated: <lisp>(current-time-string)</lisp>
+[[./linux20080424.org][linux20080424]] ubuntu8.04LTS发布

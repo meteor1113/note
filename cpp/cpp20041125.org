@@ -1,25 +1,27 @@
-#title boost::concept_check
+#+OPTIONS: ^:nil
+
+boost::concept_check
 
 concept_check是boost的概念检查库，在使用模板错的时候编译器给出的信息一般都看不懂，使用concept_check能使编译器给出的信息易懂一些。
 
 concept的使用很简单，用在一个模板函数里的时候用function_requires:
 
-<example>
+#+BEGIN_SRC c++
 template <class T>
 void generic_library_function(T x)
 {
     function_requires< EqualityComparableConcept<T> >();
     // ...
 };
-</example>
+#+END_SRC
 
 在一个模板类里的时候用BOOST_CLASS_REQUIRES:
 
-<example>
+#+BEGIN_SRC c++
 template <class T>
 struct generic_library_class
 {
     BOOST_CLASS_REQUIRES(T, EqualityComparableConcept);
     // ...
 };
-</example>
+#+END_SRC

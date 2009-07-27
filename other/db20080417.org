@@ -1,4 +1,4 @@
-#title sqlite3, access, sqlserver2000的编码设置
+sqlite3, access, sqlserver2000的编码设置
 
 最近做的一个项目(S-LAN)中涉及到对多种数据库(sqlite3, access, sqlserver2000)的操作，但是在编码过程中，碰到了编码的问题，在这儿记录下来免得以后忘记。
 

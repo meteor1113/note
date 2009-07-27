@@ -1,4 +1,4 @@
-#title boost::any
+boost::any
 
 boost::any库是一个能保存任意类型值的类，有点像variant类型，不过variant是用一个巨大的union实在，效率低下，而boost利用模板，保存的时候并不改变值的类型，只是在需要的时候提供方法让用户主动/被动地进行类型判断以及取值。
 
@@ -10,16 +10,16 @@ virtual placeholder *clone() const
 
 使用上，可以使用any::type()方法主动检测值类型:	
 
-<example>
+#+BEGIN_SRC c++
 bool is_int(const boost::any &operand)
 {
     return operand.type() == typeid(int);
 }
-</example>
+#+END_SRC
 
 也可以使用any_cast被动检测，此函数会对boost::any类型进行类型转换，如果不匹配则指针返回NULL，引用抛出boost::bad_any_cast异常:
 
-<example>
+#+BEGIN_SRC c++
 boost::any str = string("12345");
 try
 {
@@ -29,11 +29,11 @@ catch(boost::bad_any_cast e)
 {
     cerr << e.what() << endl;
 }
-</example>
+#+END_SRC
 
 boost::any的应用，any适合于类型不同但使用相关的值，如c/c++中的...参数本来不是类型安全的，可以使用vector<any>改造使它在使用时检测类型是否匹配。如改造printf为:
 
-<example>
+#+BEGIN_SRC c++
 void safe_printf(const char *format, const vector<any>& params)
 {
     int index = 0;
@@ -56,7 +56,7 @@ void safe_printf(const char *format, const vector<any>& params)
                     else
                     {
                         throw ...
-                    }
+                            }
                 }
             }
         }
@@ -72,4 +72,4 @@ void safe_printf(const char *format, const vector<any>& params)
         }   
     }
 }
-</example>
+#+END_SRC

@@ -1,4 +1,6 @@
-#title safearray的使用
+#+OPTIONS: ^:nil
+
+safearray的使用
 
 com中要传递数组, 在c++甚至是VJ++之间可以直接使用标准c++数组, 但是要把数组传递给VB, 则要使用safearray. safearray比一般的简单数组功能强大, 但使用起来也更复杂. Win32提供了一组API来操作safearray, 但是这些API很不容易使用, 所以VC和CB都有专门的类封装了safearray的操作.
 
@@ -7,7 +9,7 @@ CB中提供的是TSafeArray类, 这是一个模板类, 使用起来需要传很�
 
 VC中提供了COleSafeArray类来封装safearray. COleSafeArray中没有重载[], 所以需要用GetElement和SetElement来取值和设值. 并且COleSafeArray不是模板类, 所以不是类型安全的. 另外, 要注意的仍然是BSTR, 用GetElement取出来的BSTR是原有safearray的一份拷贝, 使用完后需要手动释放. 另外, 如果从COM接口中传递出来一个用VARIANT包装的safearray对象, 我们一般可以通过这个VARIANT构造COleSafeArray, 不过用完之后还需要用VariantClear释放VARIANT. 以下例子是PutElement构造一个COleSafeArray 数组，再用GetElement将一个COleSafeArray 数组中的元素取出，最后用VariantClear清除数组:
 
-<example>
+#+BEGIN_SRC c++
 /*用PutElement构造一个COleSafeArray 数组*/
 VARIANT val;
 COleSafeArray saRet;         
@@ -63,4 +65,4 @@ for(;r <= lNumRows; r++ )
 }
 
 VariantClear( &val );
-</example>
+#+END_SRC

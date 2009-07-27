@@ -1,8 +1,8 @@
-#title python与C/C++的不同
+python与C/C++的不同
 
 ** 操作符
 
-<verse>
+#+BEGIN_EXAMPLE
 x or y                             逻辑或
 lambda args: expression            匿名函数
 x and y                            逻辑与
@@ -10,7 +10,7 @@ not x                              逻辑反
 is, is not                         身份测试
 in, not in                         序列成员关系测试
 x ** y                             x的y次方
-</verse>
+#+END_EXAMPLE
 
 ** 字符串
 

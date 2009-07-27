@@ -1,4 +1,4 @@
-#title debian安装小结
+debian安装小结
     
 1.安装基本系统，从 http://cdimage.debian.org/pub/ 下载testing的网络安装光盘刻盘安装。
 
@@ -22,12 +22,12 @@ deb ftp://ftp.nerim.net/debian-marillat unstable main
 
 7.安装中文输入法，apt-get install fcitx，然后在当前目录下建立一个.xinitrc的文件，写入
 
-<example>
-    export LC_CTYPE=zh_CN.GB2312
-    export XMODIFIERS="@im=fcitx"
-    fcitx &
-    fvwm-themes-start
-</example>
+#+BEGIN_SRC sh
+export LC_CTYPE=zh_CN.GB2312
+export XMODIFIERS="@im=fcitx"
+fcitx &
+fvwm-themes-start
+#+END_SRC
 
 这样就可以在英文界面下使用fcitx输入中文了。
 

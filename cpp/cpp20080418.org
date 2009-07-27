@@ -1,4 +1,6 @@
-#title 用ScopeGuard简化异常安全代码
+#+OPTIONS: ^:nil
+
+用ScopeGuard简化异常安全代码
 
 ScopeGuard是Loki库里的一个组件，用来在c++中进行局部资源管理。
 

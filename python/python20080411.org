@@ -1,4 +1,4 @@
-#title python中使用getopt
+python中使用getopt
 
 在运行程序时，可能需要根据不同的条件，输入不同的命令行选项来实现不同的功能。目前有短选项和长选项两种格式。短选项格式为"-"加上单个字母选项；长选项为"--"加上一个单词。长格式是在Linux下引入的。许多Linux程序都支持这两种格式。在Python中提供了getopt模块很好的实现了对这两种用法的支持，而且使用简单。
 
@@ -6,10 +6,10 @@
 
 在使用之前，首先要取得命令行参数。使用sys模块可以得到命令行参数。 
 
-<example>
+#+BEGIN_SRC python
 import sys 
 print sys.argv 
-</example>
+#+END_SRC
 
 然后在命令行下敲入任意的参数，如： 
 
@@ -25,13 +25,13 @@ python get.py -o t --help cmd file1 file2
 
 对于短格式，"-"号后面要紧跟一个选项字母。如果还有此选项的附加参数，可以用空格分开，也可以不分开。长度任意，可以用引号。如以下是正确的： 
 
-<example>
+#+BEGIN_SRC python
 -o 
 -oa 
 -obbbb 
 -o bbbb 
 -o "a b" 
-</example>
+#+END_SRC
 
 对于长格式，"--"号后面要跟一个单词。如果还有些选项的附加参数，后面要紧跟"="，再加上参数。=号前后不能有空格。如以下是正确的： 
 
@@ -39,12 +39,12 @@ python get.py -o t --help cmd file1 file2
 
 而这些是不正确的： 
 
-<example>
+#+BEGIN_EXAMPLE
 -- help=file1 
 --help =file1 
 --help = file1 
 --help= file1 
-</example>
+#+END_EXAMPLE
 
 (注：根据我测试，这儿不用=好像也是可以的，我直接使用--help file1也可以通过。)
 
@@ -65,12 +65,12 @@ import getopt, sys
 
 第二步处理方法如下（以Python手册上的例子为例）： 
 
-<example>
+SRC python
 try: 
     opts, args = getopt.getopt(sys.argv[1:], "ho:", ["help", "output="]) 
 except getopt.GetoptError: 
     # print help information and exit: 
-</example>
+#+END_SRC
 
 1. 处理所使用的函数叫getopt()，因为是直接使用import导入的getopt模块，所以要加上限定getopt才可以。 
 
@@ -98,13 +98,13 @@ except getopt.GetoptError:
 
 第三步主要是对分析出的参数进行判断是否存在，然后再进一步处理。主要的处理模式为： 
 
-<example>
+#+BEGIN_SRC python
 for o, a in opts: 
     if o in ("-h", "--help"): 
         usage() 
         sys.exit() 
     if o in ("-o", "--output"): 
         output = a 
-</example>
+#+END_SRC
 
 使用一个循环，每次从opts中取出一个两元组，赋给两个变量。o保存选项参数，a为附加参数。接着对取出的选项参数进行处理。

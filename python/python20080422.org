@@ -1,4 +1,4 @@
-#title python的unicode支持
+python的unicode支持
 
 从python1.6版开始引入了Unicode字符串.
 

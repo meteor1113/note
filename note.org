@@ -1,22 +1,21 @@
-笔记首页
+#+OPTIONS: num:nil toc:nil
 
-* [[./linux/linux.html][linux]]
-  linux操作与程序设计
+我的学习笔记
 
-* [[./windows/windows.html][windows]]
-  windows操作与程序设计
+* [[./linux/linux.org][linux]] linux操作与程序设计
 
-* [[./mac/mac.html][mac]]
-  mac操作与程序设计
+* [[./windows/windows.org][windows]] windows操作与程序设计
 
-[[./cpp/cpp.html][cpp]] c++语言，我的最爱
+* [[./mac/mac.org][mac]] mac操作与程序设计
 
-[[./python/python.html][python]] 面向对象的脚本语言
+* [[./cpp/cpp.org][cpp]] c++语言，我的最爱
 
-[[./ruby/ruby.html][ruby]] ruby脚本语言
+* [[./python/python.org][python]] 面向对象的脚本语言
 
-[[./design/design.html][design]] 设计模式
+* [[./ruby/ruby.org][ruby]] ruby脚本语言
 
-[[./emacs/emacs.html][emacs]] 不仅仅是一个编辑器
+* [[./design/design.org][design]] 设计模式
 
-[[./other/other.html][other]] 其它一些杂项
+* [[./emacs/emacs.org][emacs]] 神之编辑器
+
+* [[./other/other.org][other]] 其它一些杂项

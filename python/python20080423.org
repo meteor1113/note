@@ -1,30 +1,29 @@
-#title python的正则表达式
+python的正则表达式
 
 python的正则表达式模块叫re
 
 使用正则表达式的通常步骤：
 
-<example>
+#+BEGIN_EXAMPLE
 1.先用re.compile编译得到一个RegexObject，表示一个regexp
 2.然后用pattern的match, search方法，得到MatchObject
 3.再用MatchObject得到匹配的位置，匹配的字符串等信息
-</example>
+#+END_EXAMPLE
 
 RegexObject的常用函数：
 
-<example>
+#+BEGIN_EXAMPLE
 reobj.match(str[, pos[, endpos]])      如果str的开头和reobj匹配，则返回一个MatchObject，否则返回None
 reobj.search(str[, pos[, endpos]])     在str中搜索第一个和reobj匹配的部分
 reobj.findall(str)                     在str中搜索所有和reobj匹配的部分，返回一个tuple,其中是匹配的字符串
-</example>
+#+END_EXAMPLE
 
 MatchObject常用函数：
 
-<example>
+#+BEGIN_EXAMPLE
 m.start()         返回起始位置，对于reobj.match(),start()总是返回0
 m.end()           返回结束位置(不包含该位置的字符)
 m.span()          返回一个tuple表示(m.start(), m.end())
 m.pos(), m.endpos(), m.re(), m.string()    分别表示生成这个MatchObject函数中的参数
 m.finditer()      返回一个iterator，用来遍历所有找到的MatchObject
-</example>
-
+#+END_EXAMPLE

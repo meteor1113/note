@@ -1,4 +1,6 @@
-#title boost其它
+#+OPTIONS: ^:nil
+
+boost其它
 
 ** boost::conversion
 

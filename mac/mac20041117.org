@@ -1,4 +1,4 @@
-#title powerplant中broadcast和command的一点体会
+powerplant中broadcast和command的一点体会
 
 LBroadcaster和LListener是配对的，从LListener继承的类可以获得消息并处理，从LBroadcaster继承的类可以广播消息出去。所以一般可以将view类从LListener继承，把view上的控件类从LBroadcaster继承，然后控件将控件AddListener到view上去，这样控件有消息的时候就可以在LListener的ListenToMesseng里处理了。
 

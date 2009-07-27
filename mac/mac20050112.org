@@ -1,4 +1,4 @@
-#title powerplant中的命令和消息
+powerplant中的命令和消息
 
 powerplant中，LCommander类处理消息，它的命令被ObeyCommand处理，这个主要用来处理菜单命令，可以在FindCommandStatus中设置菜单的状态。
 

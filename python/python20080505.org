@@ -1,14 +1,12 @@
-#title wxPython学习1
+wxPython学习1
 
 wxPython程序所必须的五个基本步骤：
 
-<verse>
-1.导入必须的wxPython包
-2.子类化wxPython应用程序类(*注：书上说是必须子类化，不过我试验直接实例化wx.App也是可以的)
-3.定义一个应用程序的初始化方法
-4.创建一个应用程序类的实例
-5.进入应用程序的主事件循环(MainLoop())
-</verse>
+1. 导入必须的wxPython包
+2. 子类化wxPython应用程序类(*注：书上说是必须子类化，不过我试验直接实例化wx.App也是可以的)
+3. 定义一个应用程序的初始化方法
+4. 创建一个应用程序类的实例
+5. 进入应用程序的主事件循环(MainLoop())
 
 有两种方式导入wxPython包：老的方式和新的方式：
 
@@ -32,16 +30,14 @@ wxPython应用程序至少必须有一个顶级窗口，可以是wx.Frame或者w
 
 wxFrame的构造器：
 
-<verse>
-wx.Frame(parent, id = -1, title = "", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE, name = "frame")
-parent:框架的父窗口，顶级窗口的话设置为None
-id:新窗口的ID号，传递-1的话，wxPython会自动生成一个新的，可以用GetId()来得到，全局函数wx.NewId()会自动生成不重复的一个新ID
-title:标题
-pos:一个wx.Point对象，指定新窗口的左上角在屏幕上的位置。通常(0, 0)是显示器左上角，默认的(-1, -1)将让系统决定窗口位置。wx.Point对象可以用Set(x, y)和Get()来取值和设值，Get()返回一个元组，也可以直接访问wx.Point的x和y属性。需要时一个元组会自动转化为wx.Point对象
-size:一个wx.Size对象，指定窗口的初始大小，默认的(-1, -1)将让系统决定窗口的初始大小。wx.Size和wx.Point几乎完全相同，除了属性名变为了width和height。
-style:窗口的类型，可以用或运行来组合。一些比较重要的样式如下：wx.CAPTION, wx.CLOSE_BOX, wx.DEFAULT_FRAME_STYLE, wx.FRAME_TOOL_WINDOW, wx.MAXIMIZE_BOX, wx.MINIMIZE_BOX, wx.RESIZE_BORDER, wx.SIMPLE_BORDER, wx.SYSTEM_MENU
-name:框架的内在名字，可以用它来寻找窗口
-</verse>
+- wx.Frame(parent, id = -1, title = "", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE, name = "frame")
+- parent:框架的父窗口，顶级窗口的话设置为None
+- id:新窗口的ID号，传递-1的话，wxPython会自动生成一个新的，可以用GetId()来得到，全局函数wx.NewId()会自动生成不重复的一个新ID
+- title:标题
+- pos:一个wx.Point对象，指定新窗口的左上角在屏幕上的位置。通常(0, 0)是显示器左上角，默认的(-1, -1)将让系统决定窗口位置。wx.Point对象可以用Set(x, y)和Get()来取值和设值，Get()返回一个元组，也可以直接访问wx.Point的x和y属性。需要时一个元组会自动转化为wx.Point对象
+- size:一个wx.Size对象，指定窗口的初始大小，默认的(-1, -1)将让系统决定窗口的初始大小。wx.Size和wx.Point几乎完全相同，除了属性名变为了width和height。
+- style:窗口的类型，可以用或运行来组合。一些比较重要的样式如下：wx.CAPTION, wx.CLOSE_BOX, wx.DEFAULT_FRAME_STYLE, wx.FRAME_TOOL_WINDOW, wx.MAXIMIZE_BOX, wx.MINIMIZE_BOX, wx.RESIZE_BORDER, wx.SIMPLE_BORDER, wx.SYSTEM_MENU
+- name:框架的内在名字，可以用它来寻找窗口
 
 对于wx.Frame，一般情况会创建一个和Frame一样大小的wx.Panel来容纳框架上的内容，这样可以窗口内容与工具栏状态栏等分开，通过tab近包，可以遍历wx.Panel中的元素，wx.Frame不能。
 
@@ -49,18 +45,14 @@ name:框架的内在名字，可以用它来寻找窗口
 
 wxPython的一些事件：
 
-<verse>
-wx.EVT_BUTTON：按钮单击事件
-wx.EVT_CLOSE：窗口关闭事件
-</verse>
+- wx.EVT_BUTTON：按钮单击事件
+- wx.EVT_CLOSE：窗口关闭事件
 
 wxPython的一些预定义对话框：
 
-<verse>
-消息对话框:wx.MessageDialog(parent, message, caption = "Message box", style = wx.OK 按位或 wx.CANCEL, pos = wx.DefaultPosition)
-文本输入对话框：wx.TextEntryDialog(parent, message, caption = "Please enter text, initialContent = "",)
-单选对话框：wx.SingleChoiceDialog(None, message, caption = "Single Choice", [value1, value2...])
-</verse>
+- 消息对话框:wx.MessageDialog(parent, message, caption = "Message box", style = wx.OK 按位或 wx.CANCEL, pos = wx.DefaultPosition)
+- 文本输入对话框：wx.TextEntryDialog(parent, message, caption = "Please enter text, initialContent = "",)
+- 单选对话框：wx.SingleChoiceDialog(None, message, caption = "Single Choice", [value1, value2...])
 
 Bind()方法是wx.EvtHandler的一个方法，wx.EvtHandler是所有可显示对象的父类，所以Bind可以被放置在任何显示类。Bind的用法：Bind(event, handler, source = None, id = wx.ID_ANY, id2 = wx.ID_ANY)
 

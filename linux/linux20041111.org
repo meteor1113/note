@@ -1,4 +1,4 @@
-#title debian的几个sources.list源
+debian的几个sources.list源
 
 http://mirror.dlut.edu.cn/ 大连理工大学
 

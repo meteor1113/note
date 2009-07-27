@@ -1,4 +1,4 @@
-#title ubuntu8.04LTS发布
+ubuntu8.04LTS发布
 
 今天，ubuntu发布了8.04LTS版。
 

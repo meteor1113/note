@@ -1,14 +1,14 @@
-#title yasnippet
+yasnippet
 
 从textmate把snippet发扬光大以来，各大编辑器纷纷学习，emacs也开始有了snippet的扩展，从最初的snippet.el，smart-snippet，到现在的yasnippet。其中smart-snippet和yasnippet都是同一个作者的作品。这三个中我只用了yasnippet，不过它们应该是逐渐发展提高的，那么yasnippet应该是上前最好用的了。
 
 yasnippet官方主页上有两个发布包：yasnippet和yasnippet-bundle，区别在于yasnippet-bundle里带了很多预定的snippets，只要load-library<RET> yasnippet-bundle<RET>就直接可以使用了，yasnippet里也带了同样的snippets，不过是放在单独的文件夹里，要使用的话需要在.emacs中写入：
 
-<example>
+#+BEGIN_SRC emacs-lisp
 (require 'yasnippet) ;; not yasnippet-bundle
 (yas/initialize)
 (yas/load-directory "/path/to/the/snippets/directory/")
-</example>
+#+END_SRC
 
 它的好处是可以自定义snippets，只要放在/path/to/the/snippets/directory/中就可以了，yasnippet会自动load的。
 

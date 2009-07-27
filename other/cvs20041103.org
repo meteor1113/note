@@ -1,10 +1,10 @@
-#title cvs学习
+cvs学习
 
 ** debian下配置cvs
 
 按debian的指南,
 
-<example>
+#+BEGIN_SRC sh
 # cd /var/lib; umask 002 ; sudo mkdir cvs # [Woody] FSH
 # apt-get install cvs cvs-doc cvsbook
 # export CVSROOT=/var/lib/cvs
@@ -18,7 +18,7 @@
 # touch val-tags 
 # chmod 664 history val-tags
 # chown root:src history val-tags
-</example>
+#+END_SRC
 
 不过好象这些设置有些不是必要的，直接apt-get install cvs之后好象debian已经配置好了。
 
@@ -52,17 +52,15 @@ cvs checkout record
 
 建立一个新的项目如record:
 
-<example>
-cvs import -m "hehe" record v0 start
-从cvs获取项目: cvs checkout record
-获得ceo.c文件的更新: cvs update ceo.c
-获取所有文件的更新: cvs update
-查看状态: cvs status
-提交ceo.c的修改: cvs commit -m "hehe" ceo.c
-提交所有的修改: cvs commit -m "hehe"
-加入一个文件ceo.c: cvs add -m "hehe" ceo.c
-删除一个文件ceo.c: cvs remove -m "hehe" ceo.c
-</example>
+- cvs import -m "hehe" record v0 start
+- 从cvs获取项目: cvs checkout record
+- 获得ceo.c文件的更新: cvs update ceo.c
+- 获取所有文件的更新: cvs update
+- 查看状态: cvs status
+- 提交ceo.c的修改: cvs commit -m "hehe" ceo.c
+- 提交所有的修改: cvs commit -m "hehe"
+- 加入一个文件ceo.c: cvs add -m "hehe" ceo.c
+- 删除一个文件ceo.c: cvs remove -m "hehe" ceo.c
 
 注意:add和remove都只是做标记，最后必须调用cvs commit才能真正修改。
 

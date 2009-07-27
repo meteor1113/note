@@ -1,4 +1,4 @@
-#title 在emacs中使用ecb
+在emacs中使用ecb
 
 ecb是emacs中使用一个代码浏览器,使用它可以方便地查看文件,函数,以及在代码间方便地跳转,在debian中的安装极其简单,直接apt-get install ecb即可.
 

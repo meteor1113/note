@@ -1,44 +1,44 @@
-#title c++标准库总结
+c++标准库总结
 
-** 1.容器
+** 容器
 
-*** 1.1序列
-<example>
+*** 序列
+#+BEGIN_SRC c++
     vector=========================<vector>
     list===========================<list>
     deque==========================<deque>
-</example>
+#+END_SRC
 
-*** 1.2序列适配器
+*** 序列适配器
 
-<example>
+#+BEGIN_EXAMPLE
     stack:top,push,pop=============<stack>
     queue:front,back,push,pop======<queue>
     priority_queue:top,push,pop====<queue>
-</example>
+#+END_EXAMPLE
 
-*** 1.3关联容器 
+*** 关联容器 
 
-<example>
+#+BEGIN_EXAMPLE
     map============================<map>
     multimap=======================<map>
     set============================<set>
     multiset=======================<set>
-</example>    
+#+END_EXAMPLE    
 
-*** 1.4拟容器
+*** 拟容器
 
-<example>
+#+BEGIN_EXAMPLE
     string=========================<string>
     valarray=======================<valarray>
     bitset=========================<bitset>
-</example>
+#+END_EXAMPLE
 
-** 2.算法
+** 算法
 
-*** 2.1非修改性序列操作
+*** 非修改性序列操作
 
-<example>
+#+BEGIN_EXAMPLE
 <algorithm>
     for_each()=====================对序列中每个元素执行操作
     find()=========================在序列中找某个值的第一个出现
@@ -52,11 +52,11 @@
     search()=======================找出一序列作为子序列的第一个出现位置
     find_end()=====================找出一序列作为子序列的最后一个出现位置
     search_n()=====================找出一序列作为子序列的第n个出现位置
-</example>
+#+END_EXAMPLE
 
-*** 2.2修改性的序列操作
+*** 修改性的序列操作
 
-<example>
+#+BEGIN_EXAMPLE
 <algorithm>
     transform()====================将操作应用于序列中的每个元素
     copy()=========================从序列的第一个元素起进行复制
@@ -83,11 +83,11 @@
     rotate()=======================循环移动元素
     rotate_copy()==================复制序列时循环移动元素
     random_shuffle()===============采用均匀分布随机移动元素
-</example>
+#+END_EXAMPLE
 
-*** 2.3序列排序
+*** 序列排序
 
-<example>
+#+BEGIN_EXAMPLE
 <algorithm>
     sort()=========================以很好的平均次序排序
     stable_sort()==================排序且维持相同元素原有的顺序
@@ -102,79 +102,79 @@
     inplace_merge()================归并两个接续的排好序的序列
     partition()====================将满足某谓词的元素都放到前面
     stable_partition()=============将满足某谓词的元素都放到前面且维持原顺序
-</example>
+#+END_EXAMPLE
 
-*** 2.4集合算法
+*** 集合算法
 
-<example>
+#+BEGIN_EXAMPLE
 <algorithm>
     include()======================如果一个序列是另一个的子序列则为真
     set_union()====================构造一个已排序的并集
     set_intersection()=============构造一个已排序的交集
     set_difference()===============构造一个已排序序列，包含在第一个序列但不在第二个序列的元素
     set_symmetric_difference()=====构造一个已排序序列，包括所有只在两个序列之一中的元素
-</example>
+#+END_EXAMPLE
 
-*** 2.5 堆操作
+*** 堆操作
 
-<example>
+#+BEGIN_EXAMPLE
 <algorithm>
     make_heap()====================将序列高速得能够作为堆使用
     push_heap()====================向堆中加入一个元素
     pop_heap()=====================从堆中去除元素
     sort_heap()====================对堆排序
-</example>
+#+END_EXAMPLE
 
-*** 2.6 最大和最小
+*** 最大和最小
 
-<example>
+#+BEGIN_EXAMPLE
 <algorithm>
     min()==========================两个值中较小的
     max()==========================两个值中较大的
     min_element()==================序列中的最小元素
     max_element()==================序列中的最大元素
     lexicographic_compare()========两个序列中按字典序的第一个在前
-</example>
+#+END_EXAMPLE
 
-*** 2.7排列
-<example>
+*** 排列
+#+BEGIN_EXAMPLE
 <algorithm>
     next_permutation()=============按字典序的下一个排列
     prev_permutation()=============按字典序的前一个排列
-</example>
+#+END_EXAMPLE
 
-*** 2.8 通用数值算法
+*** 通用数值算法
 
-<example>
+#+BEGIN_EXAMPLE
 <numeric>
     accumulate()===================积累在一个序列中运算的结果(向量的元素求各的推广)
     inner_product()================积累在两个序列中运算的结果(内积)
     partial_sum()==================通过在序列上的运算产生序列(增量变化)
     adjacent_difference()==========通过在序列上的运算产生序列(与partial_sum相反)
-</example>
+#+END_EXAMPLE
 
-*** 2.9 C风格算法
+*** C风格算法
 
-<example>
+#+BEGIN_EXAMPLE
 <cstdlib>
     qsort()========================快速排序，元素不能有用户定义的构造，拷贝赋值和析构函数
     bsearch()======================二分法查找，元素不能有用户定义的构造，拷贝赋值和析构函数
-</example>
+#+END_EXAMPLE
 
-** 3.函数对象
+** 函数对象
 
-*** 3.1基类
+*** 基类
 
-<example>    
+#+BEGIN_EXAMPLE    
     template<class Arg, class Res> struct unary_function
     template<class Arg, class Arg2, class Res> struct binary_function
-</example>   
+#+END_EXAMPLE   
 
-*** 3.2谓词
+*** 谓词
 
     返回bool的函数对象。
 
-<example>
+#+BEGIN_EXAMPLE
 <functional>
     equal_to=======================二元，arg1 == arg2
     not_equal_to===================二元，arg1 != arg2
@@ -185,11 +185,11 @@
     logical_and====================二元，arg1 && arg2
     logical_or=====================二元，arg1 || arg2
     logical_not====================一元，!arg
-</example> 
+#+END_EXAMPLE 
 
-*** 3.3算术函数对象
+*** 算术函数对象
 
-<example>
+#+BEGIN_EXAMPLE
 <functional>
     plus===========================二元，arg1 + arg2
     minus==========================二元，arg1 - arg2
@@ -197,11 +197,11 @@
     divides========================二元，arg1 / arg2
     modulus========================二元，arg1 % arg2
     negate=========================一元，-arg
-</example>
+#+END_EXAMPLE
 
-*** 3.4约束器，适配器和否定器
+*** 约束器，适配器和否定器
 
-<example>
+#+BEGIN_EXAMPLE
 <functional>
     bind2nd(y)
         binder2nd==================以y作为第二个参数调用二元函数
@@ -225,55 +225,55 @@
         unary_negate===============否定一元谓词
     not2()
         binary_negate==============否定二元谓词
-</example>
+#+END_EXAMPLE
 
-** 4.迭代器
+** 迭代器
 
-*** 4.1分类
+*** 分类
 
-<example>
+#+BEGIN_EXAMPLE
     Output: *p= , ++
     Input: =*p , -> , ++ , == , !=
     Forward: *p= , =*p , -> , ++ , == , != 
     Bidirectional: *p= , =*p -> , [] , ++ , -- , == , !=
     Random: += , -= , *p= , =*p -> , [] , ++ , -- , + , - , == , != , < , > , <= , >=
-</example>
+#+END_EXAMPLE
 
-*** 4.2插入器
+*** 插入器
 
-<example>
+#+BEGIN_EXAMPLE
     template<class Cont> back_insert_iterator<Cont> back_inserter(Cont& c);
     template<class Cont> front_insert_iterator<Cont> front_inserter(Cont& c);
     template<class Cont, class Out> insert_iterator<Cont> back_inserter(Cont& c, Out p);
-</example>
+#+END_EXAMPLE
 
-*** 4.3反向迭代器
+*** 反向迭代器
 
-<example>
+#+BEGIN_EXAMPLE
     reexample_iterator===============rbegin(), rend()
-</example>
+#+END_EXAMPLE
 
-*** 4.4流迭代器
+*** 流迭代器
 
-<example>
+#+BEGIN_EXAMPLE
     ostream_iterator===============用于向ostream写入
     istream_iterator===============用于向istream读出
     ostreambuf_iterator============用于向流缓冲区写入
     istreambuf_iterator============用于向流缓冲区读出
-</example>
+#+END_EXAMPLE
 
-** 5.分配器
+** 分配器
 
-<example>
+#+BEGIN_EXAMPLE
 <memory>
     template<class T> class std::allocator
-</example>
+#+END_EXAMPLE
 
-** 6.数值
+** 数值
 
-*** 6.1数值的限制
+*** 数值的限制
 
-<example>
+#+BEGIN_EXAMPLE
 <limits>
     numeric_limits<>
 <climits>
@@ -285,11 +285,11 @@
     FLT_RADIX
     LDBL_MAX
     ...
-</example>
+#+END_EXAMPLE
 
-*** 6.2标准数学函数
+*** 标准数学函数
 
-<example>
+#+BEGIN_EXAMPLE
 <cmath>
     double abs(double)=============绝对值(不在C中)，同fabs()
     double fabs(double)============绝对值
@@ -324,22 +324,22 @@
     div_t div(int n, int d)========用d除n，返回(商，余数)
     ldiv_t div(long n, long d)=====用d除n，返回(商，余数)(不在C中)
     ldiv_t ldiv(long n, long d)====用d除n，返回(商，余数)
-</example>
+#+END_EXAMPLE
 
-*** 6.3向量算术
+*** 向量算术
 
-<example>
+#+BEGIN_EXAMPLE
 <valarray>
     valarray
-</example>
+#+END_EXAMPLE
 
-*** 6.4复数算术
+*** 复数算术
 
-<example>
+#+BEGIN_EXAMPLE
 <complex>
     template<class T> class std::complex;
-</example>
+#+END_EXAMPLE
 
-*** 6.5通用数值算法
+*** 通用数值算法
 
     见2.8

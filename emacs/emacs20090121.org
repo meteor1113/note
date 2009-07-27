@@ -1,24 +1,24 @@
-#title ediff
+ediff
 
 可以通过运行ediff命令或者从菜单中启动，ediff可以用以下的控制命令：
-
-Space 或 n | ediff-next-difference | 下一个差异处 
-Del 或 p | ediff-previous-difference | 上一个差异处 
-[n]j | ediff-jump-to-difference | 有数字前缀 [n] 修饰，第n个差异处,n可为负数 
-v 或 C-v | ediff-scroll-vertically | 所有缓冲区同步向下滚动 
-V 或 M-v | ediff-scroll-vertically | 所有缓冲区同步向上滚动 
-< | ediff-scroll-horizontally | 所有缓冲区同步向左滚动 
-> | ediff-scroll-horizontally | 所有缓冲区同步向右滚动 
-"|"(不是字母l，是shift+\) | ediff-toggle-split | 切换缓冲区布局方式, 水平和竖直 
-m | ediff-toggle-wide-display | 在正常 frame 大小和最大化之间切换 
-a | ediff-copy-A-to-B | 把Buffer-A的内容复制到Buffer-B 
-b | ediff-copy-B-to-A | 把Buffer-B的内容复制到Buffer-A 
-r a 或 r b | ediff-restore-diff | 恢复 Buffer-A 或 Buffer-B 差异区域中的被修改的内容 
-A 或 B | ediff-toggle-read-only | 切换 Buffer-A 或 Buffer-B 的只读状态 
-g a 或 g b | ediff-jump-to-difference-at-point | 根据光标在缓冲区中的位置，设置一个离它们最近的差异区域为当前活动区域 
-C-l | ediff-recenter | 恢复先前的所有缓冲区比较的高亮差异区。 
-! | ediff-update-diffs | 重新比较并高亮差异区域 
-w a 或 w b | ediff-save-buffer | 保存 Buffer-A 或 Buffer-B 到磁盘 
-E | ediff-documentation | 打开 Ediff 文档 
-z | ediff-suspend | 关闭 ediff control buffer, 只是挂起，可在以后恢复 ediff 状态 
-q | ediff-quit | 关闭 ediff control buffer， 并退出 ediff 
+| 按键       | 命令                              | 作用                                                                 |
+|------------+-----------------------------------+----------------------------------------------------------------------|
+| Space 或 n | ediff-next-difference             | 下一个差异处                                                         |
+| Del 或 p   | ediff-previous-difference         | 上一个差异处                                                         |
+| [n]j       | ediff-jump-to-difference          | 有数字前缀 [n] 修饰，第n个差异处,n可为负数                           |
+| v 或 C-v   | ediff-scroll-vertically           | 所有缓冲区同步向下滚动                                               |
+| V 或 M-v   | ediff-scroll-vertically           | 所有缓冲区同步向上滚动                                               |
+| <          | ediff-scroll-horizontally         | 所有缓冲区同步向左滚动                                               |
+| >          | ediff-scroll-horizontally         | 所有缓冲区同步向右滚动                                               |
+| m          | ediff-toggle-wide-display         | 在正常 frame 大小和最大化之间切换                                    |
+| a          | ediff-copy-A-to-B`                | 把Buffer-A的内容复制到Buffer-B                                       |
+| b          | ediff-copy-B-to-A                 | 把Buffer-B的内容复制到Buffer-A                                       |
+| r a 或 r b | ediff-restore-diff                | 恢复 Buffer-A 或 Buffer-B 差异区域中的被修改的内容                   |
+| A 或 B     | ediff-toggle-read-only            | 切换 Buffer-A 或 Buffer-B 的只读状态                                 |
+| g a 或 g b | ediff-jump-to-difference-at-point | 根据光标在缓冲区中的位置，设置一个离它们最近的差异区域为当前活动区域 |
+| C-l        | ediff-recenter                    | 恢复先前的所有缓冲区比较的高亮差异区                                 |
+| !          | ediff-update-diffs                | 重新比较并高亮差异区域                                               |
+| w a 或 w b | ediff-save-buffer                 | 保存 Buffer-A 或 Buffer-B 到磁盘                                     |
+| E          | ediff-documentation               | 打开 Ediff 文档                                                      |
+| z          | ediff-suspend                     | 关闭 ediff control buffer, 只是挂起，可在以后恢复 ediff 状态         |
+| q          | ediff-quit                        | 关闭 ediff control buffer， 并退出 ediff                             |

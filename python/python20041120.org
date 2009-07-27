@@ -1,4 +1,4 @@
-#title python笔记1
+python笔记1
 
 一种解释性的面向对象的语言。
 
@@ -24,30 +24,30 @@ if <expr1>: <one-line-statement>
 
 或者
 
-<example>
+#+BEGIN_SRC python
 if <expr1>:
     <statement-block>
-</example>
+#+END_SRC
 
 或者
 
-<example>
-    if <expr1>:
+#+BEGIN_SRC python
+if <expr1>:
     <statement-block>
-    else:
+else:
     <statement-block>
-</example>
+#+END_SRC
 
     或者
 
-<example>
-    if <expr1>:
+#+BEGIN_SRC python
+if <expr1>:
     <statement-block>
-    elif <expr2>:
+elif <expr2>:
     <statement-block>
-    elif <expr3>:
+elif <expr3>:
     <statement-block>
     ...
-    else:
+else:
     <statement-block>
-</example>
+#+END_SRC

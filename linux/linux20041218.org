@@ -1,14 +1,14 @@
-#title 在debian下使用fvwm
+在debian下使用fvwm
 
 太简单了，直接apt-get install fvwm可以，不过这时候需要自己配置fvwm，可以上http://fvwm-themes.sourceforge.net/deb/ 下载fvwm-themes,fvwm-themes-extra,wm-icons这三个debian包装上，然后把~/.initrc改为
 
-<example>
+#+BEGIN_SRC sh
 export XMODIFIERS="@im=fcitx"
 export LC_CTYPE=zh_CN.GB2312
 fcitx &
 fvwm-themes-start
 killall fcitx
-</example>
+#+END_SRC
 
 现在startx吧，直接可以到一个默认的fvwm theme,fvwm-themes-extra里自带了好多themes，可以自已节换，感觉fvwm好象确实比gnome好呀。
 

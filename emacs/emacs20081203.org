@@ -1,20 +1,18 @@
-#title 在MacOS X下编译emacs23
+在MacOS X下编译emacs23
 
 MacOS X下的几个emacs binary都不很满意，aquamacs和carbon emacs都是基于emacs22的，而且它们都自带了很多扩展包，不够“干净”。emacs.app是比较好的，它基于emacs23，而且是个很干净的发行版，但是emacs.app最后发布的版本还是2007年的，在我的notebook上不支持鼠标滚轮，line wrap功能也是老的，在ecb上工作很不好。所以我想基于emacs.app自己编译一个emacs23。
 
 根据emacs.app网站上的说明，emacs.app的patches已经于2008年7月合并到emacs官方的cvs了，所以直接从官方下载cvs就行了：
 
-<example>
 cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/emacs co emacs
-</example>
 
 下载完后查看INSTALL文档，按文档写的方法进行编译：
 
-<example>
+#+BEGIN_SRC sh
 ./configure --with-ns
 make -j2
 make install
-</example>
+#+END_SRC
 
 就会在nextstep目录下生成emacs.app了，把emacs.app拷贝到/Applications下，现在开始使用吧。
 

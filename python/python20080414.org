@@ -1,4 +1,4 @@
-#title python的模块和包
+python的模块和包
 
 ** 模块
 
@@ -25,4 +25,3 @@ import和from ... import还可用于导入包。可以from 包.子包.模块 imp
 2.环境变量PYTHONPATH所指的目录列表
 
 3.python解释器的安装目录
-

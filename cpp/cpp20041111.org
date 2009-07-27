@@ -1,4 +1,6 @@
-#title boost
+#+OPTIONS: ^:nil
+
+boost库
 
 ** BOOST_STATIC_ASSERT
 

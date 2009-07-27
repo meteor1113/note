@@ -1,60 +1,62 @@
-#title ruby学习笔记二
+#+OPTIONS: ^:nil
+
+ruby学习笔记二
 
 ** ruby的类
 
 首字母大写，实例变量名以@开头，方法名和参数名用小写字母或_开头。 
 
-<example>
+#+BEGIN_SRC ruby
 class Person
-    def initialize(name)
-        @name = name
-        @motherland = "china"
-    end
- 
-    def talk
-        puts "my name is " + @name
-        puts "my motherland is " + @motherland  
-    end
+  def initialize(name)
+    @name = name
+    @motherland = "china"
+  end
+  
+  def talk
+    puts "my name is " + @name
+    puts "my motherland is " + @motherland  
+  end
 end
-</example>
+#+END_SRC
 
 talk函数因为没有参数，所以可以省略括号。
 
 getter和setter函数可以定义为(以@motherland为例)：
 
-<example>
-    def motherland
-        return @motherland
-    end
-    
-    def motherland = (m)
-        @motherland = m
-    end
-</example>
+#+BEGIN_SRC ruby
+def motherland
+  return @motherland
+end
+
+def motherland = (m)
+  @motherland = m
+end
+#+END_SRC
 
 也可以简写为attr_reader:motherland和attr_writer:mother，更简单的话可以写为attr_accessor:motherland，这一句话把getter和setter都包括了。
     
 使用这个类的方式如下：
     
-<example>
-    p = Person.new("meteor")
-    puts p.motherland
-    p.motherland = "england"
-    p.talk
-</example>
+#+BEGIN_SRC ruby
+p = Person.new("meteor")
+puts p.motherland
+p.motherland = "england"
+p.talk
+#+END_SRC
 
 ** 类的继承
 
 使用<符号表示继承
     
-<example>
-    class Student < Person
-        def talk
-            puts "students, name: " + @name;
-            super.talk;
-        end
-    end
-</example>
+#+BEGIN_SRC ruby
+class Student < Person
+  def talk
+    puts "students, name: " + @name;
+    super.talk;
+  end
+end
+#+END_SRC
 
 调用父类的方法用super指明。
     
@@ -68,11 +70,11 @@ ruby的函数不能重载。ruby的所有函数相对于C++来说都是virtual�
 
 ruby是动态语言，ruby中的类定义之后可以再次定义，重新定义的时候可以往里增加新的方法，修改原先的方法，增加新的变量等，甚至可以删除方法。
     
-<example>
-    class Student
-        undef talk
-    end    
-</example>
+#+BEGIN_SRC ruby
+class Student
+  undef talk
+end
+#+END_SRC
 
 可以undef的有方法、局部变量、常量，不能undef类、实例变量。
     

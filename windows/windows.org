@@ -1,20 +1,15 @@
-#title windows操作系统
+windows操作系统
 
-----
+[[./windows20051121.org][windows20051121]] Com中BSTR的使用
 
-[[./windows20051121.html][windows20051121]] Com中BSTR的使用
+[[./windows20060207.org][windows20060207]] Com中内存申请和释放的规范
 
-[[./windows20060207.html][windows20060207]] Com中内存申请和释放的规范
+[[./windows20060314.org][windows20060314]] windows内核对象名字空间
 
-[[./windows20060314.html][windows20060314]] windows内核对象名字空间
+[[./windows20060315.org][windows20060315]] safearray的使用
 
-[[./windows20060315.html][windows20060315]] safearray的使用
+[[./windows20080428.org][windows20080428]] windows的线程互斥和同步
 
-[[./windows20080428.html][windows20080428]] windows的线程互斥和同步
+[[./windows20080429.org][windows20080429]] 0xcd(205)问题
 
-[[./windows20080429.html][windows20080429]] 0xcd(205)问题
-
-[[./windows20080506.html][windows20080506]] com组件和多接口
-
-----
-updated: <lisp>(current-time-string)</lisp>
+[[./windows20080506.org][windows20080506]] com组件和多接口

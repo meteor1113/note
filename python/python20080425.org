@@ -1,4 +1,4 @@
-#title python线程
+python线程
 
 python里有两个模块支持线程：thread和threading模块。
 
@@ -21,7 +21,3 @@ Thread类的三种使用方式：
 这三种方式创建实例后，都需要手动调用Thread类的start()方法，线程才真正开始执行。
 
 Thread类有一个方法join()，用于等待线程的退出。
-
-
-
-
