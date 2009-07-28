@@ -1,9 +1,0 @@
-ruby语言
-
-[[./ruby20080325.org][ruby20080325]] ruby学习笔记一
-
-[[./ruby20080326.org][ruby20080326]] ruby学习笔记二
-
-[[./ruby20080328.org][ruby20080328]] ruby学习笔记三
-
-[[./ruby20080331.org][ruby20080331]] ruby学习笔记四
