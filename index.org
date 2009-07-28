@@ -1,7 +1,7 @@
 #+TITLE: index
 
    + cpp
-     + [[file:cpp/cpp20041105.org][杂记gcc&&make]]
+     + [[file:cpp/cpp20041105.org][gcc&&make杂记]]
      + [[file:cpp/cpp20041106.org][对gcc的理解]]
      + [[file:cpp/cpp20041107.org][c++的注释]]
      + [[file:cpp/cpp20041110.org][boost库学习]]
@@ -91,7 +91,7 @@
      + [[file:python/python20080424.org][用struct模块处理二进制数据]]
      + [[file:python/python20080425.org][python线程]]
      + [[file:python/python20080505.org][wxPython学习1]]
-     + [[file:python/python20080512.org][标准对话框：]]
+     + [[file:python/python20080512.org][wxPython学习2]]
    + ruby
      + [[file:ruby/ruby20080325.org][ruby学习笔记一]]
      + [[file:ruby/ruby20080326.org][ruby学习笔记二]]

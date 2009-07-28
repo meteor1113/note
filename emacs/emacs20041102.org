@@ -6,31 +6,33 @@
 
 emacs的配置文件:
 
+#+BEGIN_SRC emacs-lisp
 (set-keyboard-coding-system 'cn-gb-2312)
-
 (set-selection-coding-system 'cn-gb-2312)
-
 (set-terminal-coding-system  'cn-gb-2312)
-
 (set-buffer-file-coding-system 'gb2312)
-
 (setq default-buffer-file-coding-system 'gb2312)
-
 (setq locale-coding-system 'gb2312)
-
 (set-language-environment-coding-systems "chinese-gb"  nil)
+#+END_SRC
 
-#语法加亮
+** 语法加亮
 
+#+BEGIN_SRC emacs-lisp
 (global-font-lock-mode t)
+#+END_SRC
 
-#自动显示图片
+** 自动显示图片
 
+#+BEGIN_SRC emacs-lisp
 (auto-image-file-mode t)
+#+END_SRC
 
-#可以使用shift和方向键选择
+** 可以使用shift和方向键选择
 
+#+BEGIN_SRC 
 (pc-selection-mode)
+#+END_SRC
 
 ** 切换当前buffer的编码
 

@@ -2,15 +2,13 @@ python与C/C++的不同
 
 ** 操作符
 
-#+BEGIN_EXAMPLE
-x or y                             逻辑或
-lambda args: expression            匿名函数
-x and y                            逻辑与
-not x                              逻辑反
-is, is not                         身份测试
-in, not in                         序列成员关系测试
-x ** y                             x的y次方
-#+END_EXAMPLE
+| x or y                  | 逻辑或           |
+| lambda args: expression | 匿名函数         |
+| x and y                 | 逻辑与           |
+| not x                   | 逻辑反           |
+| is, is not              | 身份测试         |
+| in, not in              | 序列成员关系测试 |
+| x ** y                  | x的y次方         |
 
 ** 字符串
 
@@ -19,4 +17,3 @@ python中也可以格式化字符串，并且支持的是和c中printf相同的�
 e.g.: "%d, %s, %d" %(1, 'aa', 4)
 
 r'\ab\\c'或R"\ab\\c"表示\ab\\c这个字符串是原始字符串(raw string)，它不会把\当作转义符，它通常用于正则表达式。
-

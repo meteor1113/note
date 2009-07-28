@@ -1,10 +1,12 @@
-杂记gcc&&make
+gcc&&make杂记
 
-gcc -c生成.o文件
+* gcc
 
-gcc -g加入调试信息
+| gcc -c | 编译成.o文件，不链接 |
+| gcc -g | 加入调试信息         |
+| gcc -o | 指定输出文件名       |
 
-gcc -o指定输出文件名
+* make
 
 Makefile的写法，下面是一个简单的例子(hello.c)：
 

@@ -1,73 +1,47 @@
 重构原则
 
-１、重构是对软件内部结构的一种调整，目的在不改变软件之可察行为前提下，提高其可理解性，降低其修改成本。
+* 重构原则
 
-２、重构是使用一系统重构准则（手法），在不必变软件之可察行为的前提下，调整其结构。
++ 重构是对软件内部结构的一种调整，目的在不改变软件之可察行为前提下，提高其可理解性，降低其修改成本。
 
-三次法则：第一次做某件事时只管去做，第二次做类似的事会产生反感，但无论如何还是做了，第三次再做类似的事，你就应该重构。
++ 重构是使用一系统重构准则（手法），在不必变软件之可察行为的前提下，调整其结构。
 
-添加功能时一并重构，修补错误时一并重构，修复程序时一并重构。
++ 三次法则：第一次做某件事时只管去做，第二次做类似的事会产生反感，但无论如何还是做了，第三次再做类似的事，你就应该重构。
 
-如何重构：
++ 添加功能时一并重构，修补错误时一并重构，修复程序时一并重构。
 
-Duplicated Code(重复的程序代码)：如果在一个以上的地点看到相同的程序结构，那么应该设法将它们合而为一。
+* 如何重构
 
-Long Method(过长的函数)：拥有短函数的对象会活得比较好，比较长。
++ Duplicated Code(重复的程序代码)：如果在一个以上的地点看到相同的程序结构，那么应该设法将它们合而为一。
++ Long Method(过长的函数)：拥有短函数的对象会活得比较好，比较长。
++ Large Class(过大类别)：如果想利用单一class做太多事情，里面就会出现太多instance变量，这时应该将数个变量一起提至新的class。
++ Long Parameter List(过长参数列表)：
++ Divergent Change(发散式变化)：一个class受多种变化的影响，那针对某一外界变化的所有相应修改，应该集中在同一class中。
++ Shotgun Surgery(散弹式修改)：当外界有某种变化时，需要在多个class内做许多小修改才可以的时候就应该把需要修改的程序放在同一个class，如果没有合适的class就创建一个，运用inline class把它们放在一起。
++ Feature Envy(依恋情结)：一个函数对某个class的兴趣高过对自己所处的host class的兴趣，则应把它放在另一个class中。
++ Data Clumps(资料泥团)：
++ Primitive Obsession(基本型别偏执)：
++ Switch Statements(switch现身)：面向对象程序设计的一个特征是少用switch或case语句。
++ Parallel Inheritance Hierarchies(平行继承体系)：你为一个class添加一个subclass同时也必须为另一个class添加一个相应的subclass的时候
++ Lazy Class(冗员类别)：某些class的所得不值其身价就应该消失。
++ Speculative Generality(夸夸其谈未来性)：不要因为以后想做某件事就把事情处理得很复杂。
++ Temporary Field(令人迷惑的暂时栏位)：某个instance变量仅为某种特定情况而设
++ Message Chains(过度耦合的讯息链)：
++ Middle Man(中间转手人)：不要过度使用delegation(委托)。
++ Inappropriate Intimacy()：两个classes过于亲密，应该分散。
++ Alternative Classes with Different Interfaces(异曲同工的类别)：两个函数做同一件事却用不同的名字，需要合并。
++ Incomplete Library Class(不完美的程式库类别)：
++ Data Class(幼稚的资料类别)：只有一些资料，
++ Refused Bequest(被拒绝的遗赠)：subclass应该继承superclass的函数的成员，否则不应该是subclass。
++ Comments(过多的注释)：注释要适当。
 
-Large Class(过大类别)：如果想利用单一class做太多事情，里面就会出现太多instance变量，这时应该将数个变量一起提至新的class。
+* 建立测试体系
 
-Long Parameter List(过长参数列表)：
-
-Divergent Change(发散式变化)：一个class受多种变化的影响，那针对某一外界变化的所有相应修改，应该集中在同一class中。
-
-Shotgun Surgery(散弹式修改)：当外界有某种变化时，需要在多个class内做许多小修改才可以的时候就应该把需要修改的程序放在同一个class，如果没有合适的class就创建一个，运用inline class把它们放在一起。
-
-Feature Envy(依恋情结)：一个函数对某个class的兴趣高过对自己所处的host class的兴趣，则应把它放在另一个class中。
-
-Data Clumps(资料泥团)：
-
-Primitive Obsession(基本型别偏执)：
-
-Switch Statements(switch现身)：面向对象程序设计的一个特征是少用switch或case语句。
-
-Parallel Inheritance Hierarchies(平行继承体系)：你为一个class添加一个subclass同时也必须为另一个class添加一个相应的subclass的时候
-
-Lazy Class(冗员类别)：某些class的所得不值其身价就应该消失。
-
-Speculative Generality(夸夸其谈未来性)：不要因为以后想做某件事就把事情处理得很复杂。
-
-Temporary Field(令人迷惑的暂时栏位)：某个instance变量仅为某种特定情况而设
-
-Message Chains(过度耦合的讯息链)：
-
-Middle Man(中间转手人)：不要过度使用delegation(委托)。
-
-Inappropriate Intimacy()：两个classes过于亲密，应该分散。
-
-Alternative Classes with Different Interfaces(异曲同工的类别)：两个函数做同一件事却用不同的名字，需要合并。
-
-Incomplete Library Class(不完美的程式库类别)：
-
-Data Class(幼稚的资料类别)：只有一些资料，
-
-Refused Bequest(被拒绝的遗赠)：subclass应该继承superclass的函数的成员，否则不应该是subclass。
-
-Comments(过多的注释)：注释要适当。
-
-建立测试体系：
-
-确保所有测试都完全自动化，让它们检查自己的测试结果。
-
-一整组测试就是一个强大的臭虫检查器，能够大大缩减查找bug所需要的时间。
-
-频繁地执行测试，每次编译把测试也考虑进去，每天至少执行每个测试一次。
-
-每当接到一个bug report,就先写一个单元测试来发现这个bug。
-
-编写不完善的测试并实际执行，比对完美测试的等待好。
-
-考虑可能出错的边界条件，把主要精力放在那。
-
-当事情被大家认为应该会出错时，不要忘了检查是否有异常如想象的抛出。
-
-不要因为测试无法发现所有bug就不写测试代码，因为测试可以发现大多数bug。
++ 确保所有测试都完全自动化，让它们检查自己的测试结果。
++ 一整组测试就是一个强大的臭虫检查器，能够大大缩减查找bug所需要的时间。
++ 频繁地执行测试，每次编译把测试也考虑进去，每天至少执行每个测试一次。
++ 每当接到一个bug report,就先写一个单元测试来发现这个bug。
++ 编写不完善的测试并实际执行，比对完美测试的等待好。
++ 考虑可能出错的边界条件，把主要精力放在那。
++ 当事情被大家认为应该会出错时，不要忘了检查是否有异常如想象的抛出。
++ 不要因为测试无法发现所有bug就不写测试代码，因为测试可以发现大多数bug。

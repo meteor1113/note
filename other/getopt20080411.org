@@ -62,7 +62,7 @@ extern int getopt_long (int argc, char *const *argv,
 		        const struct option *longopts, int *longind)
 #+END_SRC
 
-<verse>
+#+BEGIN_EXAMPLE
 参数的含义：
 longopts:长选项数组
 longind:返回时这个值会被设置为当前找到选项在longopts中的索引
@@ -72,7 +72,7 @@ name:长选项名
 has_arg:这个选项是否有参数，可以取的值有:no_argument(没有参数),optional_argument(可选一个参数),required_argument(必须有一个参数)
 flag:getopt_long遇到此选项时，会把flag设置为val的值，如果flag为NULL，则函数返回val的值，如果命令行参数中有个短选项和长选项表示相同的意义，则可以把val的值设为相应的短选项字母，这样在处理返回值的时候就可以和getopt的处理保持一致了。
 val:此长选项对应的值，一般设置为和这个长选项对应的短选项字母。如果没有对应的短选项，则可以把val设置成其它没有被用过的值，当找到这个长选项时，getopt_long会返回这个val，可以给每个长选项设置为不同的val值。也可以给所有长选项设置一样的val值，当switch到这个值时，可以通过字符串比较来确定找到了哪个长选项（通过返回的longind找到longopts中对应的name值来进行比较）。
-</verse>
+#+END_EXAMPLE
 
 和getopt相比，它多了longopts和longind两个参数，longopts是一个指向结构体struct option数组的指针，这个数组的最后一项要把结构体设置为struct option{NULL, no_argument, NULL, 0}。例如，如果我们想分析"language"和"output"两个参数时，应该这样设置结构体数组：
 

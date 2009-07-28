@@ -34,5 +34,11 @@ company-mode的使用很简单，把下载下来的tar.bz2包解压放在emacs�
 
 越来越觉得company-mode就是emacs完美的补全方案。
 
+上个python用company-rope补全的图:
+[[file:./images/emacs-company-rope.png]]
+
 ps:
 company-0.3.0有个bug，弹出的菜单有时候会错乱，并且和tabbar有冲突，在0.3.1中已经修正了。
+
+ps:
+company-0.4以后加了一个方法(global-company-mode t)，只要在.emacs里写上它，company就会在支持的模式下自动启动了，不需要再像前面那样add-hook了。

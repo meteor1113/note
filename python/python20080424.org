@@ -4,49 +4,46 @@
 
 struct模块中最重要的三个函数是pack(), unpack(), calcsize()
 
-#+BEGIN_EXAMPLE
-pack(fmt, v1, v2, ...)    按照给定的格式(fmt)，把数据封装成字符串(实际上是类似于c结构体的字节流)
-unpack(fmt, string)       按照给定的格式(fmt)解析字节流string，返回解析出来的tuple
-calcsize(fmt)             计算给定的格式(fmt)占用多少字节的内存
-#+END_EXAMPLE
++ pack(fmt, v1, v2, ...)    按照给定的格式(fmt)，把数据封装成字符串(实际上是类似于c结构体的字节流)
++ unpack(fmt, string)       按照给定的格式(fmt)解析字节流string，返回解析出来的tuple
++ calcsize(fmt)             计算给定的格式(fmt)占用多少字节的内存
 
 struct中支持的格式如下表：
 
-#+BEGIN_EXAMPLE
-格式 |      c类型                       | python类型
-x |        char                       | 无(表示填充字节)  
-c |        char                       | 长度为1的字符串
-b |        signed char                | integer  
-B |        unsigned char              | integer  
-h |        short                      | integer  
-H |        unsigned short             | integer  
-i |        int                        | integer  
-I |        unsigned int               | long  
-l |        long                       | integer  
-L |        unsigned long              | long  
-q |        long long                  | long 
-Q |        unsigned long long         | long 
-f |        float                      | float  
-d |        double                     | float  
-s |        char[]                     | string  
-p |        char[]                     | string  
-P |        void*                      | integer 
-注1.q和Q只在机器支持64位操作时有意思
-注2.每个格式前可以有一个数字，表示个数
-注3.s格式表示一定长度的字符串，4s表示长度为4的字符串，但是p表示的是pascal字符串
-注4.P用来转换一个指针，其长度和机器字长相关
-#+END_EXAMPLE
+| 格式 | c类型              | python类型       |
+|------+--------------------+------------------|
+| x    | char               | 无(表示填充字节) |
+| c    | char               | 长度为1的字符串  |
+| b    | signed char        | integer          |
+| B    | unsigned char      | integer          |
+| h    | short              | integer          |
+| H    | unsigned short     | integer          |
+| i    | int                | integer          |
+| I    | unsigned int       | long             |
+| l    | long               | integer          |
+| L    | unsigned long      | long             |
+| q    | long long          | long             |
+| Q    | unsigned long long | long             |
+| f    | float              | float            |
+| d    | double             | float            |
+| s    | char[]             | string           |
+| p    | char[]             | string           |
+| P    | void*              | integer          |
+
++ 注1.q和Q只在机器支持64位操作时有意思
++ 注2.每个格式前可以有一个数字，表示个数
++ 注3.s格式表示一定长度的字符串，4s表示长度为4的字符串，但是p表示的是pascal字符串
++ 注4.P用来转换一个指针，其长度和机器字长相关
 
 默认情况下struct根据本地机器字节顺序转换.不过可以用格式中的第一个字符来改变对齐方式.定义如下：
 
-#+BEGIN_EXAMPLE
-字符 |    字节顺序                 | 长度和对齐方式
-@   |    native                  | native  
-=   |    native                  | standard 
-<   |    little-endian           | standard 
->   |    big-endian              | standard 
-!   |    network (= big-endian)  | standard 
-#+END_EXAMPLE
+| 字符 | 字节顺序               | 长度和对齐方式 |
+|------+------------------------+----------------|
+| @    | native                 | native         |
+| =    | native                 | standard       |
+| <    | little-endian          | standard       |
+| >    | big-endian             | standard       |
+| !    | network (= big-endian) | standard       |
 
 有了struct，我们就可以很容易操作二进制数据了.
 

@@ -1,11 +1,11 @@
-#title wxPython学习2
+wxPython学习2
 
-标准对话框：
+* 标准对话框
 
 - 标准文件对话框：wx.FileDialog
 - 标准颜色对话框：wx.ColourDialog
 
-布局组件：
+* 布局组件
 
 - wx.BoxSizer:在一条线上布局，可以是垂直或者水平，可以包含子sizer
 - wx.GridSizer:固定的二维网格，每个元素有相同的尺寸，要么固定行数要么固定列数，项目被从左至右添加，直到一行被填满然后从下一行开始。

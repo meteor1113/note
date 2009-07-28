@@ -4,11 +4,9 @@ debian安装小结
 
 2.装完基本系统后设置sources.list为dlut:
 
-deb http://mirror.dlut.edu.cn/debian unstable main non-free contrib
-
-deb http://mirror.dlut.edu.cn/debian-non-US unstable/non-US main non-free contrib
-
-deb ftp://ftp.nerim.net/debian-marillat unstable main
++ deb http://mirror.dlut.edu.cn/debian unstable main non-free contrib
++ deb http://mirror.dlut.edu.cn/debian-non-US unstable/non-US main non-free contrib
++ deb ftp://ftp.nerim.net/debian-marillat unstable main
 
 另外还有几个非官方的源可以从前面找到，然后从网络升级系统:apt-get update;apt-get dist-upgrade。
 

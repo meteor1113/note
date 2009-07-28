@@ -12,6 +12,9 @@ emacs使用semantic
 
 之后用emacs随便打开一个c/c++文件，就可以在时而用ctrl+tab弹出自动补全的提示菜单了。semantic会parse当前所有include的文件，然后进行智能提示。
 
+上图:
+[[file:./images/emacs-semantic.png]]
+
 这个配置太简单了，下面用一个稍稍复杂点的配置文件说说它的配置过程：
 
 #+BEGIN_SRC emacs-lisp

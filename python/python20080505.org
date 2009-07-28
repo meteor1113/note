@@ -1,3 +1,5 @@
+#+OPTIONS: ^:nil
+
 wxPython学习1
 
 wxPython程序所必须的五个基本步骤：

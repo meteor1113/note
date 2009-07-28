@@ -20,7 +20,10 @@ list(列表，定义为[])，相当于c++中的vector或者c中的数组。其�
 
 条件语句if:
 
-if <expr1>: <one-line-statement>
+#+BEGIN_SRC python
+if <expr1>:
+    <one-line-statement>
+#+END_SRC
 
 或者
 

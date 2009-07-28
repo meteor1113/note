@@ -1,3 +1,5 @@
+#+OPTIONS: ^:nil
+
 boost::any
 
 boost::any库是一个能保存任意类型值的类，有点像variant类型，不过variant是用一个巨大的union实在，效率低下，而boost利用模板，保存的时候并不改变值的类型，只是在需要的时候提供方法让用户主动/被动地进行类型判断以及取值。

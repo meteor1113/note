@@ -4,24 +4,24 @@ boost库
 
 ** BOOST_STATIC_ASSERT
 
-宏BOOST_STATIC_ASSERT(x)在由文件boost/static_assert.hpp提供，用于当常整数表达式x非真时产生一条编译期错误信息，平时我们的断言都是运行期的，而这个宏产生编译器断言，即compile-time-assertion，也叫做"静态断言"。
+   宏BOOST_STATIC_ASSERT(x)在由文件boost/static_assert.hpp提供，用于当常整数表达式x非真时产生一条编译期错误信息，平时我们的断言都是运行期的，而这个宏产生编译器断言，即compile-time-assertion，也叫做"静态断言"。
 
-BOOST_STATIC_ASSERT可用在任何进行声明的地方，也就是类、函数和命名空间的作用域中。
+   BOOST_STATIC_ASSERT可用在任何进行声明的地方，也就是类、函数和命名空间的作用域中。
 
-BOOST_STATIC_ASSERT宏的工作原理是产生一个typedef声明，因为typedef必须用一个名字，所以该宏借助__LINE__的值产生这个名字，使用它的时候保证每一行只使用一次。
+   BOOST_STATIC_ASSERT宏的工作原理是产生一个typedef声明，因为typedef必须用一个名字，所以该宏借助__LINE__的值产生这个名字，使用它的时候保证每一行只使用一次。
 
 ** Conversion库
 
-boost conversion库通过以下几个文件提供：
+   boost conversion库通过以下几个文件提供：
 
-boost/cast提供polymorphic_cast<>和polymorphic_downcast<>来进行多态类型之间的安全转换，并提供numeric_cast<>进行数值类型之间的安全转换。
+   boost/cast提供polymorphic_cast<>和polymorphic_downcast<>来进行多态类型之间的安全转换，并提供numeric_cast<>进行数值类型之间的安全转换。
 
-boost/lexical_cast提供了lexical_cast<>来进行普通文字串的转换。
+   boost/lexical_cast提供了lexical_cast<>来进行普通文字串的转换。
 
 ** compressed_pair
 
-boost/compressed_pair类与std::pair非常类似，但如果某模板参数是空类，则compressed_pair可利用空基类优化技术减少pair所占用的空间。
+   boost/compressed_pair类与std::pair非常类似，但如果某模板参数是空类，则compressed_pair可利用空基类优化技术减少pair所占用的空间。
 
 ** 复合函数对象适配器compose
 
-头文件boost/compose/hpp提供了数个函数对象适配器，作为对标准模板库STL的补充。
+   头文件boost/compose/hpp提供了数个函数对象适配器，作为对标准模板库STL的补充。

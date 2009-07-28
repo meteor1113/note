@@ -8,29 +8,18 @@ python笔记3
 
 class中特殊的method:
 
-__init__
-
-__del__(self)：对象删除的时候会调用
-
-__repr__(self)：使用repr函数的时候调用
-
-__str__(self)：返回一个字符串描述对象本身
-
-__cmp__(self,other)：一个比较操作符，０相等，１大于，－１小于
-
-__nozero__(self)：
-
-__len__(self)：调用len()的时候，返回对象的长度
-
-__getitem__(self,key)：返回self[key]，用来模拟list等数据结构
-
-__setitem__：(self,key,value)模拟obj[key]=value
-
-__delitem__(self,key)：模拟del obj[key]
-
-__contains__(self.other)：处理in语句
-
-__call__(self,arg1,arg2,...)：让obj像函数一样可以调用
+| __init__                     |                                          |
+| __del__(self)                | 对象删除的时候会调用                     |
+| __repr__(self)               | 使用repr函数的时候调用                   |
+| __str__(self)                | 返回一个字符串描述对象本身               |
+| __cmp__(self,other)          | 一个比较操作符，０相等，１大于，－１小于 |
+| __nozero__(self)             |                                          |
+| __len__(self)                | 调用len()的时候，返回对象的长度          |
+| __getitem__(self,key)        | 返回self[key]，用来模拟list等数据结构    |
+| __setitem__(self,key,value)  | 模拟obj[key]=value                       |
+| __delitem__(self,key)        | 模拟del obj[key]                         |
+| __contains__(self.other)     | 处理in语句                               |
+| __call__(self,arg1,arg2,...) | 让obj像函数一样可以调用                  |
 
 还有很多算术操作符等，可以查看python参考手册。
 

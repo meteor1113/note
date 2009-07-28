@@ -2,7 +2,7 @@
 
 Com中BSTR的使用
 
-** BSTR:
+* BSTR:
 
 BSTR(Basic STRing)实际上是类Pascal字符串，在BSTR的前4个字节保存了字符串长度，所以BSTR内部可以包括\0，它也不是靠\0来判断字符串结尾的。BSTR在c/c++中的定义实际上是wchar_t*，但因为BSTR是依靠前4个字节来判断字符串长度的，所以它的分配和释放都不同于普通的字符串，需要通过::SysAllocString和::SysFreeString等函数来分配和释放。
 
@@ -21,25 +21,17 @@ if (*sAnswers != NULL)
 客户调用时，如果需要通过这个BSTR*传值给Com，也必须使用::SysAllocString申请一段空间，然后把指针传进去，而不能使用局部变量(因为Com内部一般会首先释放这段空间，如果这个局部变量被Com释放，那它离开作用域的时候再自动析构可能就会出错)，如果不需要传值进去(只作为接受返回值使用)，则可以定义一个空的BSTR值(一般初始化为NULL,因为它也是一个指针)传入。不论是否传入值，经过Com接口传出的BSTR都必须由客户来释放(使用::SysFreeString)。
 
 
-** 相关函数：
+* 相关函数：
 
-::SysAllocString     根据参数分配一定长度的BSTR,并用传入参数初始化。
+| ::SysAllocString                                                    | 根据参数分配一定长度的BSTR,并用传入参数初始化。                                                           |
+| ::SysFreeString                                                     | 释放参数指向的BSTR                                                                                        |
+| ::SysAllocStringByteLen(LPCSTR psz, unsigned int len);              | 分配len字节的空间，拷贝psz的前len个字节用来初始化这个BSTR。                                               |
+| ::SysAllocStringLen(const OLECHAR* pch, unsigned int cch);          | 分配一个新的BSTR,拷贝cch个字符进去。                                                                      |
+| ::SysReAllocString(BSTR FAR* pbstr, const OLECHAR FAR* psz);        | 将pbstr指向的空间重新分配为psz的大小，并拷贝psz进去。如果pbstr为NULL，可能造成程序crash(因为内部assert)。 |
+| ::SysReAllocStringLen(BSTR* pbstr, OLECHAR* psz, unsigned int cch); | 释放旧的BSTR,然后按cch分配一个新的BSTR,并拷贝psz的前cch个字符进去。                                       |
+| ::SysStringByteLen                                                  | 返回BSTR的字节长度。                                                                                      |
+| ::SysStringLen                                                      | 返回BSTR的字符长度。                                                                                      |
 
-::SysFreeString      释放参数指向的BSTR
-
-::SysAllocStringByteLen(LPCSTR psz, unsigned int len);     分配len字节的空间，拷贝psz的前len个字节用来初始化这个BSTR。
-
-::SysAllocStringLen(const OLECHAR* pch, unsigned int cch);     分配一个新的BSTR,拷贝cch个字符进去。
-
-::SysReAllocString(BSTR FAR* pbstr, const OLECHAR FAR* psz);    将pbstr指向的空间重新分配为psz的大小，并拷贝psz进去。如果pbstr为NULL，可能造成程序crash(因为内部assert)。
-
-::SysReAllocStringLen(BSTR* pbstr, OLECHAR* psz, unsigned int cch);    释放旧的BSTR,然后按cch分配一个新的BSTR,并拷贝psz的前cch个字符进去。
-
-::SysStringByteLen   返回BSTR的字节长度。
-
-::SysStringLen       返回BSTR的字符长度。
-
-
-** OLECHAR和BSTR的区别：
+* OLECHAR和BSTR的区别：
 
 BSTR不以\0结尾而领先前4个字节保存字符串的长度，所以需要用SysAllocString和SysFreeString来申请和释放内存。

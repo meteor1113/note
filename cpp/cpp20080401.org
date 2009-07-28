@@ -3,11 +3,11 @@ c++标准库总结
 ** 容器
 
 *** 序列
-#+BEGIN_SRC c++
+#+BEGIN_EXAMPLE
     vector=========================<vector>
     list===========================<list>
     deque==========================<deque>
-#+END_SRC
+#+END_EXAMPLE
 
 *** 序列适配器
 
