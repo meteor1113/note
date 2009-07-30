@@ -1,0 +1,11 @@
+emacs中用ispell检查拼写错误
+
+一直以来不很喜欢用拼写检查的功能(包括在word中)，所以一直没在emacs中配置它。不过看到好多人都有这个功能，今天也试验了一下。
+
+我安装的是aspell，很多文章都说需要设置ispell使用aspell，其实ispell已经可以自动地寻找aspell/ispell/hunspell了，按顺序在当前系统中查找，先找到哪个就会用哪个。所以emacs不需要什么配置就可以用ispell了。直接执行命令ispell-buffer就会调用aspell对当前buffer进行拼写检查，要是检查出错就会用特殊的颜色标识出来。
+
+另外还有flyspell-mode，打开的话边打字就会边进行检查。
+
+ispell和flyspell都已经在emacs中自带了，所以不需要怎么设置就可以使用了。
+
+在linux下使用ispell还是比较方便的，windows上我就不喜欢单独为了这么个功能安装aspell了。

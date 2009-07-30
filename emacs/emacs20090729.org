@@ -1,0 +1,20 @@
+emacs里的可视化书签
+
+以前一直用emacs自带的书签功能(c-x r m, c-x r b, c-x r l)。
+
+今天配置Vim的时候看到Vim有个VisualMark的插件，可以在文件中可视化地显示书签，比Vim自带的bookmark看起来直观，并且它使用和Visual Studio一样的键绑定，对于用习惯Visual Studio的人来说很方便。
+
+突然觉得不习惯emacs这样的书签，有没有类似VisualMark这样的插件能可视化的设置书签呢。一阵搜索下来，还真找到一个可用的：就是cedet的eieio组件里带的linemark.el。
+
+先执行(enable-visual-studio-bookmarks)开启可视化书签功能，然后就可以使用类似Visual Studio的键绑定操作书签了：
+
+| F2     | 在当前行设置或取消书签 |
+| C-F2   | 查找下一个书签         |
+| S-F2   | 查找上一个书签         |
+| C-S-F2 | 清空当前文件的所有书签 |
+
+设置的书签可以通过特殊的底色看出来，这可比自带的书签直观多了。看这个图：
+
+[[file:./images/emacs-visual-bookmarks.jpg]]
+
+和自带书签不同的是，linemark.el支持的书签只能是在当前buffer的，不能跨buffer使用。不过，对我来说够用了。

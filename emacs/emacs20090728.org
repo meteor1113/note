@@ -1,0 +1,7 @@
+ffap
+
+在一个c/c++文件中，如果有#include行，想直接打开include的这个文件，以前只知道find-file-at-point命令。
+
+不过这个命令太长了打起来不方便，如果单独为它设个键绑定又太浪费按键了。今天才发现原来emacs已经自带了ffap来实现这个功能。
+
+ffap.el是emacs自带的，不需要require就可以用，不过需要执行一下(ffap-bindings)，这样ffap会把自身一些命令绑定到已有的一些按键上，比如c-x c-f，这样，在#include上按c-x c-f，就会自动查找到这个文件打开了。这可比用命令方便多了。

@@ -1,0 +1,7 @@
+emacs-23.1发布
+
+emacs23终于发布了，等了多少年了啊。
+
+emacs23带来了更好的Unicode支持，字体支持等。唯一可惜的是我喜欢的在日文windows系统上直接用Courier New字体显示中文还是不行。
+
+越来越喜欢emacs了。
