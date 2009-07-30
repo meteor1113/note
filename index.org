@@ -40,6 +40,7 @@
      + [[file:emacs/emacs20090303.org][使用jde编辑java]]
      + [[file:emacs/emacs20090304.org][使用ropemacs对python代码进行补全]]
      + [[file:emacs/emacs20090416.org][company-mode]]
+     + [[file:emacs/emacs20090726.org][用org代替muse记日记]]
      + [[file:emacs/emacs20090727.org][emacs中用ispell检查拼写错误]]
      + [[file:emacs/emacs20090728.org][ffap]]
      + [[file:emacs/emacs20090729.org][emacs里的可视化书签]]

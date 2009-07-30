@@ -1,0 +1,57 @@
+用org代替muse记日记
+
+用emacs写日记已经好几年了，从最开始的emacs-wiki到后来的muse。前段时间看到好多大虾在推荐org-mode，加上前段时间已经开始学习用org-mode作todo管理了，而且org-mode已经在emacs中自带了，不需要再像muse那样单独安装了，所以我也准备改用org来记日记了。
+
+这儿只记录一下org代替muse记日记的设定，因为已经有很多教程写org的基本操作和时间管理功能了。
+
+在用muse的时候，我会按功能对日记进行分类，大概会有下面这样的目录结构：
+
+[[file:./images/emacs-note-dir.jpg]]
+
+我需要把它用git进行管理(放在github上托管)，这样我在家里和在单位都能用。家里我在windows下用，单位是在osx下，有时候也会上linux下，我然后能一次配置到处都能用。所以我在wiki目录下写了一个note-init.el来设置org project，内容如下：
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-publish)
+
+
+(setq note-root-dir
+      (file-name-directory (or load-file-name (buffer-file-name))))
+
+(setq note-publish-dir
+      (expand-file-name "public_html" (directory-file-name
+                                       (file-name-directory
+                                        (directory-file-name note-root-dir)))))
+
+(setq org-publish-project-alist
+      `(("note-org"
+         :base-directory ,note-root-dir
+         :publishing-directory ,note-publish-dir
+         :base-extension "org"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :auto-index t
+         :index-filename "index.org"
+         :index-title "index"
+         :link-home "index.html")
+        ("note-static"
+         :base-directory ,note-root-dir
+         :publishing-directory ,note-publish-dir
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el"
+         :publishing-function org-publish-attachment)
+        ("note" :components ("note-org" "note-static"))))
+#+END_SRC
+
+然后只需要在.emacs里写上一句(load "/path/to/note-init.el")就可以了。
+
+上面代码的作用是取得note-init.el文件所在的目录(也就是wiki的根目录)设置为org的base-directory，把上层的publish_html目录作为org的publishing-directory(不能在note根目录下放publish_html，因为发布到根目录下的publish_html之后，下次再发布，会把已经发布过的内容再发布.......无穷尽了)。
+
+解释一下上面的设置：
+
++ 先设置了一个note-org的项目，会递归(:recursive t)地把目录下所有的.org文件(:base-extension "org")发布成html(:publishing-function org-publish-org-to-html)到上层的publish_html目录中。
++ 接下来有一个note-static的项目，会递归地把目录下所有扩展名为"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el"的文件拷贝到上层的publish_html中。
++ 最后设置了一个名为note的components，把note-org和note-static合并到一起。这样就可以在emacs中用org-publish命令发布note项目，相当于把note-org和note-static一起发布出去了。
+
+最后单独解释一下note-org下的auto-index设置。这个功能是muse没有的(至少我没发现)，就是为所有的org文件生成索引。以前在muse中，我是为每个子目录单独写一个index.muse文件，内容是到里面各个子文件的链接。这样每次新写一个.muse的时候都要更新index文件也挺麻烦了。org有了这个auto-index功能：像上面这样设置好以后，每次用org-publish发布这个项目的时候，它会用所有搜索到的.org文件在根目录下生成index.org文件(:index-filename "index.org")，里面包含了所有的org链接，同时还会把index.org发布成index.html(:link-home "index.html"))，这样看起来就像一个小网站了，也不用再像以前那样手工维护索引文件了。
+
+用了几天org-mode来记笔记，感觉它比muse更好用，它的编辑功能和发布功能不比muse差，而它带的table功能比起muse来强的不是一点两点。以前muse的table必须发布成html才能看到效果，在muse里直接看的时候可以用惨不忍睹来形容。而org的table功能就强多了，直接在org-mode里预览的效果相当好，操作起来也十分简单(甚至比table.el还方便)。
