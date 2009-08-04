@@ -73,6 +73,7 @@
      + [[file:other/doxygen20041130.org][用doxygen为程序生成文档]]
      + [[file:other/dvcs20090406.org][几个分布式vcs比较]]
      + [[file:other/getopt20080411.org][用getopt处理命令行参数]]
+     + [[file:other/git20090804.org][从git中永久删除文件以节省空间]]
      + [[file:other/regexp20041125.org][正则表达式]]
      + [[file:other/squid20041105.org][配置squid使支持匿名访问]]
      + [[file:other/tex20080428.org][tex入门]]
