@@ -36,6 +36,7 @@
          :publishing-directory ,note-publish-dir
          :recursive t
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el"
+         :exclude "note-init.el"
          :publishing-function org-publish-attachment)
         ("note" :components ("note-org" "note-static"))))
 
