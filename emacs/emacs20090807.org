@@ -1,0 +1,95 @@
+emacs的Local Variables和vim的Modeline
+
+emacs和vim都可以通过在文件中设置一些变量来影响当前文档，在emacs中被称为Local Variables或者叫File Variables，在vim中被叫做Modeline。叫法不一样，功能是相同的，不过写法上还有些区别。
+
+* emacs
+
+emacs的方式是在第一行用下面的格式:
+
+#+BEGIN_EXAMPLE
+-*- var1: value1; var2: value2; ... -*-
+#+END_EXAMPLE
+
+也就是说变量以及它的值被包含在两个"-*-"之间；可以写多组变量，每组之前用";"分割；每组变量和值用":"分割，变量名在冒号前，变量的值写在冒号后。在这段代码的前面可以加任意的字符，也就是说我们可以在前后加上对应的注释，让它不对实际的文本造成影响。
+
+比如我们要让某个文件打开时自动进入C++-mode，并且设置tab-width为4就可以在文件头写上:
+
+#+BEGIN_SRC c++
+// -*- mode: c++; tab-width: 4; -*-
+#+END_SRC
+
+如果是进入python模式并且把coding设为gbk，那就是:
+
+#+BEGIN_SRC python
+# -*- mode: python; coding: gbk; -*-
+#+END_SRC
+
+在某些第一行有特殊用处的语言下，emacs也可以把Local Variables放在文件的最后。方法是在文件的最后几行，用包含"Local Variables:"的行开头,"End:"的行结尾，中间每行放一个变量。
+
+比如一个文件是c模式并且要求tab-width为8，则在文件尾写:
+
+#+BEGIN_SRC c
+/* Local Variables: */
+/* mode: c          */
+/* table-width: 8   */
+/* End:             */
+#+END_SRC
+
+emacs在打开包含Local Variables的文件时，如果里面有不安全的变量，会提示是否要应用变量的值，这时候按y或者空格同意，按n拒绝。如果很多文件都有同样的这个变量设置每次按y太麻烦，可以根据提示按!，这样emacs会把这些变量当作安全变量存入.emacs中，以后再碰上相同的变量它就不会提示直接应用了。
+
+* vim
+
+vim的Modeline写法有两种:
+
+(1)第一种格式：
+
+[text]{white}{vi:|vim:|ex:}[white]{options}
+
++ [text]          随便什么文本，或者空白。
++ {white}         至少一个空格或tab。
++ {vi:|vim:|ex:}  后面三个字符串之一，"vi:", "vim:" 或 "ex:"。
++ [white]         可有也可无的空格。
++ {options}       被set的选项列表，用冒号':'分隔。
+
+比如:
+
+#+BEGIN_SRC c++
+// vim:ft=cpp:tabstop=8
+#+END_SRC
+
+(2)第二种格式：
+
+[text]{white}{vi:|vim:|ex:}[white]set {options}:[text]
+
++ [text]          随便什么本文，或者空白。
++ {white}         至少一个空格或tab。
++ {vi:|vim:|ex:}  后面三个字符串之一，"vi:", "vim:" or "ex:"。
++ [white]         可有也可无的空格。
++ set             字符串"set " （注意set后面的那个空格不可少）。
++ {options}       选项列表，用空格分开。
++ :               一个冒号。
++ [text]          随便什么文本，或者空白。
+
+比如:
+
+#+BEGIN_SRC c
+/* vim:set ft=c tabstop=2: */
+#+END_SRC
+
+两种格式的区别：
+
+对于第一种格式，一旦识别，该行剩余部分都将被使用，因此，这样的写法
+
+#+BEGIN_SRC c
+/* vim:ft=c:tabstop=8 */
+#+END_SRC
+
+将因为后面的*/而出错。
+
+而采用第二种格式就没有这个问题了，因为它将显式地以一个冒号结束。
+
+#+BEGIN_SRC c
+/* vim:set ft=c tabstop=2: */
+#+END_SRC
+
+vim中要使modeline生效，必须打开modeline选项，方法是执行set modeline或者加入vimrc中。另外还可以设置vim读取前几行当作modeline，方法是set modelines=8设置为8行，默认是5行。

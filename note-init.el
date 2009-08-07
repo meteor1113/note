@@ -16,9 +16,9 @@
       (file-name-directory (or load-file-name (buffer-file-name))))
 
 (setq note-publish-dir
-      (expand-file-name "public_html" (directory-file-name
-                                       (file-name-directory
-                                        (directory-file-name note-root-dir)))))
+      (expand-file-name "website" (directory-file-name
+                                   (file-name-directory
+                                    (directory-file-name note-root-dir)))))
 
 (setq org-publish-project-alist
       `(("note-org"
