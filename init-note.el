@@ -12,13 +12,13 @@
 (require 'org-publish)
 
 
-(let* ((root-dir (file-name-directory (or load-file-name (buffer-file-name))))
+(let* ((note-dir (file-name-directory (or load-file-name (buffer-file-name))))
        (parent-dir (directory-file-name
-                    (file-name-directory (directory-file-name root-dir))))
+                    (file-name-directory (directory-file-name note-dir))))
        (publish-dir (expand-file-name "website" parent-dir)))
   (setq org-publish-project-alist
         `(("note-org"
-           :base-directory ,root-dir
+           :base-directory ,note-dir
            :publishing-directory ,publish-dir
            :base-extension "org"
            :recursive t
@@ -28,7 +28,7 @@
            :index-title "index"
            :link-home "index.html")
           ("note-static"
-           :base-directory ,root-dir
+           :base-directory ,note-dir
            :publishing-directory ,publish-dir
            :recursive t
            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el"
