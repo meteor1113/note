@@ -10,14 +10,14 @@
 
 
 (when (require 'org-publish nil t)
-  (let* ((ndir (file-name-directory (or load-file-name (buffer-file-name))))
-         (pardir (directory-file-name
-                  (file-name-directory (directory-file-name ndir))))
-         (pdir (expand-file-name "website" pardir)))
+  (let* ((dir (file-name-directory (or load-file-name (buffer-file-name))))
+         (par-dir (directory-file-name
+                   (file-name-directory (directory-file-name dir))))
+         (publish-dir (expand-file-name "website" par-dir)))
     (setq org-publish-project-alist
           `(("note-org"
-             :base-directory ,ndir
-             :publishing-directory ,pdir
+             :base-directory ,dir
+             :publishing-directory ,publish-dir
              :base-extension "org"
              :recursive t
              :publishing-function org-publish-org-to-html
@@ -26,8 +26,8 @@
              :index-title "index"
              :link-home "index.html")
             ("note-static"
-             :base-directory ,ndir
-             :publishing-directory ,pdir
+             :base-directory ,dir
+             :publishing-directory ,publish-dir
              :recursive t
              :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el"
              :exclude "init-note.el"
