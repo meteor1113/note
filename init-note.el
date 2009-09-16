@@ -13,11 +13,11 @@
   (let* ((dir (file-name-directory (or load-file-name (buffer-file-name))))
          (par-dir (directory-file-name
                    (file-name-directory (directory-file-name dir))))
-         (publish-dir (expand-file-name "website" par-dir)))
+         (pub-dir (expand-file-name "website" par-dir)))
     (setq org-publish-project-alist
           `(("note-org"
              :base-directory ,dir
-             :publishing-directory ,publish-dir
+             :publishing-directory ,pub-dir
              :base-extension "org"
              :recursive t
              :publishing-function org-publish-org-to-html
@@ -27,7 +27,7 @@
              :link-home "index.html")
             ("note-static"
              :base-directory ,dir
-             :publishing-directory ,publish-dir
+             :publishing-directory ,pub-dir
              :recursive t
              :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el"
              :exclude "init-note.el"

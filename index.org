@@ -49,7 +49,7 @@
      + [[file:emacs/emacs20090730.org][emacs-23.1发布]]
      + [[file:emacs/emacs20090807.org][emacs的Local Variables和vim的Modeline]]
    + iphone
-     + [[file:iphone/iphone20090915.org][AudioSessionGuide]]
+     + [[file:iphone/iphone20090915.org][Audio Session 编程指南(摘要翻译)]]
    + linux
      + [[file:linux/linux20041105.org][用screen挂bbs]]
      + [[file:linux/linux20041106.org][配置apache2使用能访问用户目录]]
