@@ -6,5 +6,5 @@
 # *~
 *.svn*
 *~
-public_html/*
+*.html
 *Thumbs.db

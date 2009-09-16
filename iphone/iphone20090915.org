@@ -1,14 +1,16 @@
+#+OPTIONS: ^:nil
+
 Audio Session 编程指南(摘要翻译)
 
-* Audio Session 基础
+* Audio Session Basics
 
-** 为什么iPhone OS需要管理Audio
+** Why Does iPhone OS Need to Manage Audio?
 
    一天早上你打开iPhone开始听podcast，你使用了iPhone内置的扬声器，音量
-   很大，这时候，你的妻子皱了下眉，你马上插上耳机继续听，这时iPhone自
-   动地使用耳机输出。可能你还会打开数独游戏，游戏和声音将和podcast的声
-   音合成到一起被听到。过了一会，podcast静音了，电话响了起来，你开始接
-   电话。当然你挂断电话的时候，podcast从刚才的地方继续播放。
+   很大，这时候，你的妻子皱了下眉，你马上插上耳机，这时iPhone自动地使用
+   耳机输出。可能你还会打开数独游戏，游戏和声音将和podcast的声音合成到
+   一起被听到。过了一会，podcast静音了，电话响了起来，你开始接电话。当
+   然你挂断电话的时候，podcast从刚才的地方继续播放。
 
    这一切不需要你改变iPhone的声音设置。这一切都可以通过audio session获
    得。
@@ -17,20 +19,347 @@ Audio Session 编程指南(摘要翻译)
    了AVAudioPlayer类，Audio Queue Services，OpenAL，或者I/O Audio Unit
    的程序都必须使用Audio Session Services。
 
-** 什么是Audio Session
+** What Is an Audio Session?
 
-   一个audio session是应用程序和iPhone OS之前的媒介。从应用程序启动开始就
-   自动地获得了一个单例的audio session。你可以配置audio session来表达应用
-   程序的意图。比如:
-
+   一个audio session是应用程序和iPhone OS之前的媒介。从应用程序启动开始
+   就自动地获得了一个单例的audio session。你可以配置audio session来表达
+   应用程序的意图。比如:
    - 你希望你的应用程序的声音和其它正在运行的应用程序的声音合成还是让其
      它应用程序静音?
    - 你希望你的应用程序如何响应干扰，比如来电?
    - 你的应用程序如何响应声音设备改变，比如用户插入一个耳机。
 
-   为了使用这些特性，可以根据需要多次配置audio session。audio session
-   的配置会影响除alerts和user-interface sound effects之外的所有声音。
+   为了使用这些特性，可以根据需要多次配置audio session。audio session的
+   配置会影响除alerts和user-interface sound effects之外的所有声音。
 
-* Audio Sessions 如何工作
+   实际上，audio session能做的比这更多:你可以通过它查询硬件特性--比如通
+   道数(channel count)，采样率(sample rate)，以及有效的输入。
 
-* Audio Session 手册
+** Audio Session Default Behavior — What You Get for Free
+
+   audio session有一些默认行为:
+   - 当用户把Ring/Silent switch拨到"silent"位置时，你的声音会被静音。
+   - 当用户通过Sleep/Wake按钮锁定屏幕，或者到达了自动锁定的时间，你的
+     声音会被静音。
+   - 当你的声音开始播放，iPhone上的其它声音，比如iPod会被静音。
+
+   默认情况下，你的audio session会自动激活(activated)。允许你播放和录音。
+   但是如果你的audio session被禁用(deactivated)，audio将不再工作。比
+   如，iPhone有电话响了，你挂断了它，audio不再工作了。下一节将会解释如
+   何解决这个问题。
+
+   你可以利用默认的行为让应用程序工作。事实上，如果满足下面条件，你可以
+   忽略Audio Session Services，仅使用默认行为:
+   - 使用AVAudioPlayer播放，并且没有使用Audio Queue Services, OpenAL,或
+     者I/O audio unit。此外，你必须使用默认audio session类
+     别--kAudioSessionCategory_SoloAmbientSound。AVAudioPlayer提供了一
+     个简单的接口可以在中断结束的时候重新激活audio session。
+   - 使用System Sound Services，并且不使用Audio Queue Services, OpenAL
+     和I/O audio unit。
+   - 完全不使用任何声音。
+
+   除此之外的情况，不要使用默认的audio session行为。
+
+** Why a Default Audio Session Usually Isn’t What You Want
+
+   如果没有初始化，配置，也没有明确地使用audio session，那么程序不能响
+   应中断和audio route改变。
+
+   下面是audio session默认行为的概要，以及如果改变它:
+   1. 用户在听音乐的时候，Auto-Lock时间到了，之后屏幕被锁定，声音变成静
+      音。为了让声音在屏幕锁定后继续播放，需要配置audio session使用
+      kAudioSessionCategory_MediaPlayback category。
+   2. 一个第一人称射击游戏使用了OpenAL，还提供了一可以打开/关闭的背景音
+      乐。用户正在用iPod听音乐，然后切换到游戏中，此时iPod的音乐停止了。
+      为了让iPod音乐不被中断，需要配置audio session允许其它程序在后台
+      播放音乐，使用kAudioSessionCategory_AmbientSound category。
+   3. 有一个程序使用Audio Queue Services播放streaming radio，有电话响了
+      并且停止了程序里的声音。用户忽略了电话，然后按Play希望继续播放，
+      但是程序不工作了。只能退出程序重新启动它。为了解决这个问题，需要
+      为audio session写回调函数让程序自动继续播放或者用户手动重新播放。
+
+* How Audio Sessions Work
+
+** Resolving Competing(竞争) Audio Demands(需求)
+
+   如果把iPhone想象成机场，应用程序想象成飞机，Core Audio想象成控制塔。
+   你可以发出请求，但在有多个程序竞争audio session的时候，由Core Audio
+   决定如何分配audio session。程序只能通过audio session API和控制塔通讯。
+
+** Initialization, Activation, and Categories(类别)
+
+   程序启动的时候Core Audio会分配一个audio session对象，在使用它之前，
+   需要初始化它。
+
+   对一个初始化过的session最简单的操作就是active和inactive。但
+   是,activation是个请求而不是命令。为了决定是否允许activation，Core
+   Audio会在你的程序和其它active的程序之间衡量是否允许activation。
+
+*** Stating Your Application’s Audio Intentions(意图)
+
+    category是audio行为的名字。应该根据程序希望的行为来设置category。
+    - 你希望你的程序让其它程序静音还是和它合成?
+    - 你希望你的程序服从ringer/silent switch的设定吗?
+    - 你希望你的程序在屏幕锁定的时候播放吗?
+
+    通过经audio session object设置属性来指定category。在session初始化后
+    的任何时间都可以设置，无论当前是active还是inactive。如果是
+    inactive，那么等到active的时候会发出category请求，如果已经是
+    active的，则category请求会立即发送。
+
+    当前category会影响程序中所有的声音。因为一个程序只有一个audio
+    session object，而一个object同时只能有一个category。
+
+*** To Mix or Not to Mix — Choosing an Appropriate(合适的) Category
+
+    iPhone OS有7个audio session categories。第1个和第2个表示是否和别的
+    程序mix(合成)。同时它们也表示:根据iPhone Ring/Silent switch的设定
+    以及屏幕锁定的时候程序将静音。
+    - kAudioSessionCategory_UserInterfaceSoundEffects -- 用于短暂的音
+      效。
+    - kAudioSessionCategory_AmbientSound -- 用于较长的声音，同时如果程
+      序提供了一个虚拟乐器比如钢琴，并且你希望让程序和iPod Audio一起播
+      放的时候，也可以用这个category。
+
+    另外5个categories表示声音不能mix。当你的程序启动时你打算让内置的应
+    用程序停下来。除"solo ambient"之外，其它的category表示即使当
+    Ring/Silent switch设置为"silent"时也可用。
+    - kAudioSessionCategory_SoloAmbientSound -- 当Ring/Silent switch设
+      置为"silent"时希望静音。
+    - kAudioSessionCategory_MediaPlayback -- 用于声音或者视频播放。
+    - kAudioSessionCategory_LiveAudio -- For a live performance
+      scenario, 比如程序模拟钢琴或吉他。
+    - kAudioSessionCategory_RecordAudio -- 用于录音。
+    - kAudioSessionCategory_PlayAndRecord -- 用于录音和播放。
+
+    应用程序不能控制category更精细的行为，它只能由Core Audio控制。在将
+    来的iPhone OS中可能会重新定义category的行为。所以最好根据你的需求精
+    确地选择category。
+
+*** The Final Decision(决定)
+    当程序请求session activation时，Core Audio检查audio session规则和
+    用户设定，综合各种情况来决定。
+
+** Audio Interruptions
+
+   一个audio interruption就是让程序的audio session deactivation。当一
+   个内置的程序activate并且它的session没有配置为mix的时候产生
+   interruption。主要是来电。
+
+   当interruption发生时，程序的session马上deactivate，停止或暂时audio。
+   在进入inactive状态后，session会给应用程序发送通知，这时候程序可以保
+   存状态，更新用户界面等。
+
+   经常，收到interruption后程序会shut down。一般是在用户决定接听电话时。
+   如果用户拒绝接听电话，那么程序会收到interruption-end消息并且应用程
+   序会继续运行。如果想让声音继续，那么audio session需要reactivated。
+
+   如果使用AVAudioPlayer类来播放声音，因为这个类自己处理reactivation，
+   所以不需要程序来reactivateion.
+
+   如果使用Audio Queue Services, OpenAL, I/O audio unit，那就需要手动
+   reactive audio session。
+
+   | 音频技术               | interruption行为                             |   |
+   |------------------------+----------------------------------------------+---|
+   | System Sound Services  | interruption开始时，System Sounds和alerts静  |   |
+   |                        | 音，当interruption end时，自动开始。用户无法 |   |
+   |                        | 改变这个行为                                 |   |
+   |------------------------+----------------------------------------------+---|
+   | Audio Queue Services,  | 通过自定义interruption listener callback处理 |   |
+   | OpenAL, I/O audio unit |                                              |   |
+   |------------------------+----------------------------------------------+---|
+   | AVAudioPlayer class    | AVAudioPlayer提供delegate methods处理        |   |
+   |                        | interruption的开始和结束。开始时会调用       |   |
+   |                        | audioPlayerBeginInterruption:方法，可以在这  |   |
+   |                        | 更新用户界面；结束时调用                     |   |
+   |                        | audioPlayerEndInterruption:方法，可以在这恢  |   |
+   |                        | 复播放。audio player负责reactivating         |   |
+   |                        | audio session                                |   |
+
+*** The Interruption Life Cycle
+
+*** Handling Interruptions
+
+    interruption回调函数的原型如下:
+
+#+BEGIN_SRC c
+    typedef void  (*AudioSessionInterruptionListener) (
+    void    *inClientData,
+    UInt32  inInterruptionState);
+#+END_SRC
+
+    第一个参数是初始化session的时候传入的用户数据。
+
+    第二个参数是interruption状态:
+    - kAudioSessionBeginInterruption -- audio session已经inactive，收
+      到这个消息时，程序应该假定将要退出。
+    - kAudioSessionEndInterruption -- 可以在这reactive audio session并
+      且恢复播放，或者返回合适的状态。如果用户选择接听电话，那么程序将
+      直接退出而收不到这个消息。
+
+      给程序添加interruption支持有三个步骤:
+    1. 定义函数用来实际处理interruption发生时应用程序的处理过程。
+    2. 定义callback函数，当interruption开始和结束时调用上面定义的函数。
+    3. 注册callback函数。
+
+** Audio Session Property Changes
+
+   当硬件状态改变时audio session会发出通知:
+   - 当audio imput有效时
+   - audio hardware route改变时
+   - 输入或输出音量变化时
+
+   可以注册一个或多个属性监听callback函数。原型如下:
+
+#+BEGIN_SRC c
+typedef void (*AudioSessionPropertyListener)(
+    void                     *inClientData,
+    AudioSessionPropertyID   inID,
+    UInt32                   inDataSize,
+    const void               *inData);
+#+END_SRC
+
+*** Audio Hardware Route Changes
+
+** Querying Hardware Characteristics(特征)
+
+   audio session能够提供很多硬件设定。这个设定可能会在运行时被改变，比
+   如，当用户插入耳机时输入的sample rate会改变。
+
+** Setting the Audio Output Route
+
+   为了方便，iPhone OS自动设置audio output route。
+
+   有时也可以通过编程的方式设置audio output route。
+
+** Developing With the Audio Session Inter face
+
+   给程序添加audio session支持以后，虽然程序可以在模拟器上运行，但是模
+   拟器不能模拟interruption行为。为了测试audio session代码的行为，只能
+   使用真实的iPhone。
+
+* Audio Session Cookbook
+
+** Initializing an Audio Session
+
+   要使用audio session object，首先要初始化它。大部分情况下只需要在程序
+   启动时初始化一次就够了。
+
+#+BEGIN_SRC c
+AudioSessionInitialize(
+    NULL,                            // 1
+    NULL,                            // 2
+    interruptionListenerCallback,    // 3
+    userData                         // 4
+);
+#+END_SRC
+
+   1. NULL代表使用默认的(main)run loop
+   2. NULL代表使用默认的run loop mode
+   3. interruption listener call函数
+   4. 用户数据
+
+** Activating and Deactivating an Audio Session
+
+#+BEGIN_SRC c
+AudioSessionSetActive (true);    // 1
+#+END_SRC
+
+   1. 使用true activate session, 用false则deactivate
+
+** Setting the Category
+
+   audio session category的默认值是kAudioSessionCategory_MediaPlayback。
+   下面的代码把category设置为"ambient sound"。
+
+#+BEGIN_SRC c
+UInt32 sessionCategory = kAudioSessionCategory_AmbientSound;    // 1
+AudioSessionSetProperty (
+    kAudioSessionProperty_AudioCategory,                        // 2
+    sizeof (sessionCategory),                                   // 3
+    &sessionCategory                                            // 4
+);
+#+END_SRC
+
+** Ensuring that Audio Continues When the Screen Locks
+
+   要想在屏幕锁定的时候声音能继续运行，必须为audio session设置category
+   而不能使用默认的audio session，(从iPhone OS 2.2开始)默认audio
+   session的category是kAudioSessionCategory_SoloAmbientSound。默认
+   audio session category的特征如下:
+   - 屏幕锁定时，用户按Sleep/Wake还有Auto-Lock时程序静音。
+   - 用户把Ring/Silent switch设置为"silent"时程序静音。
+   - 程序运行时，其它程序(比如iPod)被静音。
+
+   想要在屏幕锁定或者Ring/Silent switch设置为"silent"时不静音，可以使用
+   kAudioSessionCategory_MediaPlayback category。
+
+** Redirecting Output Audio
+
+#+BEGIN_SRC c
+UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;  // 1
+AudioSessionSetProperty (
+    kAudioSessionProperty_OverrideAudioRoute,                         // 2
+    sizeof (audioRouteOverride),                                      // 3
+    &audioRouteOverride                                               // 4
+);
+#+END_SRC
+
+** Responding to Audio Interruptions
+
+*** Implementing Interruption Delegate Methods for the AVAudioPlayer Class
+
+*** Defining Interruption Methods
+
+** Responding to Audio Hardware Route Changes
+
+*** Defining Audio Hardware Route Change Methods
+
+*** Defining a Property Listener Callback Function
+
+*** Registering Your Property Listener Callback with the Audio Session
+
+** Querying and Using Audio Hardware Characteristics
+
+*** Obtaining and Using the Hardware Sample Rate
+
+#+BEGIN_SRC c
+- (void) configureSampleRate {
+    UInt32 propertySize = sizeof (self.hardwareSampleRate);    // 1
+    AudioSessionGetProperty (                                  // 2
+        kAudioSessionProperty_CurrentHardwareSampleRate,
+        &propertySize,
+        &hardwareSampleRate
+    );
+    if (self.hardwareSampleRate == 0) {                        // 3
+        audioFormat.mSampleRate = 44100.0;
+    } else {
+        audioFormat.mSampleRate = self.hardwareSampleRate;
+    }
+}
+#+END_SRC
+
+*** Determining Whether a Mobile Device Supports Recording
+
+#+BEGIN_SRC c
+UInt32 audioInputIsAvailable;                            // 1
+UInt32 propertySize = sizeof (audioInputIsAvailable);    // 2
+AudioSessionGetProperty (                                // 3
+    kAudioSessionProperty_AudioInputAvailable,
+    &propertySize,
+    &audioInputIsAvailable
+);
+#+END_SRC
+
+** Providing Usage Guidelines
+
+   我们希望在录音的时候不要收到任何的interruption。但是iPhone没有任何方
+   式可以让audio session不接受interruption。为了让程序尽量不受到
+   interruption的干扰，可以这样:
+   1. 打开飞行模式
+   2. 在Calendar程序中取消alerms
+   3. 在Clock程序中取消clock alarms
+   4. 录音过程中不要动Ring/Silent switch
+   5. 录音过程中不要插拔耳机
+   6. 录音过程中插入充电器
