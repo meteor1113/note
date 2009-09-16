@@ -1,0 +1,36 @@
+Audio Session 编程指南(摘要翻译)
+
+* Audio Session 基础
+
+** 为什么iPhone OS需要管理Audio
+
+   一天早上你打开iPhone开始听podcast，你使用了iPhone内置的扬声器，音量
+   很大，这时候，你的妻子皱了下眉，你马上插上耳机继续听，这时iPhone自
+   动地使用耳机输出。可能你还会打开数独游戏，游戏和声音将和podcast的声
+   音合成到一起被听到。过了一会，podcast静音了，电话响了起来，你开始接
+   电话。当然你挂断电话的时候，podcast从刚才的地方继续播放。
+
+   这一切不需要你改变iPhone的声音设置。这一切都可以通过audio session获
+   得。
+
+   audio session可以让你的程序获得无缝的声音体验。事实上，任何一个使用
+   了AVAudioPlayer类，Audio Queue Services，OpenAL，或者I/O Audio Unit
+   的程序都必须使用Audio Session Services。
+
+** 什么是Audio Session
+
+   一个audio session是应用程序和iPhone OS之前的媒介。从应用程序启动开始就
+   自动地获得了一个单例的audio session。你可以配置audio session来表达应用
+   程序的意图。比如:
+
+   - 你希望你的应用程序的声音和其它正在运行的应用程序的声音合成还是让其
+     它应用程序静音?
+   - 你希望你的应用程序如何响应干扰，比如来电?
+   - 你的应用程序如何响应声音设备改变，比如用户插入一个耳机。
+
+   为了使用这些特性，可以根据需要多次配置audio session。audio session
+   的配置会影响除alerts和user-interface sound effects之外的所有声音。
+
+* Audio Sessions 如何工作
+
+* Audio Session 手册

@@ -1,3 +1,0 @@
-配置apache2使用能访问用户目录
-
-其实这个不需要配置，在用户目录下建立public_html的目录，然后在目录里放入index.html即可，这样就可以用ip/~username来访问了。

@@ -20,9 +20,13 @@ cvs学习
 # chown root:src history val-tags
 #+END_SRC
 
-不过好象这些设置有些不是必要的，直接apt-get install cvs之后好象debian已经配置好了。
+不过好象这些设置有些不是必要的，直接apt-get install cvs之后好象debian已
+经配置好了。
 
-要注意的主要是设置目录的权限，chmod的时候需要加上s位，否则某一个用户建立一个cvs后，同组的用户也只有只读权限了，因为umask的原因。s位表示当其它用户执行这个的时候会以这个用户的身份执行，这样就可以操作了。s位的设置是chmod g+s xxx。
+要注意的主要是设置目录的权限，chmod的时候需要加上s位，否则某一个用户建
+立一个cvs后，同组的用户也只有只读权限了，因为umask的原因。s位表示当其它
+用户执行这个的时候会以这个用户的身份执行，这样就可以操作了。s位的设置是
+chmod g+s xxx。
 
 ** cvs的使用
 
@@ -42,11 +46,14 @@ cvs import -m "my record" record v0_1 start
 
 cvs checkout record
 
-若已经checkout一次，则不需要再checkout，只需要更新一下就行了，进入到本地的re	cord目录，执行cvs update就行了
+若已经checkout一次，则不需要再checkout，只需要更新一下就行了，进入到本
+地的re cord目录，执行cvs update就行了
 
 如果不想更新只想看看有没有需要更新的东西，可以进入到record目录，执行cvs status
 
-想要提交某个文件的修改，比如ceo.c，执行cvs commit -m "add a what" ceo.c。或者直接使用cvs commit -m "about something"，这样cvs会自动查找哪些文件需要提交。
+想要提交某个文件的修改，比如ceo.c，执行cvs commit -m "add a what"
+ceo.c。或者直接使用cvs commit -m "about something"，这样cvs会自动查找哪
+些文件需要提交。
 
 ** cvs命令
 
@@ -68,6 +75,9 @@ cvs checkout record
 
 cvs tag record200411
 
-这条命令可以给cvs当前的项目指定一个时程碑，也即版本，以后可以通过这个版本导出某个版本的内容。如cvs checkout -r record200411 record
+这条命令可以给cvs当前的项目指定一个时程碑，也即版本，以后可以通过这个版
+本导出某个版本的内容。如cvs checkout -r record200411 record
 
-开发的时候cvs项目的每个目录下都有一个CVS目录，使用cvs export可以导出不带CVS目录的项目，不过只能针对一个tag或者日期导出。如cvs export -r record200411 record或cvs export -D now record
+开发的时候cvs项目的每个目录下都有一个CVS目录，使用cvs export可以导出不
+带CVS目录的项目，不过只能针对一个tag或者日期导出。如cvs export -r
+record200411 record或cvs export -D now record
