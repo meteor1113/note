@@ -64,6 +64,7 @@
      + [[file:linux/linux20080902.org][用vim作IDE]]
      + [[file:linux/linux20081222.org][automake备忘]]
      + [[file:linux/linux20081223.org][常用命令惯用法]]
+     + [[file:linux/linux20090921.org][grub2调整framebuffer分辨率]]
    + mac
      + [[file:mac/mac20041117.org][powerplant中broadcast和command的一点体会]]
      + [[file:mac/mac20041118.org][powerplant中view的click消息处理]]
