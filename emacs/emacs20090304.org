@@ -6,7 +6,9 @@ ropemacs是rope的emacs接口，ropemacs依赖于pymacs。
 
 pymacs是用来连接emacs和python的，有了它就可以在emacs中调用python了。
 
-要用ropemacs在emacs中进行python的补全，先要安装pymacs(当然最先得确保python已经安装上了)，然后顺序安装rope, ropemacs。在.emacs中写下下面代码来设置pymacs：
+要用ropemacs在emacs中进行python的补全，先要安装pymacs(当然最先得确保
+python已经安装上了)，然后顺序安装rope, ropemacs。在.emacs中写下下面代码
+来设置pymacs：
 
 #+BEGIN_SRC emacs-lisp
 ;;; Initialize Pymacs
@@ -25,6 +27,15 @@ pymacs是用来连接emacs和python的，有了它就可以在emacs中调用pyth
 (setq ropemacs-enable-autoimport t)
 #+END_SRC
 
-以后打开.py文件的话，emacs会加入一个rope的菜单。编辑python时按M-/就能显示python的补全了。
+以后打开.py文件的话，emacs会加入一个rope的菜单。编辑python时按M-/就能显
+示python的补全了。
 
-ps: 在osx里，emacs启动rope会出错，是因为emacs没有从系统继承PYTHONPATH这个环境变量。所以需要在.emacs的开头用setenv设置一个PYTHONPATH这个环境变量。
+ps: 在osx10.5里，emacs启动rope会出错，是因为emacs没有从系统继承PYTHONPATH这
+个环境变量。所以需要在.emacs的开头用setenv设置一个PYTHONPATH这个环境变
+量。
+
+2009-09-23: 今天重装了osx，发现其实在osx10.5中是不需要设置PYTHONPATH这
+个环境变量的。10.5默认安装的python-2.5.1默认的设置就可以找到安装好的
+rope/ropemacs等。上次安装后rope出错是因为没有用自带的python-2.5.1，而是
+重新安装了一个python-2.5.2，python-2.5.2默认没有找到rope/ropemacs才出问
+题。（另外，osx10.5默认安装的python-2.5.1里已经自带了wxPython-2.8.4）

@@ -48,6 +48,7 @@
      + [[file:emacs/emacs20090729.org][emacs里的可视化书签]]
      + [[file:emacs/emacs20090730.org][emacs-23.1发布]]
      + [[file:emacs/emacs20090807.org][emacs的Local Variables和vim的Modeline]]
+     + [[file:emacs/emacs20090922.org][company-0.4.3中ropemacs的问题]]
    + iphone
      + [[file:iphone/iphone20090915.org][Audio Session 编程指南(摘要翻译)]]
    + linux
@@ -77,6 +78,7 @@
      + [[file:mac/mac20050331.org][多线程及其它]]
      + [[file:mac/mac20050627.org][关于iterm的中文输入]]
      + [[file:mac/mac20080608.org][cocoa的KVO以及loadNib]]
+     + [[file:mac/mac20090923.org][OSX10.5中的git]]
    + other
      + [[file:other/db20080417.org][sqlite3, access, sqlserver2000的编码设置]]
      + [[file:other/doxygen20041130.org][用doxygen为程序生成文档]]
