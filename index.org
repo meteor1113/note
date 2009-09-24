@@ -51,6 +51,7 @@
      + [[file:emacs/emacs20090922.org][company-0.4.3中ropemacs的问题]]
    + iphone
      + [[file:iphone/iphone20090915.org][Audio Session 编程指南(摘要翻译)]]
+     + [[file:iphone/iphone20090924.org][SDK3.0免证书(iDP)联机调试]]
    + linux
      + [[file:linux/linux20041105.org][用screen挂bbs]]
      + [[file:linux/linux20041106.org][配置apache2使用能访问用户目录]]

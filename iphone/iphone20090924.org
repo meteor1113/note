@@ -1,0 +1,149 @@
+#+OPTIONS: ^:nil
+
+SDK3.0免证书(iDP)联机调试
+
+主要是跟着这个教程
+做的:http://www.cocoachina.com/bbs/read.php?tid-6040.html 。
+
+* 制作证书
+
+参照http://bbs.weiphone.com/read.php?tid=222380 的方法制作证书:
+
+从/Application/Utilities下打开Keychain Access.app
+
+[[file:images/iphone-keychain-01.png]]
+
+选择Keychain Access菜单的Cetificate Assistant -> Create a
+Certificate...
+
+[[file:images/iphone-keychain-02.png]]
+
+Create Your Certificate中，Name改为"iPhone Developer"。把"Let me
+override defaults"选中
+
+[[file:images/iphone-keychain-03.png]]
+
+Certificate Information中，Certificate Type选择"Code Signing"
+
+[[file:images/iphone-keychain-04.png]]
+
+填上个人信息
+
+[[file:images/iphone-keychain-05.png]]
+
+Key Pair Information不用改
+
+[[file:images/iphone-keychain-06.png]]
+
+Key Usage Extension也不用改
+
+[[file:images/iphone-keychain-07.png]]
+
+Extended Key Usage Extension使用选中"Code Signing"(默认为选中，不需要
+改)
+
+[[file:images/iphone-keychain-08.png]]
+
+Basic Constraints Extension和Subject Alternate Name Extension都保持默
+认就行
+
+Specify a Location For the Certificate的Keychain保持默认的"login"就行
+
+[[file:images/iphone-keychain-09.png]]
+
+这样就大功告成了，已经省下那99$了。可以在Keychain Access里看到刚才创建
+的证书
+
+[[file:images/iphone-keychain-10.png]]
+
+* 给XCode打补丁
+
+打开终端，执行如下代码:
+
+#+BEGIN_SRC sh
+#!/bin/bash
+cd /Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS\ Build\ System\ Support.xcplugin/Contents/MacOS/
+dd if=iPhoneOS\ Build\ System\ Support of=working bs=500 count=255
+printf "\x8f\x2a\x00\x00" >> working
+dd if=iPhoneOS\ Build\ System\ Support of=working bs=1 skip=127504 seek=127504
+/bin/mv -n iPhoneOS\ Build\ System\ Support iPhoneOS\ Build\ System\ Support.original
+/bin/mv working iPhoneOS\ Build\ System\ Support
+chmod a+x iPhoneOS\ Build\ System\ Support
+#+END_SRC
+
+或者下载这个文件([[file:attachment/iphone-xcode-patch.sh][iphone-xcode-patch.sh]])后用sudo执行。
+
+[[file:images/iphone-xcode-patch.png]]
+
+* 在终端执行如下命令
+
+#+BEGIN_SRC sh
+mkdir /Developer/iphoneentitlements30
+cd /Developer/iphoneentitlements30
+curl -O http://www.alexwhittemore.com/iphone/gen_entitlements.txt
+mv gen_entitlements.txt gen_entitlements.py
+chmod 777 gen_entitlements.py
+#+END_SRC
+
+或者把这个文件([[file:attachment/gen_entitlements.py][gen_entitlements.py]])下载后放到
+/Developer/iphoneentitlements30目录下，然后把文件权限改为777。这个文件
+在后面会用到。
+
+[[file:images/iphone-gen_entitlements.png]]
+
+* 修改/Developer/Platforms/iPhoneOS.platform/Info.plist文件
+
+添加以下两行:
+
+#+BEGIN_EXAMPLE
+PROVISIONING_PROFILE_ALLOWED = NO
+PROVISIONING_PROFILE_REQUIRED = NO
+#+END_EXAMPLE
+
+[[file:images/iphone-iphoneos-infoplist.png]]
+
+* 修改project
+
+XCode中打开你的project,在菜单project->New Build Phase > New Run Script
+Build Phase,那个script空白框,拷贝如下代码进去
+
+#+BEGIN_SRC sh
+export CODESIGN_ALLOCATE=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate
+if [ "${PLATFORM_NAME}" == "iphoneos" ]; then
+    /Developer/iphoneentitlements30/gen_entitlements.py "my.company.${PROJECT_NAME}" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent";
+    codesign -f -s "iPhone Developer" --resource-rules "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/ResourceRules.plist" \
+        --entitlements "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent"  "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/"
+fi
+#+END_SRC
+
+[[file:images/iphone-xcode-buildphase.png]]
+
+* 修改project的Info.plist文件
+
+增加下面这行:
+
+#+BEGIN_EXAMPLE
+SignerIdentity=iPhone Developer
+#+END_EXAMPLE
+
+[[file:images/iphone-project-infoplist.png]]
+
+"iPhone Developer"就是第一步创建的证书名字。
+
+到这一步，在XCode里选择Device就可以编译成功了。
+
+* iphone要安装MobileInstallation Patch
+
+在iphone中打开cydia(需要先安装cydia)，进入manage->sources->edit->Add,在
+网址输入框里面输入www.iphone.org.hk/adp/。完成后,进入sources 可以看到
+www.iphone.org.hk这个网站,然后进去,可以找到MobileInstallation Patch,点
+击安装即可. 安装完成重启手机。
+
+* 联机调试
+
+把iphone连接到电脑,提示连接成功后，通过xcode菜单window->Organizer里面,
+把iphone设为调试设备。
+
+现在把XCode的Active SDK从iPhone Simulator 3.0改为
+iPhone Device 3.0，然后Build and Go就可以把程序编译成armv6的格式，并自
+动安装到iPhone真机上调试运行了。

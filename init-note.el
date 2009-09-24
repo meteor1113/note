@@ -29,7 +29,7 @@
              :base-directory ,dir
              :publishing-directory ,pub-dir
              :recursive t
-             :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el"
+             :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el\\|sh\\|py"
              :exclude "init-note.el"
              :publishing-function org-publish-attachment)
             ("note" :components ("note-org" "note-static"))))))
