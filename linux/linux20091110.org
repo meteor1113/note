@@ -1,0 +1,25 @@
+在Linux下mount windows共享
+
+完全的命令如下：
+
+#+BEGIN_SRC sh
+mount -t smbfs -o username=guest,password=a@a,uid=1000,gid=1000,iocharset=utf8,codepage=cp936 //192.168.1.6/cata cata
+#+END_SRC
+
+其中：
+
+1.-t指定mount的文件系统类型，一般是smbfs，最新的内核要改为cifs(在
+ubuntu9.10中就必须用cifs了)。
+
+2.username和password选项分别是windows共享的用户名和密码。
+
+3.uid设置mount后文件夹的owner，gid设置设置文件夹的group。如果不设的话
+只有root用户有写权限，因为mount命令是root执行的。
+
+4.iocharset指定文件和目录名的字符集。(在RHEL4中不设这个也行，但在
+ubuntu9.10中却必须指定)
+
+5.codepage指定代码页。(ubuntu中不设也行，RHEL4中必须设，否则中文文件名
+是乱码)
+
+6.后面的两个参数分别表示windows共享和路径和本地映射的路径。
