@@ -1,0 +1,56 @@
+在gdb中查看stl容器
+
+(本文主要内容来自于http://sourceware.org/gdb/wiki/STLSupport)
+
+目前，gdb默认不能print出stl容器的内容，但是网上有好多种方案来做这件事，我
+试用了一下，比较方便的是以下两种：
+
+* gdb-stl-views
+
+这是由Dan Marinescu编写的一些宏，用来查看gdb容器内容，支持list,
+vector, map, multimap, set, multiset, dequeue, stack, queue,
+priority_queue, bitset, string, 以及widestring，从
+http://sourceware.org/gdb/wiki/STLSupport?action=AttachFile&do=view&target=stl-views-1.0.3.gdb
+可以下载这个文件，下载后把它放到用户目录下改名为.gdbinit。之后再进入
+gdb就可以用以下这些命令查看容器内容了：
+
+pvector, plist, pmap, pset, pdequeue, pstack, pqueue, ppqueue,
+pbitset, pstring, pwstring
+
+用help可以查看命令的帮助，比如help pvector。这个方法可以支持广泛的gdb
+版本，据说是GDB 4.3+都可以，我只在GDB 6.x和GDB 7.0使用过。不过好像目前不能
+支持MinGW中的GDB。
+
+* GDB 7.0
+
+GDB 7.0加入了python脚本支持，可以通过python编写pretty-printers用来显示
+stl容器。
+
+方法是通过svn下载python libstdc++ printers：
+
+svn co svn://gcc.gnu.org/svn/gcc/trunk/libstdc++-v3/python
+
+我把下载来的python目录放在用户目录下的.gdb下。之后在~/.gdbinit中加入下
+面的内容：
+
+#+BEGIN_SRC python
+python
+import sys
+import os
+p = os.path.expanduser('~/.gdb/python')
+print p
+if os.path.exists(p):
+    sys.path.insert(0, p)
+    from libstdcxx.v6.printers import register_libstdcxx_printers
+    register_libstdcxx_printers(None)
+end
+#+END_SRC
+
+这样就为stl容器安装好了pretty-printers，在GDB中直接print容器会直接
+print出容器内容，而不是以前那一堆乱七八糟的东西。
+
+这个方案的好处是直接用print完成，不用记很多的自定义宏，并且假如临时想
+看看gdb默认的输入，还可以用print /r来切换为raw模式的输出。
+
+不过麻烦的是必须在GDB 7.0及以后版本才能使用这么方便的功能，而当前很多
+系统上安装的GDB还是6.x甚至5.x的。所以只能寄希望于各发行版赶紧升级到GDB 7.0。

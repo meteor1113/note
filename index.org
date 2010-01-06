@@ -69,6 +69,7 @@
      + [[file:linux/linux20081223.org][常用命令惯用法]]
      + [[file:linux/linux20090921.org][grub2调整framebuffer分辨率]]
      + [[file:linux/linux20091110.org][在Linux下mount windows共享]]
+     + [[file:linux/linux20100106.org][在gdb中查看stl容器]]
    + mac
      + [[file:mac/mac20041117.org][powerplant中broadcast和command的一点体会]]
      + [[file:mac/mac20041118.org][powerplant中view的click消息处理]]
