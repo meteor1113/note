@@ -5,38 +5,69 @@
 网上关于如何用[[www.gnu.org/software/emacs][emacs]]+[[http://cedet.sourceforge.net][cedet]]做C++ IDE的文章已经很多了，可是大都只列出了配
 置文件和效果，没有讲清楚具体的配置过程；一篇讲得比较具体的文章
 (http://alexott.net/en/writings/emacs-devenv/EmacsCedet.html ,这篇文章
-是被cedet官方推荐的)又是英文的。刚接触cedet的用户经常照抄了别人的配置却
+是被cedet官方推荐的)还是英文的。刚接触cedet的用户经常照抄了别人的配置却
 发现不能补全，而且配置文件是别人的想改还无法下手。本文中我尽量详细解释
 各个语句的作用，希望能给初次接触的人提供点帮助。
-
-本文主要来源于我平时使用过程中积累的一点东西和上面网页提供的内容，从内
-容上来说上面网页的内容更充实一些，所以英文无障碍的同学直接打开上面的网
-址看英文就可以了。
 
 cedet于2010年2月26日发布了1.0pre7，强烈建议以前用过cedet觉得速度慢而放
 弃的同学试试1.0pre7，这个版本速度比以前有很大很大提高。
 
-* 安装
-
-安装就不说了，不会装的放狗去搜，[[http://emacser.com/install-cedet.htm][这儿]]也详细说明了如何下载安装。
-
-不过通过cvs下载必须要编译后才能用，而官方发布后的包其实直接解压不编译
-也是可以用的。
-
 * 简介
 
-* 配置
+cedet是一堆完全用elisp实现的emacs工具的集合，主要有：
 
-首先当然要load它(确保安装的路径已经在load-path中了)：
+** EDE
+
+用来管理项目，它可以把emacs模拟得像一个IDE那样，把一堆文件作为一个
+project来管理。
+
+** Semantic
+
+Semantic应该是cedet里用得最多的组件了，代码间跳转和自动补全这两大功能
+都是通过semantic来实现的。
+
+** SRecode
+
+SRecode是一个模板系统，通过一些预定义的模板，可以很快地插入一段代码。
+个人觉得这个功能跟msf-abbrev和yasnippet的功能有些类似。
+
+** Cogre
+
+全称叫"Connected Graph Editor"，主要和图形相关，比如可以用它来为C++类
+生成UML图。
+
+** Speedbar
+
+Speedbar可以单独创建一个frame，用于显示目录树，函数列表等等。这个组件
+已经包含在emacs官方发布包中。
+
+** EIEIO
+
+EIEIO是一个底层库，它为elisp加入了OO支持。cedet的其它组件都依赖于EIEIO。
+
+* 安装
+
+安装就不多说了，[[http://emacser.com/install-cedet.htm][这儿]]详细说明了如何下载安装。
+
+要注意的是通过cvs下载必须要编译后才能用，而官方发布后的包可以直接解压不
+编译也是能用。
+
+安装完后首先当然要load它(确保安装的路径已经在load-path中了)：
 
 #+BEGIN_SRC emacs-lisp
 (require 'cedet)
 #+END_SRC
 
-一般装插件的思路，都是先load然后enable某个minor mode。cedet基本上也遵
-循这个规则，不过有点区别是cedet定义了很多个mode，要是挨个去enable，用
-户可能就要骂娘了，所以cedet的作者Eric定义了几个方便使用的函数，这些函
-数会自动帮你enable某些minor mode，大概有这么几个：
+* semantic配置
+
+先介绍一下最常用的semantic。
+
+** 功能介绍
+
+一般装插件的思路，都是先load然后enable某个minor mode。cedet基本上也遵循
+这个规则，不过有点区别是semantic定义了很多个mode，要是挨个去enable，用
+户可能就要骂娘了，所以cedet的作者Eric定义了几个方便使用的函数，这些函数
+会自动帮你enable某些minor mode，大概有这么几个：
 
 #+BEGIN_SRC emacs-lisp
 (semantic-load-enable-minimum-features)
@@ -48,212 +79,566 @@ cedet于2010年2月26日发布了1.0pre7，强烈建议以前用过cedet觉得�
 
 简单介绍一下各个函数的功能：
 
-** semantic-load-enable-minimum-features
+*** semantic-load-enable-minimum-features
 
-这个函数enable了最基本的三个特性：
+这个函数开启了最基本的三个特性：
 
-*** semantic-idle-scheduler-mode
+**** semantic-idle-scheduler-mode
 
 enable这个mode让cedet在emacs空闲的时候自动分析buffer内容，比如正在编辑
 的buffer内容改变后。这个mode一般应该是需要enable的，如果没有enable这个
 mode，那只有手工触发才会让cedet重新分析。
 
-*** semanticdb-minor-mode
+**** semanticdb-minor-mode
 
 semanticdb是semantic用来保存分析后的内容的，所以也是应该enable的。
 
-*** semanticdb-load-ebrowse-caches
+**** semanticdb-load-ebrowse-caches
 
-** semantic-load-enable-code-helpers
+这个feature我不是很确定，大概的意思好像是semantic可以利用ebrowse的结
+果。这个feature大概就是把ebrowse生成的文件load给semantic使用。(要是谁
+了解这个feature具体意义请告诉我下)
+
+*** semantic-load-enable-code-helpers
 
 这个函数除enable semantic-load-enable-minimum-features外，还包括：
 
-*** imenu
+**** imenu
 
-*** semantic-idle-summary-mode
+这个feature可以让imenu显示semantic分析出的类，函数等tags。如图：
 
-*** senator-minor-mode
+[[file:./images/emacs-semantic-imenu.jpg]]
 
-*** semantic-mru-bookmark-mode
+**** semantic-idle-summary-mode
 
-** semantic-load-enable-gaudy-code-helpers
+打开这个mode之后，光标停留在一个类/函数等tag上时，会在minibuffer显示出
+这个函数原型，如图：
+
+[[file:./images/emacs-semantic-idle-summary.jpg]]
+
+**** senator-minor-mode
+
+senator开启之后，会在emacs上增加一个senator的菜单，可以通过菜单在当前
+文件的各个tag之间前后移动，跳转；还可以在里面方便地打开/关闭某个
+feature；还有另外一些实用的功能，看看菜单大概就能明白：
+
+[[file:./images/emacs-semantic-senator-menu.jpg]]
+
+**** semantic-mru-bookmark-mode
+
+cedet有tag跳转的功能，但是经常跳转完后还需要跳回刚才的位置，这时候就需
+要mru-bookmark-mode了。打开这个mode之后，每次跳转semantic都会把位置当
+作书签一样记录下来，以后可以通过M-x semantic-mrub-switch-tags（绑定到
+按键C-x B上）来选择跳回以前的任意一个位置。
+
+*** semantic-load-enable-gaudy-code-helpers
 
 这个函数除enable semantic-load-enable-code-helpers之外，还包括：
 
-*** semantic-stickyfunc-mode
+**** semantic-stickyfunc-mode
 
-*** semantic-decoration-mode
+这个mode会根据光标位置把当前函数名显示在buffer顶上，如图：
 
-*** semantic-decoration-on-includes
+[[file:./images/emacs-semantic-stickyfunc.jpg]]
 
-*** semantic-idle-completions-mode
+这个mode我觉得用处不大，因为基本上可以用which-func-mode代替。而且我习
+惯打开tabbar-mode，这个mode会覆盖tabbar-mode，所以我是不打开它的。
 
-** semantic-load-enable-excessive-code-helpers
+**** semantic-decoration-mode
+
+打开这个mode后，semantic会在类/函数等tag上方加一条蓝色的线，源文件很大
+的时候用它可以提示出哪些是类和函数的头。如图：
+
+[[file:./images/emacs-semantic-decoration.jpg]]
+
+**** semantic-idle-completions-mode
+
+这个mode打开后，光标在某处停留一段时间后，semantic会自动提示此处可以补
+全的内容。比如下面这段代码：
+
+[[file:./images/emacs-semantic-idle-complete-1.jpg]]
+
+如果把光标停留在"this->"的后面，稍隔一会会提示：
+
+[[file:./images/emacs-semantic-idle-complete-2.jpg]]
+
+如果提示的函数不是需要的，按TAB键可以在各个可能的函数之间循环，按回车
+就可以确定了。
+
+*** semantic-load-enable-excessive-code-helpers
 
 这个函数除enable semantic-load-enable-gaudy-code-helpers之外，还包括：
 
-*** semantic-highlight-func-mode
+**** semantic-highlight-func-mode
 
-*** semantic-idle-tag-highlight-mode
+打开这个mode的话，semantic会用灰的底色把光标所在函数名高亮显示，如下图
+中，函数Delete被高亮了，而LexicalCast没被高亮：
 
-*** semantic-decoration-on-*-members
+[[file:./images/emacs-semantic-highlight-func.jpg]]
 
-*** which-func-mode
+**** semantic-idle-tag-highlight-mode
 
-** semantic-load-enable-semantic-debugging-helpers
+用过XCode或eclipse的人应该会喜欢高亮光标处变量的功能：就是在函数内部，
+光标停留在一个变量上，整个函数内部用这个变量的地方都高亮了。在emacs里只
+要打开idle-tag-highlight-mode，光标在变量处停留一会，就会把相同的变量
+全都高亮，比如下图中的变量mAddr：
+
+[[file:./images/emacs-semantic-idle-tag-highlight.jpg]]
+
+semantic的这个tag-highlight虽然智能，可是我感觉它显示得太慢了，所以我是
+用另一个插件[[http://nschum.de/src/emacs/highlight-symbol/][highlight-symbol]]来高亮的，[[http://emacser.com/highlight-symbol.htm][这儿]]有它的介绍。
+
+**** semantic-decoration-on-*-members
+
+把private和protected的函数用颜色标识出来，如图：
+
+[[file:./images/emacs-semantic-decoration-on-star.jpg]]
+
+**** which-func-mode
+
+这个其实就是emacs自带的which-function-mode，把光标当前所在的函数名显示
+在mode-line上。
+
+*** semantic-load-enable-semantic-debugging-helpers
 
 这个函数会enable几个和调试semantic相关的特性：
 
-*** semantic-highlight-edits-mode
+**** semantic-highlight-edits-mode
 
-*** semantic-show-unmatched-syntax-mode
+打开这个mode后，emacs会把最近修改过的内容高亮出来，如下图中begin就是刚
+输入的，所以用灰底色高亮了：
 
-*** semantic-show-parser-state-mode
+[[file:./images/emacs-semantic-highlight-edits.jpg]]
 
+隔一段时间后高亮会自动取消，不会一直高亮着让整个buffer看起来混乱。
+
+其实emacs自带也有高亮修改内容的mode：highlight-changes-mode，它会用红色
+的字体高亮所有修改的内容，但是不会自动取消，所以修改多了整个buffer就会
+乱七八糟糕。用semantic这个就好多了。
+
+**** semantic-show-unmatched-syntax-mode
+
+这个mode会把semantic解析不了的内容用红色下划线标识出来，比如下面这个文
+件是从emacs源代码中来的：
+
+[[file:./images/emacs-semantic-highlight-unmatched-syntax.jpg]]
+
+**** semantic-show-parser-state-mode
+
+打开这个mode，semantic会在modeline上显示出当前解析状态，这是关闭mode的
+样子：
+
+[[file:./images/emacs-semantic-show-parse-1.jpg]]
+
+这是打开mode的样子：
+
+[[file:./images/emacs-semantic-show-parse-2.jpg]]
+
+能看出modeline上文件名前的横线多了一条，其实倒数第二条就是用来显示当前
+semantic解析状态的：未解析时显示为"!"，正在解析时显示"@"，解析完后显示
+"-"，如果buffer修改后未重新解析显示为"^"。
+
+semantic会在空闲时自动解析，另外可以打开senator-minor-mode，按[C-c ,
+,]或者在senator菜单中选[Force Tag Refresh]强制它马上解析。
+
+** 基本配置
+
+了解了上面这些feature，就可以根据需要配置了，为了使用semantic，至少需要
+开启semantic-load-enable-minimum-features定义的三个基础feature，其余的
+feature就可以根据自己的需要开启了。比如我的配置是：
+
+#+BEGIN_SRC emacs-lisp
+;; (semantic-load-enable-minimum-features)
+(semantic-load-enable-code-helpers)
+;; (semantic-load-enable-guady-code-helpers)
+;; (semantic-load-enable-excessive-code-helpers)
+(if window-system
+    (semantic-load-enable-semantic-debugging-helpers)
+  (progn (global-semantic-show-unmatched-syntax-mode 1)
+         (global-semantic-show-parser-state-mode 1)))
+#+END_SRC
+
+因为imenu,idle-summary-mode,senator-mode,mru-bookmark-mode都是我需要
+的。特别是senator，有时候我会碰到semantic等很久也不自动解析文件的问题，这
+时候就需要在senator菜单里[Force Tag Refresh]一下了，并且senator还可以
+通过菜单方便地打开和关闭某些mode，用起来还是很方便的。
+
+(semantic-load-enable-guady-code-helpers)和
+(semantic-load-enable-excessive-code-helpers)定义的那些feature，对我来
+说用处不大，而且我感觉打开的话还会让emacs反应变慢，所以我就不启用了。
+
+(semantic-load-enable-semantic-debugging-helpers)的几个feature我都比较
+喜欢，但是在终端下，highlight-edits-mode这个mode让buffer看起来太混乱
+了，所以我只在GUI下才启用highlight-edits-mode。
+
+有了这些基本配置，在emacs打开C和C++文件的时候，semantic就会自动解析文
+件。不过有个问题，一个cpp文件中肯定会include很多头文件，要想解析这个
+cpp的内容，头文件的信息是必要的；但是头文件可能和cpp放在一起，也可能放
+在系统某个目录下，semantic怎么才能找到这个头文件一起解析呢？
+
+semantic是这样处理的：1、如果当前目录中能找到，就直接在当前文件中读取头
+文件。2、如果当前目录下没有，就上系统INCLUDE目录中去找（在Linux下，我们
+一般使用gcc编译器，semantic会自动调用gcc，取得gcc的INCLUDE目录，比如
+/usr/include,/usr/local/include等，但是Windows下就不行了）。
+
+BTW：很多文档中提到需要load semantic-gcc，不过我没有load它，在Linux下
+semantic仍然能自动把gcc的INCLUDE目录加进来。
+
+semantic这种找法肯定会造成大量的头文件找不到的(找不到头文件还怎么解析
+啊)，有两个问题需要解决：1、很多工程中都会把头文件和实现文件分开放置，
+比如头文件放在include(或者inc,public,common等)目录中，实现文件放在src目
+录中，这些目录semantic是不能自己找的；2、在Windows下怎么能让semantic去
+找编译器的INCLUDE目录。
+
+既然semantic不能自动查找找，那就只能我们告诉semantic了，办法是调用
+semantic-add-system-include函数，这个函数会根据mode把路径加入到
+semantic-dependency-system-include-path里去。下面是我的配置：
+
+#+BEGIN_SRC emacs-lisp
+;; (setq semanticdb-project-roots (list (expand-file-name "/")))
+(defconst cedet-user-include-dirs
+  (list ".." "../include" "../inc" "../common" "../public"
+        "../.." "../../include" "../../inc" "../../common" "../../public"))
+(defconst cedet-win32-include-dirs
+  (list "C:/MinGW/include"
+        "C:/MinGW/include/c++/3.4.5"
+        "C:/MinGW/include/c++/3.4.5/mingw32"
+        "C:/MinGW/include/c++/3.4.5/backward"
+        "C:/MinGW/lib/gcc/mingw32/3.4.5/include"
+        "C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include"))
+(require 'semantic-c nil 'noerror)
+(let ((include-dirs cedet-user-include-dirs))
+  (when (eq system-type 'windows-nt)
+    (setq include-dirs (append include-dirs cedet-win32-include-dirs)))
+  (mapc (lambda (dir)
+          (semantic-add-system-include dir 'c++-mode)
+          (semantic-add-system-include dir 'c-mode))
+        include-dirs))
+#+END_SRC
+
+因为我在Windows下可能用MinGW和VC6，所以我把它们的include目录都加进来
+了，要是你用别的编译器，就改成自己的目录好了。
+
+另外，我找了一些一般项目中经常用到的头文件目录名
+(include,inc,common,public)，把它们也加进来了，这样对于一般的项目来说基
+本上都能解析正确（比如我们在项目中见到头文件放在include目录实现文件放在
+src目录的方式，对src目录下一个cpp文件，通过“../include”这个路径就能找到
+对应的头文件）。如果你的项目中还用了其它一些目录名，也可以配置在这儿。
+
+上面配置中那一行(require 'semantic-c nil 'noerror)是必须的，因为
+semantic的大部分功能是autoload的，如果不在这儿load semantic-c，那打开一
+个c文件时会自动load semantic-c，它会把
+semantic-dependency-system-include-path重设为/usr/include，结果就造成前
+面自定义的include路径丢失了。
+
+顺便说一下semanticdb-project-roots的配置，很多地方都说要把它配置成
+"/"，但是我在Linux/Mac/Windows都试验过，不配这一行并没什么影响。
+
+解析文件是semantic基本高级功能的基础，正确地解析了文件我们才能实现：代
+码跳转和代码补全。
+
+** 代码跳转
+
+有了前面的配置，semantic自动就解析c/c++文件，解析完后跳转就容易了：光标
+放在函数上，执行M-x semantic-ia-fast-jump，马上就跳转到函数的定义上了。
+如果跳不过去，那就检查一下前面配置的INCLUDE路径，是不是当前文件include
+的所有头文件都能在INCLUDE中找到。如果检查了很多遍都不好用，那就换个项目
+或者别的文件试试，确实存在semantic对某些文件支持不太好的情况，比如
+boost。
+
+semantic-ia-fast-jump这个功能如此常用，我就把它绑定到f12上去了。
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key [f12] 'semantic-ia-fast-jump)
+#+END_SRC
+
+另外，前面我们说过跳转过去了我们还需要跳回来，在打开mru-bookmark-mode
+的情况下，按[C-x B]，emacs会提示你跳回到哪个地方，一般默认的就是上一次
+semantic-ia-fast-jump的位置，所以回车就可以回去了。
+
+不过看代码时候我经常需要跳转后马上就跳回来，要按[C-x B] [RET]这么多键实
+在有点麻烦，所以我写了个函数不提示直接就跳回上次的位置，并把它绑定到
+shift+f12上了：
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key [S-f12]
+                (lambda ()
+                  (interactive)
+                  (if (ring-empty-p (oref semantic-mru-bookmark-ring ring))
+                      (error "Semantic Bookmark ring is currently empty"))
+                  (let* ((ring (oref semantic-mru-bookmark-ring ring))
+                         (alist (semantic-mrub-ring-to-assoc-list ring))
+                         (first (cdr (car alist))))
+                    (if (semantic-equivalent-tag-p (oref first tag)
+                                                   (semantic-current-tag))
+                        (setq first (cdr (car (cdr alist)))))
+                    (semantic-mrub-switch-tags first))))
+#+END_SRC
+
+除了semantic-ia-fast-jump可以跳转之外，其实semantic中还有两个函数也有
+类似的功能：
+
++ semantic-complete-jump-local
++ semantic-complete-jump
+
+看名字很容易看出来，前一个只能在当前buffer内跳转，后一个可以跳转到其它
+文件。不过这两个命令都需要用户手工输入要跳转的Tag名，不能像
+semantic-ia-fast-jump那样自动识别当前光标处单词，所以浏览代码时还是
+semantic-ia-fast-jump舒服。
+
+cedet还有个功能在函数和声明和实现间跳转，一般的，函数声明放在h文件中，
+函数的实现放在cpp文件中，光标在函数体的时候通过M-x
+semantic-analyze-proto-impl-toggle可以跳到函数声明去，在声明处再执行的
+话就会再跳回函数体，我把它绑定到M-S-F12上了：
+
+#+BEGIN_SRC emacs-lisp
+(define-key c-mode-base-map [M-S-f12] 'semantic-analyze-proto-impl-toggle)
+#+END_SRC
+
+不是这个功能不是十分准确，一般在cpp中函数实现处想跳到函数声明处正常，但
+是从声明处跳到实现处的话cedet不一定能找到cpp文件的位置。
+
+** 代码补全
+
+semantic中有4个用来代码补全的命令：
+
++ senator-complete-symbol
++ senator-completion-menu-popup
++ semantic-ia-complete-symbol
++ semantic-ia-complete-symbol-menu
+
+senator-complete-symbol和semantic-ia-complete-symbol这两个函数是新开一
+个buffer提示可能的补全内容；而senator-completion-menu-popup和
+semantic-ia-complete-symbol-menu会弹出一个补全菜单。
+
+至于功能，以senator开头的两个函数是调用senator补全，另外两个是调用
+semantic-ia补全。至于senator和semantic-ia的区
+别，[[http://alexott.net/en/writings/emacs-devenv/EmacsCedet.html#sec9]]是
+这样解释的：
+
+“semantic-ia调用semantic-analyze-possible-completions函数来取得可能的补
+全内容，它能为用户提供精确的补全列表；而senator用了一个更简单的的函数来
+获取补全内容，所以有可能会提供错误的结果。”
+
+也就是说semantic-ia的补全更智能一些。
+
+至于semantic-ia这两个补全选哪一样就看各人喜好了，我喜欢用
+semantic-ia-complete-symbol-menu，因为看起来更直观一些，像这样：
+
+[[file:./images/emacs-semantic.png]]
+
+我喜欢把它绑定到[Alt+n]上：
+
+#+BEGIN_SRC emacs-lisp
+(define-key c-mode-base-map (kbd "M-n") 'semantic-ia-complete-symbol-menu)
+#+END_SRC
+
+不过semantic-ia-complete-symbol-menu只能用于GUI下，要是在终端下，就只能
+用semantic-ia-complete-symbol了。(终端下想要
+semantic-ia-complete-symbol一样的结果可以用别的插件，比如auto-complete
+或者company-mode)
+
+如果启用了semantic-idle-completions-mode，不用按键只需要光标在.或者->后
+面停一会semantic就会自动开始补全了。
+
+如果你用cedet不能补全，检查一下semantic是不是已经启用了，我的emacs上经
+常出现第一次打开c++-mode时semantic没自动启用的情况。看semantic是否正常
+有个直观的方法就是senator，如果启用了senator-minor-mode，打开c++文件时
+emacs会出现Senator菜单，如果没有Senator菜单你可以关掉再重新打开试试，
+要是仍然不出现菜单那就得检查配置是不是有问题。
+
+如果确认semantic启用了仍然不能补全，就需要检查INCLUDE路径的配置，通过
+C-h v semantic-dependency-system-include-path RET检查INCLUDE路径，确保
+当前cpp中直接或间接include的头文件都能在INCLUDE路径中找到。
+
+* EDE配置
+
+EDE是用来管理project的工具，用下面的代码启用它：
+
+#+BEGIN_SRC emacs-lisp
+(global-ede-mode t)
+#+END_SRC
+
+EDE会在emacs中加一个叫做“Project”的菜单：
+
+[[file:./images/emacs-ede-menu.jpg]]
+
+通过菜单可以创建project，往project里添加/移除文件；还可以编译project，
+不过好像只能通过已有的Makefile编译。
+
+另外EDE还可以通过Speedbar显示整个project的目录树(见右边的Speedbar)：
+
+[[file:./images/emacs-ede-tree.jpg]]
+
+EDE可以支持四种类型的project：
+
+- Automake
+- 手工写的Makefile
+- C++ Root project
+- Simple project
+
+并且EDE能解析Autoconf/Automake，如果打开一个文件时在当前或者上级目录中
+能找到Makefile.am文件，EDE会自动解析文件(认为这是一个Automake的
+project)，识别出Makefile.am中定义的target和编译需用到的文件；打开目录树
+的话EDE能由Makefile.am中涉及到的文件生成目录树（上图的目录树就是EDE通过
+Makefile.am自动生成的）。
+
+为了让semantic找到C/C++的头文件，前面是通过调用
+semantic-add-system-include把系统中可能出现的INCLUDE目录都告诉semantic
+的来实现的。其实semantic还可以通过EDE识别project中特定的INCLUDE目录，方
+法是在.emacs文件中定义C++ Root project，比如：
+
+#+BEGIN_SRC emacs-lisp
+(setq libutil-project
+      (ede-cpp-root-project "libutil"
+                            :file "~/projects/libutil/configure.in"
+                            :system-include-path '("/home/meteor1113/projects/include"
+                                                   "/home/meteor1113/projects/common"
+                                                   "/home/meteor1113/projects/libutil/pub")))
+(setq test-project
+      (ede-cpp-root-project "test"
+                            :file "~/test/Makefile"
+                            :system-include-path '("/test/include"
+                                                   "/usr/include/boost-1.42")))
+#+END_SRC
+
+上面定义了两个project，并且设定了各个project各自的INCLUDE目录。
+
+不过这种方式有两个缺点：
+
+- 不能支持常见的Makefile/Makefile.am型project。
+- 我不愿意为每个project都定义这样一个project，对于每天都要自己写代码的
+  项目生成个C++ Root project还可以接受，有时候只是临时阅读一下其它项
+  目，要是还要为它写个EDE的project配置就太麻烦了。
+
+所以这个功能我也一直没用过，有问题的请参考官方文档。我觉得把所有可能的
+目录都加进system-include里更方便。
 
 * 其它
 
-在emacs中用gdb调试c/c++还是很方便的，不过一直以来用惯了vc6，按起gud默
-认的按键来说确实不很方便，所以就作了一些按键映射来模仿vc6的调试：
+** 可视化书签
+
+emacs有自带的书签功能(c-x r m, c-x r b, c-x r l)，不过对于用了多年VC6
+的我来说还是更习惯让一个书签能高亮显示出来。cedet里就带了一个可视化的
+书签，通过下面的语句可以启用它：
 
 #+BEGIN_SRC emacs-lisp
-(setq gdb-many-windows t)
-(global-set-key [f5] 'gdb)
-(global-set-key [C-f5] 'gud-run)
-(global-set-key [S-f5] 'gud-cont)
-(global-set-key [f7] 'compile)
-(global-set-key [f8] 'gud-print)
-(global-set-key [C-f8] 'gud-pstar)
-(global-set-key [f9] 'gud-break)
-(global-set-key [C-f9] 'gud-remove)
-(global-set-key [f10] 'gud-next)
-(global-set-key [C-f10] 'gud-until)
-(global-set-key [S-f10] 'gud-jump)
-(global-set-key [f11] 'gud-step)
-(global-set-key [C-f11] 'gud-finish)
+(enable-visual-studio-bookmarks)
 #+END_SRC
 
-用上面的配置，emacs中:
+之后就可以通过下面几个按键操作书签了：
 
-+ 在c/c++-mode中按f７,就会调用make编译程序。
-+ 在c/c++-mode中按f5,就会进入gdb调试。
-+ 打开gdb后在源代码buffer中按f9设置断点，相当于gdb中的break。
-+ 按Ctrl+f9就可以删除断点，相当于gdb中的delete。
-+ 在gdb buffer中，按Ctrl+f5就开始执行程序，相当于gdb中的run。
-+ 断点之后，可以按f10单步执行，相当于gdb中的next。
-+ 把光标移动到某处按Ctrl+f10，会一直执行光标位置，相当于gdb的until。
-+ 把光标移动到某处按Shift+f10，会jump到光标位置，下一次会从光标处执行。
-+ 也可以按f11单步执行，不过f11会进入函数内部，相当于gdb中的step。
-+ 按Ctrl+f11可以跳出当前函数，相当于gdb中的finish。
-+ 在断点处按Shift+f5继续执行程序，相当于gdb中的continue。
-+ 在变量上按f8会输出变量的值，相当于gdb的print。
-+ 在变量上按Ctrl+f8会打印出指针对应的值。
++ F2     在当前行设置或取消书签
++ C-F2   查找下一个书签
++ S-F2   查找上一个书签
++ C-S-F2 清空当前文件的所有书签
 
-可是用上面的配置和vc6还是有一些地方不太一样，主要有：
+看这个效果：
 
-+ vc6中是用f9来切换断点，而不是设置两个键来分别设置和删除断点。
-+ 上面按键中的f5/C-f5/S-f5在vc中统一用f5，会根据当前状态自动选择。
-+ vc6中按Shift+f5可以中止当前调试，而gud中只能输入命令quit。
+[[file:./images/emacs-eieio-visual-bookmarks.jpg]]
 
-可惜在gud中我没找到和上面这三个对应的方法，所以经过几天的折腾，我自己写
-了几个函数，首先是(gdb-or-gud-go)，这个函数会自动判断gdb是否已启动，如
-果没启动就调用(gdb)启动，否则就调用(gud-go)，(gud-go)会根据程序是否在运
-行来决定执行(gud-run)还是(gud-cont)：
+
+有点遗憾的是这个书签功能只能在当前buffer的书签间跳转。
+
+** pluse
+
+使用semantic-ia-fast-jump跳转时，cedet有个很酷的效果：在跳转到的行上实
+现一个淡入淡出的效果。具体的分析和使用看[[http://emacser.com/pulse.htm][这儿]]。
+
+** h/cpp切换
+
+cedet的contrib目录下有一些实用的小功能，比如eassist.el就提供了一个在
+C++的头文件和实现文件间跳转的小功能。
+
+要使用这个功能首先要load它：
 
 #+BEGIN_SRC emacs-lisp
-(defun gdb-or-gud-go ()
-  "If gdb isn't running; run gdb, else call gud-go."
-  (interactive)
-  (if (and gud-comint-buffer
-           (buffer-name gud-comint-buffer)
-           (get-buffer-process gud-comint-buffer)
-           (with-current-buffer gud-comint-buffer (eq gud-minor-mode 'gdba)))
-      (gud-call (if gdb-active-process "continue" "run") "")
-    (gdb (gud-query-cmdline 'gdb))))
+(require 'eassist nil 'noerror)
 #+END_SRC
 
-然后是(gud-break-remove)，这个函数会根据当前行是否设置了断点来决定设置
-或删除断点：
+之后就可以通过命令M-x eassist-switch-h-cpp来切换了，我喜欢把它绑定到
+M-F12上：
 
 #+BEGIN_SRC emacs-lisp
-(defun gud-break-remove ()
-  "Set/clear breakpoin."
-  (interactive)
-  (save-excursion
-    (if (eq (car (fringe-bitmaps-at-pos (point))) 'breakpoint)
-        (gud-remove nil)
-      (gud-break nil))))
+(define-key c-mode-base-map [M-f12] 'eassist-switch-h-cpp)
 #+END_SRC
 
-最后是(gud-kill)，本来一开始我是想用(gud-call)向gdb发送"quit"命令来退
-出gdb，可是在运行的时候发送quit，gdb会询问是否退出，必须回答y才能真正
-退出，这样显得有点麻烦。而在gdb的菜单中提供了一个Kill命令其实是可以退
-出gdb的，所以我模仿kill的代码写了(gud-kill)来直接杀死调试进程：
+这个功能是依赖semantic的，也就是说通过cpp找头文件时它也会上配置好的
+INCLUDE路径中去查找，不过如果通过头文件找cpp文件，好像只能找和头文件所
+在的同一目录了。
+
+eassist-switch-h-cpp有个BUG：它是通过文件扩展名来匹配的(通过
+eassist-header-switches可配置)，默认它能识别h/hpp/cpp/c/C/H/cc这几个扩
+展名的文件；但是C++的扩展名还可能会有别的，比如c++,cxx等，对一个扩展名
+为cxx的文件调用eassist-switch-h-cpp的话，它会创建一个新buffer显示错误信
+息。所以我把eassist-header-switches配置为：
 
 #+BEGIN_SRC emacs-lisp
-(defun gud-kill ()
-  "Kill gdb process."
-  (interactive)
-  (with-current-buffer gud-comint-buffer (comint-skip-input))
-  (kill-process (get-buffer-process gud-comint-buffer)))
+(setq eassist-header-switches
+      '(("h" . ("cpp" "cxx" "c++" "CC" "cc" "C" "c" "mm" "m"))
+        ("hh" . ("cc" "CC" "cpp" "cxx" "c++" "C"))
+        ("hpp" . ("cpp" "cxx" "c++" "cc" "CC" "C"))
+        ("hxx" . ("cxx" "cpp" "c++" "cc" "CC" "C"))
+        ("h++" . ("c++" "cpp" "cxx" "cc" "CC" "C"))
+        ("H" . ("C" "CC" "cc" "cpp" "cxx" "c++" "mm" "m"))
+        ("HH" . ("CC" "cc" "C" "cpp" "cxx" "c++"))
+        ("cpp" . ("hpp" "hxx" "h++" "HH" "hh" "H" "h"))
+        ("cxx" . ("hxx" "hpp" "h++" "HH" "hh" "H" "h"))
+        ("c++" . ("h++" "hpp" "hxx" "HH" "hh" "H" "h"))
+        ("CC" . ("HH" "hh" "hpp" "hxx" "h++" "H" "h"))
+        ("cc" . ("hh" "HH" "hpp" "hxx" "h++" "H" "h"))
+        ("C" . ("hpp" "hxx" "h++" "HH" "hh" "H" "h"))
+        ("c" . ("h"))
+        ("m" . ("h"))
+        ("mm" . ("h"))))
 #+END_SRC
 
-其实上面这些函数主要是模仿gdb-ui.el中的某些函数写出来的，有了这些函数，我
-就可以把f5绑定到(gdb-or-gud-go)，把Shift-f5绑定到(gud-kill)，把f9绑定
-到(gud-break-remove)：
+基本上所有C/C++的扩展名都包含了，同时ObjectiveC也可以用了。
+
+** 代码折叠
+
+从我开始用emacs开始就听大虾们说hs-minor-mode可以实现代码折叠，所以我
+的.emacs里一直把hs-minor-mode打开的，可是用了5年之后我发现还是不习惯它
+的按键，另外也不是很喜欢它显示的样子，5年来Hide/Show这个菜单对我来说基
+本上是个摆设。
+
+我期待像eclipse那样可以通过鼠标在直接点击就可以打开和折叠代码，这个功能
+在cedet也实现了(可惜这么长时间一直没发现它)，就是
+semantic-tag-folding.el(也在cedet的contrib目录下)。
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key [f5] 'gdb-or-gud-go)
-(global-set-key [S-f5] 'gud-kill)
-(global-set-key [f9] 'gud-break-remove)
+(require 'semantic-tag-folding nil 'noerror)
+(global-semantic-tag-folding-mode 1)
 #+END_SRC
 
-这样，先按f5会启动gdb，再按f5因为调试没运行就会执行(gud-run)，遇到断点
-再按f5则会调用(gud-cont)。
+看这个图：
 
-按Shift+f5就会终止当前的调试。
+[[file:./images/emacs-semantic-tag-folding.jpg]]
 
-在源代码行上就会根据当前行上是否有断点来确实设置或删除断点。
+只要用鼠标点击左侧的小三角图标就可以打开或折叠代码了。箭头向下的空心三
+角表示这段代码可以被折叠，箭头向右的实心三角表示这段代码被打折过了。
 
-最终的配置文件如下：
+为了方便键盘操作，我把按键绑定到了C-_，C-+上：
 
 #+BEGIN_SRC emacs-lisp
-(require 'gdb-ui)
-(defun gdb-or-gud-go ()
-  "If gdb isn't running; run gdb, else call gud-go."
-  (interactive)
-  (if (and gud-comint-buffer
-           (buffer-name gud-comint-buffer)
-           (get-buffer-process gud-comint-buffer)
-           (with-current-buffer gud-comint-buffer (eq gud-minor-mode 'gdba)))
-      (gud-call (if gdb-active-process "continue" "run") "")
-    (gdb (gud-query-cmdline 'gdb))))
-(defun gud-break-remove ()
-  "Set/clear breakpoin."
-  (interactive)
-  (save-excursion
-    (if (eq (car (fringe-bitmaps-at-pos (point))) 'breakpoint)
-        (gud-remove nil)
-      (gud-break nil))))
-(defun gud-kill ()
-  "Kill gdb process."
-  (interactive)
-  (with-current-buffer gud-comint-buffer (comint-skip-input))
-  (kill-process (get-buffer-process gud-comint-buffer)))
-(setq gdb-many-windows t)
-(global-set-key [f5] 'gdb-or-gud-go)
-;; (global-set-key [S-f5] '(lambda () (interactive) (gud-call "quit" nil)))
-(global-set-key [S-f5] 'gud-kill)
-(global-set-key [f7] '(lambda () (interactive) (compile compile-command)))
-(global-set-key [f8] 'gud-print)
-(global-set-key [C-f8] 'gud-pstar)
-(global-set-key [f9] 'gud-break-remove)
-;; (global-set-key [f9] 'gud-break)
-;; (global-set-key [C-f9] 'gud-remove)
-(global-set-key [f10] 'gud-next)
-(global-set-key [C-f10] 'gud-until)
-(global-set-key [S-f10] 'gud-jump)
-(global-set-key [f11] 'gud-step)
-(global-set-key [C-f11] 'gud-finish)
+(define-key semantic-tag-folding-mode-map (kbd "C-_") 'semantic-tag-folding-fold-all)
+(define-key semantic-tag-folding-mode-map (kbd "C-+") 'semantic-tag-folding-show-all))
 #+END_SRC
 
+打开semantic-tag-folding-mode后，用gdb调试时不能点左侧的fringe切换断点
+了，所以我把C-?定义为semantic-tag-folding-mode的切换键，在gdb调试时临时
+把semantic-tag-folding关掉：
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-?") 'global-semantic-tag-folding-mode)
+#+END_SRC
+
+* Todo
+
+以上只是cedet里我用到的一些功能，其实cedet还有很多优秀的功能，比如通过
+模板自动生成代码(SRecode)；通过代码画UML图以及通过UML图生成代码(Cogre)
+等；另外semantic除了可以自己解析代码外还可以借助ctags,global,ebrowse来
+解析。更多的功能需要进一步发掘。
+
+最后，欢迎参观我的cedet配置:
+[[http://github.com/meteor1113/dotemacs/blob/master/init-site.el]]
