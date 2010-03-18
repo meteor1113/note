@@ -1,3 +1,5 @@
+#+OPTIONS: ^:nil
+
 配置cedet浏览和编辑C++代码
 
 * 前言
@@ -180,8 +182,8 @@ cedet有tag跳转的功能，但是经常跳转完后还需要跳回刚才的位
 
 用过XCode或eclipse的人应该会喜欢高亮光标处变量的功能：就是在函数内部，
 光标停留在一个变量上，整个函数内部用这个变量的地方都高亮了。在emacs里只
-要打开idle-tag-highlight-mode，光标在变量处停留一会，就会把相同的变量
-全都高亮，比如下图中的变量mAddr：
+要打开semantic-idle-tag-highlight-mode，光标在变量处停留一会，就会把相
+同的变量全都高亮，比如下图中的变量mAddr：
 
 [[file:./images/emacs-semantic-idle-tag-highlight.jpg]]
 
@@ -252,10 +254,7 @@ feature就可以根据自己的需要开启了。比如我的配置是：
 (semantic-load-enable-code-helpers)
 ;; (semantic-load-enable-guady-code-helpers)
 ;; (semantic-load-enable-excessive-code-helpers)
-(if window-system
-    (semantic-load-enable-semantic-debugging-helpers)
-  (progn (global-semantic-show-unmatched-syntax-mode 1)
-         (global-semantic-show-parser-state-mode 1)))
+(semantic-load-enable-semantic-debugging-helpers)
 #+END_SRC
 
 因为imenu,idle-summary-mode,senator-mode,mru-bookmark-mode都是我需要
@@ -268,8 +267,7 @@ feature就可以根据自己的需要开启了。比如我的配置是：
 说用处不大，而且我感觉打开的话还会让emacs反应变慢，所以我就不启用了。
 
 (semantic-load-enable-semantic-debugging-helpers)的几个feature我都比较
-喜欢，但是在终端下，highlight-edits-mode这个mode让buffer看起来太混乱
-了，所以我只在GUI下才启用highlight-edits-mode。
+喜欢，所以我也启用了。
 
 有了这些基本配置，在emacs打开C和C++文件的时候，semantic就会自动解析文
 件。不过有个问题，一个cpp文件中肯定会include很多头文件，要想解析这个
@@ -597,6 +595,8 @@ eassist-header-switches可配置)，默认它能识别h/hpp/cpp/c/C/H/cc这几�
 
 ** 代码折叠
 
+*** semantic-tag-folding
+
 从我开始用emacs开始就听大虾们说hs-minor-mode可以实现代码折叠，所以我
 的.emacs里一直把hs-minor-mode打开的，可是用了5年之后我发现还是不习惯它
 的按键，另外也不是很喜欢它显示的样子，5年来Hide/Show这个菜单对我来说基
@@ -618,7 +618,17 @@ semantic-tag-folding.el(也在cedet的contrib目录下)。
 只要用鼠标点击左侧的小三角图标就可以打开或折叠代码了。箭头向下的空心三
 角表示这段代码可以被折叠，箭头向右的实心三角表示这段代码被打折过了。
 
-为了方便键盘操作，我把按键绑定到了C-_，C-+上：
+为了方便键盘操作，我把按键绑定到了[C-c , -]和[C-c , +]上(绑定这么复杂的
+按键主要是为了和senator兼容，后面会讲到senator实现代码折叠)：
+
+#+BEGIN_SRC emacs-lisp
+(define-key semantic-tag-folding-mode-map (kbd "C-c , -") 'semantic-tag-folding-fold-block)
+(define-key semantic-tag-folding-mode-map (kbd "C-c , +") 'semantic-tag-folding-show-block)
+#+END_SRC
+
+同时它还提供了两个函数可以同时打开和折叠整个buffer的所有代码，分别是
+semantic-tag-folding-fold-all和semantic-tag-folding-show-all，我把它们
+绑定到了[C-_]和[C-+]上：
 
 #+BEGIN_SRC emacs-lisp
 (define-key semantic-tag-folding-mode-map (kbd "C-_") 'semantic-tag-folding-fold-all)
@@ -632,6 +642,42 @@ semantic-tag-folding.el(也在cedet的contrib目录下)。
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-?") 'global-semantic-tag-folding-mode)
 #+END_SRC
+
+不过，semantic-tag-folding在终端下会有一点点小问题：终端下
+semantic-tag-folding在函数前面加了个“+”或“-”号，看下面这个图：
+
+file:./images/emacs-semantic-tag-folding-console.jpg
+
+虽然功能不受影响(除了不能用鼠标操作外，快捷键和GUI下是一样的)，不过代码
+不能对齐了还是令我有些不爽，所以终端下我是禁用semantic-tag-folding的，
+最终我的配置如下：
+
+#+BEGIN_SRC emacs-lisp
+(when (and window-system (require 'semantic-tag-folding nil 'noerror))
+  (global-semantic-tag-folding-mode 1)
+  (global-set-key (kbd "C-?") 'global-semantic-tag-folding-mode)
+  (define-key semantic-tag-folding-mode-map (kbd "C-c , -") 'semantic-tag-folding-fold-block)
+  (define-key semantic-tag-folding-mode-map (kbd "C-c , +") 'semantic-tag-folding-show-block)
+  (define-key semantic-tag-folding-mode-map (kbd "C-_") 'semantic-tag-folding-fold-all)
+  (define-key semantic-tag-folding-mode-map (kbd "C-+") 'semantic-tag-folding-show-all))
+#+END_SRC
+
+需要注意的是，semantic-tag-folding依赖于语法解析，也就是说必须等
+semantic解析完文件之后才能使用。如果找开文件在fringe处找不到空心三角，
+可以[Force Tag Refresh]下，或者检查下semantic是否配置正确。
+
+*** senator-fold-tag
+
+终端下不用semantic-tag-folding了，最好能有替代方案吧：首先可以用回
+hs-minor-mode，此外cedet的senator也提供了一种代码折叠方案。
+
+只要启用了senator-minor-mode(emacs中会出现Senator菜单)，就可以通过M-x
+senator-fold-tag和M-x senator-unfold-tag来折叠和打开代码了，GUI和终端下
+都可以使用。
+
+默认地，senator-fold-tag绑定到[C-c , -]，senator-unfold-tag绑定到[C-c
+, +]上(所以前面我把semantic折叠的快捷键也绑定到这两个键上，这样GUI和终
+端下快捷键就一致了)。不过senator里好像没有对应的fold-all和show-all方法。
 
 * Todo
 
