@@ -1,4 +1,4 @@
-#+OPTIONS: -:nil ^:nil
+#+OPTIONS: ^:nil
 
 Solaris10下gdb调试64位程序
 
@@ -20,10 +20,10 @@ procfs: ... giving up ...
 安装64位的gdb，64位gdb既可以调试64位应用程序，又可以调试32位应用程序。
 安装命令如下：
 #+BEGIN_SRC sh
-gzip –d gdb-6.8.tar.gz
+gzip -d gdb-6.8.tar.gz
 tar xvf gdb-6.8.tar
 cd gdb-6.8
-CFLAGS=-m64 ./configure –disable-werror
+CFLAGS=-m64 ./configure --disable-werror
 make
-su root –c “make install”
+su root -c "make install"
 #+END_SRC
