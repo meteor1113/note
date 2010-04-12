@@ -1,0 +1,29 @@
+#+OPTIONS: -:nil ^:nil
+
+Solaris10下gdb调试64位程序
+
+Solaris10下默认安装了gcc，但即使是在x86_64的cpu上安装的gcc仍然是32位
+的，默认编译出的程序是32位的;为了编译64位程序，可以给gcc加-m64的参数，
+这样编译出来的程序就是ELFCLASS64了。
+
+Solaris10默认没有安装gdb，还好http://www.sunfreeware.com下提供了gdb的
+二进制包，把它和其它的信赖包后发现：可以调试32位应用程序，但调试64位程
+序总报错：
+
+#+BEGIN_EXAMPLE
+procfs:4337 -- process not stopped.
+procfs: ... giving up ...
+#+END_EXAMPLE
+
+后来经过测试发现，可以下载gdb的源码
+((ftp://ftp.sunfreeware.com/pub/freeware/SOURCES/gdb-6.8.tar.gz)，编译
+安装64位的gdb，64位gdb既可以调试64位应用程序，又可以调试32位应用程序。
+安装命令如下：
+#+BEGIN_SRC sh
+gzip –d gdb-6.8.tar.gz
+tar xvf gdb-6.8.tar
+cd gdb-6.8
+CFLAGS=-m64 ./configure –disable-werror
+make
+su root –c “make install”
+#+END_SRC
