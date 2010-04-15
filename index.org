@@ -85,11 +85,13 @@
      + [[file:mac/mac20050627.org][关于iterm的中文输入]]
      + [[file:mac/mac20080608.org][cocoa的KVO以及loadNib]]
      + [[file:mac/mac20090923.org][OSX10.5中的git]]
+   + misc
+     + [[file:misc/db20080417.org][sqlite3, access, sqlserver2000的编码设置]]
+     + [[file:misc/doxygen20041130.org][用doxygen为程序生成文档]]
+     + [[file:misc/unicode20080429.org][编码知识小结]]
+     + [[file:misc/virtual20081220.org][虚拟化技术分类]]
    + other
-     + [[file:other/db20080417.org][sqlite3, access, sqlserver2000的编码设置]]
-     + [[file:other/doxygen20041130.org][用doxygen为程序生成文档]]
-     + [[file:other/unicode20080429.org][编码知识小结]]
-     + [[file:other/virtual20081220.org][虚拟化技术分类]]
+     + [[file:other/die.org][人固有一死]]
    + python
      + [[file:python/python20041120.org][python笔记1]]
      + [[file:python/python20041121.org][python笔记2]]
