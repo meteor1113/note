@@ -1,0 +1,23 @@
+通过代理访问github
+
+公司里不能随意访问外网，所有外网访问都要通过http代理，在github上托管的
+代码库也不能直接访问了，好在git可以通过代理访问版本库。
+
+以前都是通过ssh协议访问github，上传下载都很方便。可是公司只有http的代
+理，而http的代理好像是不能代理ssh协议的，不过还好github还可以通过http
+协议访问。
+
+先用export http_proxy=xxx设置好代理，然后再git clone http://xxx就可以下
+载代码了，需要注意的就是要把原有的git@github.com:username/lib.git的格
+式换成http://username@github.com/username/lib.git。
+
+这样下载下来的代码库不仅可以git fetch，还可以git push，唯一麻烦点的是
+不管上传还是下载，每次都要输入密码。另外就是好像git gui不会通过代理，
+所以只能在命令行下使用。
+
+如果使用windows下的msysgit，可以在HOME目录下建立.profile文件，写入
+#+BEGIN_SRC sh
+http_proxy=xxx
+export http_proxy
+#+END_SRC
+之后在git bash里就可以上传下载了。
