@@ -1,0 +1,14 @@
+#+OPTIONS: ^:nil
+
+通过代理apt-get
+
+公司里不能随意访问外网，所有外网访问都要通过http代理，可是又想能随时
+apt升级ubuntu，好在可以apt还可以通过代理访问。
+
+只要在/etc/apt/apt.conf里按下面的格式写入代理设置：
+
+#+BEGIN_SRC sh
+Acquire::http::Proxy "http://username:password@ip:port";
+#+END_SRC
+
+然后apt-get就会自动通过代理了。
