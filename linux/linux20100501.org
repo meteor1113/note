@@ -1,0 +1,33 @@
+#+OPTIONS: ^:nil
+
+硬盘安装ubuntu 10.04
+
+本来是想用Unetbootin来硬盘安装ubuntu，可是通过Unetbootin进去后等了半天
+还在黑屏，进不去桌面。不知道是不是Unetbootin只支持U盘，对硬盘支持不好。
+
+后来研究了半天才发现原来ubuntu本身就能直接硬盘安装，步骤如下：
+
+- 下载ubuntu的iso，我下的是ubuntu-10.04-desktop-amd64.iso，用虚拟光驱加
+  载这个iso。
+
+- 在虚拟光驱自动运行，在弹出的Ubuntu 菜单中选“演示和完全安装”：
+
+[[./images/ubuntu-10.04-wubi-1.JPG]]
+
+- 在下一个菜单中选“帮助我从光盘启动”：
+
+[[./images/ubuntu-10.04-wubi-2.JPG]]
+
+- 之后会拷贝一些文件到C盘并更新c:\boot.ini生成ubuntu启动项，然后提示重
+  启。这时候要选择“我想稍后自己重启动”。（这时候如果直接重启，虽然已经
+  有了Ubuntu的启动菜单，可是进去启动到一半的时候会报“Unable to find a
+  medium containing a live file system”的错误，所以必须有下一步操作）
+
+[[./images/ubuntu-10.04-wubi-3.JPG]]
+
+- 把虚拟光驱中的".disk"和"casper"目录拷贝到C盘根目录下。（我检查.disk目
+  录下感觉那些文件都是没啥实际作用的，可是要是少了这个文件夹就启动不起
+  来）
+
+- 重启选择"Ubuntu"启动就可以进行live desktop了，接下来的安装就和光盘安
+  装一样了。
