@@ -50,7 +50,8 @@
      + [[file:emacs/emacs20090807.org][emacs的Local Variables和vim的Modeline]]
      + [[file:emacs/emacs20090922.org][company-0.4.3中ropemacs的问题]]
      + [[file:emacs/emacs20091205.org][emacs中用gdb调试]]
-     + [[file:emacs/emacs20100308.org][配置cedet浏览和编辑C++代码]]
+     + [[file:emacs/emacs20100308.org][用CEDET浏览和编辑C++代码]]
+     + [[file:emacs/emacs20100508.org][用CEDET浏览和编辑C++代码(续) - 使用emacs-23.2内置的CEDET]]
    + iphone
      + [[file:iphone/iphone20090915.org][Audio Session 编程指南(摘要翻译)]]
      + [[file:iphone/iphone20090924.org][SDK3.0免证书(iDP)联机调试]]

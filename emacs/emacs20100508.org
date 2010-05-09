@@ -300,5 +300,6 @@ semantic-tag-folding.el没有了，可我没找到其它更好的替代方案，
 
 以前的senator-fold-tag功能还可以使用。
 
-最后插播个广告，我关于内置CEDET的配置(最后那部
-分)：http://github.com/meteor1113/dotemacs/blob/master/init-basic.el
+最后播个广告，我关于内置CEDET的配
+置：http://github.com/meteor1113/dotemacs/blob/master/init-basic.el (最
+后那部分)
