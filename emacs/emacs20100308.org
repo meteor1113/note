@@ -1,6 +1,6 @@
 #+OPTIONS: ^:nil
 
-配置cedet浏览和编辑C++代码
+用CEDET浏览和编辑C++代码
 
 * 前言
 
@@ -538,7 +538,7 @@ emacs有自带的书签功能(c-x r m, c-x r b, c-x r l)，不过对于用了多
 
 有点遗憾的是这个书签功能只能在当前buffer的书签间跳转。
 
-** pluse
+** pulse
 
 使用semantic-ia-fast-jump跳转时，cedet有个很酷的效果：在跳转到的行上实
 现一个淡入淡出的效果。具体的分析和使用看[[http://emacser.com/pulse.htm][这儿]]。
