@@ -1,4 +1,5 @@
 #+OPTIONS: ^:nil
+#+INFOJS_OPT: view:showall
 
 用CEDET浏览和编辑C++代码(续) - 使用emacs-23.2内置的CEDET
 
