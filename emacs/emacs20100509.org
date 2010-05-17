@@ -1,0 +1,96 @@
+#+OPTIONS: ^:nil
+
+我的emacs开发C++的配置
+
+* 前言
+
+我用emacs主要是用于C++开发，一直都想把我开发C++相关的配置记录一下，可
+是一直都在懒，前几天有网友发邮件问我如何用emacs开发C++，我终于下决定来
+写这篇blog了。
+
+我的emacs配置文件托管在github上：
+http://github.com/meteor1113/dotemacs ，里面是我现在所用的emacs配置，本
+文只介绍我开发C++用到的一些功能，不过有些设置对其它类型的文件也是通用的。
+
+我的所有配置文件都兼容emacs-22以上版本；有时候我会在putty中使用远程的
+emacs，所以配置中有部分是给putty使用的，我会在文章中说明。
+
+* 编辑
+
+** emacs内置的功能
+
+*** column-number-mode
+
+#+BEGIN_SRC emacs-lisp
+(column-number-mode t)
+#+END_SRC
+
+emacs 默认会在mode line上显示光标所在的行号，这个minor mode让emacs在
+mode line显示列号，对于C++来说，能看到列号还是有点用的。
+
+*** which-function-mode
+
+#+BEGIN_SRC emacs-li
+(which-function-mode t)
+#+END_SRC
+这个minor mode会让emacs在mode line上显示当前光标所处的函数，就是这样：
+
+file:./images/emacs-which-function-mode.JPG
+
+*** cua
+
+#+BEGIN_SRC emacs-lisp
+(cua-mode t)
+(define-key cua-global-keymap (kbd "<M-RET>") 'cua-set-rectangle-mark)
+(setq cua-keep-region-after-copy t)
+(setq mouse-drag-copy-region nil)
+(setq x-select-enable-clipboard t)
+#+END_SRC
+
+可能是受Windows毒害太深，我还是习惯cua。
+
+(cua-mode t)会打开cua-mode，可以像Windows下其它的编辑器一样用C-x来剪
+切，C-c来拷贝，C-v来粘贴，C-z来Undo。
+
+写C++代码很多人喜欢UE的列模式，emacs其实也有自己的列模式，不过那一堆按
+键确实令我很害怕，cua提供了自己的列模式：cua-set-rectangle-mark，默认绑
+定到C-RET上；因为putty下不能识别C-RET，所以我也把它绑定到了M-RET上。
+
+执行cua-set-rectangle-mark后可以移动光标选中一个块，然后在这个块上执行
+列操作，比如输入字符会在所有列都插入同样的字符，delete键会删除这个块，
+具体操作参考cua的帮助，cua的样子像这样：
+
+file:./images/emacs-cua-set-rectangle-mark.JPG
+
+
+
+** 第三方插件
+
+*** CEDET
+
+*** ECB
+
+*** bm
+
+*** smart-compile
+
+*** highlight-parentheses
+
+*** highlight-symbol
+
+*** ifdef
+
+*** doc-mode
+
+*** sourcepair
+
+*** yasnippet
+
+*** auto-complete
+
+
+* 编译和调试
+
+;; compile
+(setq compilation-auto-jump-to-first-error t)
+(setq compilation-scroll-output t)
