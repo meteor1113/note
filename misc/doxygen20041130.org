@@ -1,3 +1,6 @@
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil
+#+INFOJS_OPT: view:showall
+
 用doxygen为程序生成文档
 
 doxygen可以为c++,c,java,IDL,php和c#等生成文档，生成的格式可以是
@@ -17,67 +20,97 @@ doxygen缺省为documented members,files,classes,namespace生成文档
 
 为使用doxygen在文档中进行注释
 
-可以直接在注释中写带有客外标记的c/c++注释(特殊注释)，这样doxygen就知道
+可以直接在注释中写带有额外标记的c/c++注释(特殊注释)，这样doxygen就知道
 需要将其加入到文档中，有两种注释，一种是brief－简短单行的，一种是
 detail－详尽的。
 
 几种方式的detail注释：
 
-#+BEGIN_EXAMPLE
-    1.JavaDoc风格：
-    /**
-     * ...
-     */
+1.JavaDoc风格：
 
-    2.Qt风格：
-    /*!
-     * ...
-     */
+#+BEGIN_SRC c++
+  /**
+   * ...
+   */
+#+END_SRC
 
-    这两种中间的*都是可选的。
+   2.Qt风格：
 
-    3.至少使用两个c++注释行，每行多加一个/或!：
-    ///
-    /// ...
-    ///
-    或
-    //!
-    //! ...
-    //!
+#+BEGIN_SRC c++
+  /*!
+   * ...
+   */
+#+END_SRC
 
-    4.有些人喜欢将注释变得醒目：
-    ///////////////////////////
-    /// ...
-    ///////////////////////////
-#+END_EXAMPLE
+   这两种中间的*都是可选的。
 
-几种brief注释：
+   3.至少使用两个c++注释行，每行多加一个/或!：
 
-#+BEGIN_EXAMPLE
-    1.在上述注释中使用brief,然后在一个空行后跟detail注释：
-    /*! brief Brief description.
-    *  Brief Description continued.
-    *
-    *  Detailed description starts here.
-    */
+#+BEGIN_SRC c++
+  ///
+  /// ...
+  ///
+#+END_SRC
 
-    2.如果配置文件中JAVADOC_AUTOBRIEF设为YES,则使用JavaDoc风格自动开始
-    一个brief注释，这个注释以.跟一个空格或新行结束：
-    /** Brief description which ends at this dot. Details follow
-    *  here.
-    */
-    这也可以用到多行c++注释中：
-    /// Brief description which ends at this dot. Details follow
-    /// here.
+  或
 
-    3.可以用一种特殊的c++风格注释，每次不超过一行
-    /// Brief description.
-    /** Detailed description. */
-    或
-    //! Brief descripion.
-    //! Detailed description
-    //! starts here.
-#+END_EXAMPLE
+#+BEGIN_SRC c++
+  //!
+  //! ...
+  //!
+#+END_SRC
+
+  4.有些人喜欢将注释变得醒目：
+
+#+BEGIN_SRC c++
+  ///////////////////////////
+  /// ...
+  ///////////////////////////
+#+END_SRC
+
+
+  几种brief注释：
+
+  1.在上述注释中使用brief,然后在一个空行后跟detail注释：
+
+#+BEGIN_SRC c++
+  /*! brief Brief description.
+   *  Brief Description continued.
+   *
+   *  Detailed description starts here.
+   */
+#+END_SRC
+
+   2.如果配置文件中JAVADOC_AUTOBRIEF设为YES,则使用JavaDoc风格自动开始
+   一个brief注释，这个注释以.跟一个空格或新行结束：
+
+#+BEGIN_SRC c++
+  /** Brief description which ends at this dot. Details follow
+   *  here.
+   */
+#+END_SRC
+
+   这也可以用到多行c++注释中：
+
+#+BEGIN_SRC c++
+  /// Brief description which ends at this dot. Details follow
+  /// here.
+#+END_SRC
+
+  3.可以用一种特殊的c++风格注释，每次不超过一行
+
+#+BEGIN_SRC c++
+  /// Brief description.
+  /** Detailed description. */
+#+END_SRC
+
+  或
+
+#+BEGIN_SRC c++
+  //! Brief descripion.
+  //! Detailed description
+  //! starts here.
+#+END_SRC
 
 后一种的空行用来分开brief和detail注释。
 
