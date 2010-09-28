@@ -1,0 +1,102 @@
+#+OPTIONS: ^:nil timestamp:nil creator:nil
+
+vs_list的问题
+
+之前写过两个函数用来格式化字符串，类似于sprintf：
+
+#+BEGIN_SRC c++
+  template<typename T>
+  std::basic_string<T>
+  Vformat(const T* fmt, va_list ap)
+  {
+      assert(fmt != NULL);
+  
+      static const size_t MAXSIZE = 2 * 1024 * 1024;
+      T stackbuf[1024];
+      size_t size = sizeof(stackbuf);
+      T* buf = &stackbuf[0];
+      std::vector<T> dynamicbuf;
+  
+      while (1)
+      {
+          int needed = Vsnprintf(buf, size, fmt, ap);
+          if ((needed <= (int)size) && (needed >= 0))
+          {
+              return std::basic_string<T>(buf, (size_t)needed);
+          }
+          size = (needed > 0) ? (needed + 1) : (size * 2);
+          if (size > MAXSIZE)
+          {
+              break;
+          }
+          dynamicbuf.resize(size);
+          buf = &dynamicbuf[0];
+      }
+  
+      return fmt;
+  }
+  
+  template<typename T>
+  std::basic_string<T>
+  Format(const T* fmt, ...)
+  {
+      assert(fmt != NULL);
+  
+      va_list ap;
+      va_start(ap, fmt);
+      std::basic_string<T> buf = Vformat(fmt, ap);
+      va_end(ap);
+      return buf;
+  }
+#+END_SRC
+
+以前一直用来格式化的字符串都小于1024字节，所以一直没发现问题。今天用了
+个超过1024字节的字符串，发现格式化不了了。
+
+用了各种调试手段之后，才找出原因是va_list在循环中多次使用出现问题了。
+原来va_list在内部用了个指针记录当前访问到哪个位置了，第一次用Vsnprintf
+没有问题，可第二次用的时候，再访问ap的话指针已经指向最后，再用的话当然
+就段错误了。以前还一直以为Vsnprintf这样的函数会在内部保存va_list的副
+本，不改变传进去的参数呢，原来一直理解错误了。
+
+知道问题了就得改，最好的办法是在Vformat里保存个va_list的副本，每次调用
+Vsnprintf时都用副本。可找来找去，c99里增加了一个va_copy的函数可以保存
+副本，但c99之前用不了，为了移植性考虑，还是把Vformat合到Format一起吧：
+
+#+BEGIN_SRC c++
+template<typename T>
+std::basic_string<T>
+Format(const T* fmt, ...)
+{
+    assert(fmt != NULL);
+
+    static const size_t MAXSIZE = 2 * 1024 * 1024;
+    T stackbuf[1024];
+    size_t size = sizeof(stackbuf);
+    T* buf = &stackbuf[0];
+    std::vector<T> dynamicbuf;
+
+    while (1)
+    {
+        va_list ap;
+        va_start(ap, fmt);
+        int needed = Vsnprintf(buf, size, fmt, ap);
+        if ((needed <= (int)size) && (needed >= 0))
+        {
+            return std::basic_string<T>(buf, (size_t)needed);
+        }
+        size = (needed > 0) ? (needed + 1) : (size * 2);
+        if (size > MAXSIZE)
+        {
+            break;
+        }
+        dynamicbuf.resize(size);
+        buf = &dynamicbuf[0];
+        va_end(ap);
+    }
+
+    return fmt;
+}
+#+END_SRC
+
+每次都重新生成va_list，这下终于正常了。

@@ -18,6 +18,7 @@
      + [[file:cpp/cpp20080401.org][c++标准库总结]]
      + [[file:cpp/cpp20080417.org][关于临时对象的引用]]
      + [[file:cpp/cpp20080418.org][用ScopeGuard简化异常安全代码]]
+     + [[file:cpp/cpp20100928.org][vs_list的问题]]
    + design
      + [[file:design/design20041122.org][重构原则]]
      + [[file:design/design20041123.org][重构：重新组织函数]]
