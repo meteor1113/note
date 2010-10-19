@@ -77,6 +77,7 @@
      + [[file:linux/linux20100412.org][Solaris10下gdb调试64位程序]]
      + [[file:linux/linux20100424.org][通过代理apt-get]]
      + [[file:linux/linux20100501.org][硬盘安装ubuntu 10.04]]
+     + [[file:linux/linux20101019.org][VirtualBox-3.2.10安装ubuntu-10.10启动桌面特效]]
    + mac
      + [[file:mac/mac20041117.org][powerplant中broadcast和command的一点体会]]
      + [[file:mac/mac20041118.org][powerplant中view的click消息处理]]

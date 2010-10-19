@@ -1,0 +1,21 @@
+#+OPTIONS: ^:nil author:nil timestamp:nil creator:nil
+
+VirtualBox-3.2.10安装ubuntu-10.10启动桌面特效
+
+ubuntu-10.10发布了，急不可待地在VirtualBox中安装了一个，进去之后安装了
+guest additions，一切正常。可是启动ubuntu的桌面特效却失败了，重装了多
+次guest additions都不行。
+
+上论坛也问过了，没找到解决办法，今天有点空闲跑到VirtualBox官方论坛里随
+便找找，有很多人碰到了同样的问题，后面有人给了个解决办
+法：
+
+http://forums.virtualbox.org/viewtopic.php?f=3&t=35218&start=45#p158427
+
+就是说在安装guest additions之前要先安装dkms和build-essentials，然后安
+装guest additions就可以了。
+
+我在已安装好guest additions的ubuntu上安装了dkms(确实是dkms，虽然原文说
+要安装dkms和build-essentials，但我试过只需要安装dkms就是可以
+了，build-essentials不是必要的)，然后重装了guest additions，重启之后启
+动桌面特效成功了。
