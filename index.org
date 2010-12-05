@@ -54,6 +54,7 @@
      + [[file:emacs/emacs20100308.org][用CEDET浏览和编辑C++代码]]
      + [[file:emacs/emacs20100508.org][用CEDET浏览和编辑C++代码(续) - 使用emacs-23.2内置的CEDET]]
      + [[file:emacs/emacs20100601.org][自定义emacs工具栏]]
+     + [[file:emacs/emacs20101205.org][用flymake检测C/C++语法]]
    + iphone
      + [[file:iphone/iphone20090915.org][Audio Session 编程指南(摘要翻译)]]
      + [[file:iphone/iphone20090924.org][SDK3.0免证书(iDP)联机调试]]
