@@ -2,27 +2,15 @@
 
 用flymake检测C/C++语法
 
-#+BEGIN_HTML
-<span style="color: #0000ff;">作者:
-</span><a href="http://emacser.com/about.htm#meteor"
-target="_blank"><span style="color:#0000ff;"><b>Meteor Liu</b></span></a>
-#+END_HTML
+** 前言
 
-* 前言
-
-前段时间ahei使劲推荐[[http://flymake.sourceforge.net/][flymake]]，而且在dea中还给出一段flymake配置，勾起了我
-学习flymake的兴趣。在此之前只是听说过flymake，偶尔浅尝一下还没学会怎么
-用就放弃了，这几天折腾flymake后觉得实在很给力。生活是不是缺少美，而是缺
-少发现美的眼睛这话说得还真有点道理。
+前段时间ahei使劲推荐[[http://flymake.sourceforge.net/][flymake]]，而且在dea中还给出一段flymake配置，勾起了我学习flymake的兴趣。在此之前只是听说过flymake，偶尔浅尝一下还没学会怎么用就放弃了，这几天折腾flymae后觉得实在很给力。生活不是缺少美，而是缺少发现美的眼睛这话说得还真有点道理。
 
 #+HTML: <!--more-->
 
-* flymake基本用法
+** flymake基本用法
 
-flymake是一个实时的语法检查工具，好像是从emacs22开始已经自带flymake，自
-带的flymake提供了对C,C++,XML,HTML,C#,perl,php,java,tex,idl的支持。查看
-flymake-allowed-file-name-masks这个变量可以得到支持语言的详细信息。想要
-了解其它语言的支持，可以看看[[http://www.emacswiki.org/FlyMake]]。
+flymake是一个实时的语法检查工具，好像是从emacs22开始已经自带flymake，自带的flymake提供了对C,C++,XML,HTML,C#,perl,php,java,tex,idl的支持。查看flymake-allowed-file-name-masks这个变量可以得到支持语言的详细信息。想要了解其它语言的支持，可以看看[[http://www.emacswiki.org/FlyMake]]。
 
 在以下四种情况下，flymake会执行语法检测：
 
@@ -34,37 +22,34 @@ flymake-allowed-file-name-masks这个变量可以得到支持语言的详细信�
 下面是flymake基本配置：
 #在.emacs中加上以下代码，会在打开文件时自动打开flymake-mode：
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_HTML
+<pre lang="lisp">
 (autoload 'flymake-find-file-hook "flymake" "" t)
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 (setq flymake-gui-warnings-enabled nil)
 (setq flymake-log-level 0)
-#+END_SRC
+</pre>
+#+END_HTML
 
-加上以上配置后，打开文件时会检测是否是flymake支持的语言，是的话就会自动
-打开flymake-mode。flymake-gui-warnings-enabled设置为nil表示出错时不弹个
-对话框显示错误；flymake-log-level设置为0表示记录错误日志。
+加上以上配置后，打开文件时会检测是否是flymake支持的语言，是的话就会自动打开flymake-mode。flymake-gui-warnings-enabled设置为nil表示出错时不弹个对话框显示错误；flymake-log-level设置为0表示记录错误日志。
 
-本文主要讨论C/C++(因为别的我不会)，自带的flymake对C/C++的支持是通过
-Makefile实现的，Makefile中必须有一个check-syntax目标，比如我在Linux下用
-automake，那我在Makefile.am中加了这么一段(其实就是调用gcc)：
+本文主要讨论C/C++(因为别的我不会)，自带的flymake对C/C++的支持是通过Makefile实现的，Makefile中必须有一个check-syntax目标，比如我在Linux下用automake，那我在Makefile.am中加了这么一段(其实就是调用gcc)：
 
-#+BEGIN_SRC makefile
+#+BEGIN_HTML
+<pre lang="makefile">
 check-syntax:
 	$(CXXCOMPILE) -Wall -Wextra -pedantic -fsyntax-only $(CHK_SOURCES)
-#+END_SRC
+</pre>
+#+END_HTML
 
 如果不用automake，手写Makefile的话，相应地修改一下就行了。
 
-有了这些设置后，打开项目中的cpp文件，应该会自动检测语法了，语法有错误的
-话会用颜色标识出错的行，M-x flymake-goto-next-error和M-x
-flymake-goto-prev-error可以在错误行间移动；鼠标在错误行上停留会用
-tooltip显示错误信息；M-x flymake-display-err-menu-for-current-line能弹
-出一个菜单显示错误。
+有了这些设置后，打开项目中的cpp文件，应该会自动检测语法了，语法有错误的话会用颜色标识出错的行，M-x flymake-goto-next-error和M-xflymake-goto-prev-error可以在错误行间移动；鼠标在错误行上停留会用tooltip显示错误信息；M-x flymake-display-err-menu-for-current-line能弹出一个菜单显示错误。
 
 另外，ahei写了几个函数可以在错误行间移动时在minibuffer显示出错误信息：
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_HTML
+<pre lang="lisp">
 (defun flymake-display-current-error ()
   "Display errors/warnings under cursor."
   (interactive)
@@ -84,7 +69,8 @@ tooltip显示错误信息；M-x flymake-display-err-menu-for-current-line能弹
   (interactive)
   (flymake-goto-prev-error)
   (flymake-display-current-error))
-#+END_SRC
+</pre>
+#+END_HTML
 
 我把它绑定到了这几个按键：
 
@@ -100,31 +86,22 @@ tooltip显示错误信息；M-x flymake-display-err-menu-for-current-line能弹
                 minor-mode-map-alist)))
 #+END_SRC
 
-编辑过程中，每次修改过代码0.5秒后，flymake都会检测错误，这就可以随时发
-现代码编写的错误了。
+编辑过程中，每次修改过代码0.5秒后，flymake都会检测错误，这就可以随时发现代码编写的错误了。
 
 在这补充一下flymake检测的方法：
 
-对于cpp文件，每次检测时，flymake是把buffer内的内容另存一份，再检测另存
-出来的文件。
+对于cpp文件，每次检测时，flymake是把buffer内的内容另存一份，再检测另存出来的文件。
 
-而对于h文件，gcc没办法单独检查头文件，flymake会在
-flymake-master-file-dirs设定的目录中查找include过这个头文件的实现文件，
-把buffer另存为xxx_flymake.h，把查找到的第一个满足条件的实现文件另存
-yyy_flymake_master.cpp，并把里面的include语句改为include另存的文件，然
-后通过yyy_flymake_master.cpp来间接检测头文件。
+而对于h文件，gcc没办法单独检查头文件，flymake会在flymake-master-file-dirs设定的目录中查找include过这个头文件的实现文件，把buffer另存为xxx_flymake.h，把查找到的第一个满足条件的实现文件另存yyy_flymake_master.cpp，并把里面的include语句改为include另存的文件，然后通过yyy_flymake_master.cpp来间接检测头文件。
 
-* ahei的改进
+** ahei的改进
 
-自带的flymake对C++只能通过Makefile来支持，还必须在Makefile中加入
-check-syntax目标，实在很麻烦。要是代码不是通过Makefile来管理的，flymake就
-无能为力了。
+自带的flymake对C++只能通过Makefile来支持，还必须在Makefile中加入check-syntax目标，实在很麻烦。要是代码不是通过Makefile来管理的，flymake就无能为力了。
 
-其实Makefile也是通过gcc来检测代码了，那要是跳过Makefile直接调用gcc来检
-测代码该多好啊，所以[[http://emacser.com/about.htm#ahei][ahei]]在[[http://code.google.com/p/dea][DEA]]中配置了flymake直接调用gcc检测C++代码，具
-体代码在[[http://code.google.com/p/dea/source/browse/trunk/my-lisps/flymake-settings.el][flymake-setting.el]]中，主要是以下几个函数：
+其实Makefile也是通过gcc来检测代码了，那要是跳过Makefile直接调用gcc来检测代码该多好啊，所以[[http://emacser.com/about.htm#ahei][ahei]]在[[http://code.google.com/p/dea][DEA]]中配置了flymake直接调用gcc检测C++代码，具体代码在[[http://code.google.com/p/dea/source/browse/trunk/my-lisps/flymake-settings.el][flymake-setting.el]]中，主要是以下几个函数：
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_HTML
+<pre lang="lisp">
 (defvar flymake-makefile-filenames '("Makefile" "makefile" "GNUmakefile") "File names for make.")
 
 (defun flymake-get-make-gcc-cmdline (source base-dir)
@@ -165,57 +142,42 @@ Use CREATE-TEMP-F for creating temp copy."
 
 (defun flymake-simple-make-gcc-init ()
   (flymake-simple-make-gcc-init-impl 'flymake-create-temp-inplace t t "Makefile" 'flymake-get-make-gcc-cmdline))
-#+END_SRC
+</pre>
+#+END_HTML
 
-主要思路就是先检测Makefile文件，如果存在就调用make，否则就直接调用gcc检
-测。
+主要思路就是先检测Makefile文件，如果存在就调用make，否则就直接调用gcc检测。
 
-* 我的修改
+** 我的修改
 
-ahei配置的gcc非常实用，我就是因为它喜欢上flymake的，不过用过几天后，发
-现ahei的配置里有几个问题没解决：
+ahei配置的gcc非常实用，我就是因为它喜欢上flymake的，不过用过几天后，发现ahei的配置里有几个问题没解决：
 
-- 没有对make或gcc进行检测
+1.没有对make或gcc进行检测
 
-  flymake进行语法检测都是通过调用外部程序来实现的，比如make或gcc，如果没
-  有安装这两个程序，flymake还是会死心眼地启动一个process去调用。
+flymake进行语法检测都是通过调用外部程序来实现的，比如make或gcc，如果没有安装这两个程序，flymake还是会死心眼地启动一个process去调用。
 
-- 不支持用gcc直接检测头文件
+2.不支持用gcc直接检测头文件
 
-  ahei好像是把关文件忘掉了。
+ahei好像是把头文件忘掉了。
 
-- 当目标没有权限写入时会出错
+3.当目标没有权限写入时会出错
 
-  因为flymake检测文件时会把buffer内容另存到一个临时文件中再检测，如果我
-  以普通用户身份打开/usr/include/下的头文件，或者/usr/src/下的实现文件
-  时，flymake会报靠说权限有问题，并且你会发现这个文件没在emacs中被打开。
+因为flymake检测文件时会把buffer内容另存到一个临时文件中再检测，如果我以普通用户身份打开/usr/include/下的头文件，或者/usr/src/下的实现文件时，flymake会报靠说权限有问题，并且你会发现这个文件没在emacs中被打开。
 
-- 不支持父目录中的Makefile
+4.不支持父目录中的Makefile
 
-  原始的flymake调用flymake-init-find-buildfile-dir来查找Makefile，它会
-  从当前目录一直往上找，直到根目录为止，只要找到Makefile都可以。这有一
-  个好处就是对一个有很多子目录的大工程，不需要对每个子目录下的Makefile
-  文件都加上check-syntax目标，只需要在最顶层的Makefile中加就可以了。但
-  ahei修改的时候可能是因为flymake-init-find-buildfile-dir找不到
-  Makefile就会报错退出而无法转而使用gcc而放弃了这个函数，改为只在当前目
-  录下找Makefile文件而不支持查找父目录了。
+原始的flymake调用flymake-init-find-buildfile-dir来查找Makefile，它会从当前目录一直往上找，直到根目录为止，只要找到Makefile都可以。这有一个好处就是对一个有很多子目录的大工程，不需要对每个子目录下的Makefile文件都加上check-syntax目标，只需要在最顶层的Makefile中加就可以了。但ahei修改的时候可能是因为flymake-init-find-buildfile-dir找不到Makefile就会报错退出而无法转而使用gcc而放弃了这个函数，改为只在当前目录下找Makefile文件而不支持查找父目录了。
 
 我的配置主要是在ahei的基础上进行修改，解决了这几个我发现的问题：
 
-一、没有检测make或gcc存在的问题，我在配置文件中先检测有没有对应的外部程
-序，没有的话就不配置到flymake-allowed-file-name-masks中了。
+1.没有检测make或gcc存在的问题，我在配置文件中先检测有没有对应的外部程序，没有的话就不配置到flymake-allowed-file-name-masks中了。
 
-二、我加了两个函数：flymake-master-make-gcc-header-init和
-flymake-master-make-gcc-init来支持直接用gcc检测头文件。
+2.我加了两个函数：flymake-master-make-gcc-header-init和flymake-master-make-gcc-init来支持直接用gcc检测头文件。
 
-三、用ignore-error忽略掉权限错误，用flymake-report-fatal-status把错误通
-过minibuffer报告出来。
+3.用ignore-error忽略掉权限错误，用flymake-report-fatal-status把错误通过minibuffer报告出来。
 
-四、用flymake-find-buildfile来查找Makefile文件，能支持父目录Makefile查
-找。
+4.用flymake-find-buildfile来查找Makefile文件，能支持父目录Makefile查找。
 
-修改后的代码如下(完整的配置见
-http://github.com/meteor1113/dotemacs/blob/master/init-basic.el)：
+修改后的代码如下(完整的配置见http://github.com/meteor1113/dotemacs/blob/master/init-basic.el)：
 
 #+BEGIN_SRC emacs-lisp
 (setq flymake-allowed-file-name-masks '())
@@ -367,14 +329,14 @@ Use CREATE-TEMP-F for creating temp copy."
                  flymake-simple-make-gcc-init)))
 #+END_SRC
 
-* 检测python语法
+** 检测python语法
 
-因为偶尔我也用下python，所以我也希望flymake能把python也支持了。python有
-三个语法检测工具，我比较之后选择了pyflakes。
+因为偶尔我也用下python，所以我也希望flymake能把python也支持了。python有三个语法检测工具，我比较之后选择了pyflakes。
 
 装好pyflakes后，加入以下配置就可以像检测cpp那样检测py文件了：
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_HTML
+<pre lang="lisp">
 (when (executable-find "pyflakes")
   (defun flymake-pyflakes-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -385,26 +347,19 @@ Use CREATE-TEMP-F for creating temp copy."
       (list "pyflakes" (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pyflakes-init)))
-#+END_SRC
+</pre>
+#+END_HTML
 
-如果是在windows下的话，可能会找不到pyflakes这个外部程序，因为
-C:\Python25\Scripts\pyflakes没被windows识别为可执行文件，我是在
-C:\Python25\Scripts\下加了个pyflakes.bat的文件，文件里写入以下内容就能
-正常检测了：
+如果是在windows下的话，可能会找不到pyflakes这个外部程序，因为C:\Python25\Scripts\pyflakes没被windows识别为可执行文件，我是在C:\Python25\Scripts\下加了个pyflakes.bat的文件，文件里写入以下内容就能正常检测了：
 
 #+BEGIN_EXAMPLE
 C:\Python25\python.exe C:\Python25\Scripts\pyflakes %*
 #+END_EXAMPLE
 
-* 遗留问题
+** 遗留问题
 
 有两个问题我还没解决：
 
-一、对C++来说，找不到Makefile的时候自动改用gcc语法检测，但有时候看别人
-工程时会碰到有Makefile，但里面没有写check-syntax目标的问题(从网上下载的
-开源代码很少有在Makefile中写check-syntax目标的)。要是能配置成在
-Makefile中找不到check-syntax目标后也能自动改用gcc检测就好了。
+一、对C++来说，找不到Makefile的时候自动改用gcc语法检测，但有时候看别人工程时会碰到有Makefile，但里面没有写check-syntax目标的问题(从网上下载的开源代码很少有在Makefile中写check-syntax目标的)。要是能配置成在Makefile中找不到check-syntax目标后也能自动改用gcc检测就好了。
 
-二、flymake通过定时器，改变代码超过0.5秒后进行语法检测，其实我不太喜欢
-这种立即检测的方式，相比之下我更喜欢保存文件后进行检测。要是下个版本的
-flymake可以把这两种方式做成可配置就好了。
+二、flymake通过定时器，改变代码超过0.5秒后进行语法检测，其实我不太喜欢这种立即检测的方式，相比之下我更喜欢保存文件后进行检测。要是下个版本的flymake可以把这两种方式做成可配置就好了。
